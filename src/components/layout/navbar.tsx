@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
+import Link from "next/link"
 import Image from "next/image"
 import { RainbowButton } from "@/components/ui/rainbow-button"
 import { Menu, X } from "lucide-react"
@@ -87,7 +88,7 @@ export function Navbar() {
       <div className="px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px]">
         <div className="flex h-20 items-center justify-between">
           {/* Logo */}
-          <a href="/" className="flex items-center">
+          <Link href="/" className="flex items-center">
             <Image
               src="/images/logotipo parcelecart branco.png"
               alt="ParceleCart"
@@ -96,7 +97,7 @@ export function Navbar() {
               className="h-10 w-auto"
               priority
             />
-          </a>
+          </Link>
 
           {/* Desktop Links */}
           <div className="hidden md:flex items-center gap-8">

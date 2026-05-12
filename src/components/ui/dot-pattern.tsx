@@ -64,8 +64,6 @@ interface DotPatternProps extends React.SVGProps<SVGSVGElement> {
 export function DotPattern({
   width = 16,
   height = 16,
-  x = 0,
-  y = 0,
   cx = 1,
   cy = 1,
   cr = 1,
@@ -76,6 +74,11 @@ export function DotPattern({
   const id = useId()
   const containerRef = useRef<SVGSVGElement>(null)
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
+
+  const seededRandom = (seed: number) => {
+    const x = Math.sin(seed) * 10000
+    return x - Math.floor(x)
+  }
 
   useEffect(() => {
     const updateDimensions = () => {
@@ -90,22 +93,23 @@ export function DotPattern({
     return () => window.removeEventListener("resize", updateDimensions)
   }, [])
 
-  const dots = Array.from(
-    {
-      length:
-        Math.ceil(dimensions.width / width) *
-        Math.ceil(dimensions.height / height),
+  const dots = useMemo(
+    () => {
+      const columns = Math.max(1, Math.ceil(dimensions.width / width))
+      const rows = Math.max(1, Math.ceil(dimensions.height / height))
+      return Array.from({ length: columns * rows }, (_, i) => {
+        const col = i % columns
+        const row = Math.floor(i / columns)
+        const seed = i + col * 31 + row * 97
+        return {
+          x: col * width + cx,
+          y: row * height + cy,
+          delay: seededRandom(seed) * 5,
+          duration: seededRandom(seed + 1) * 3 + 2,
+        }
+      })
     },
-    (_, i) => {
-      const col = i % Math.ceil(dimensions.width / width)
-      const row = Math.floor(i / Math.ceil(dimensions.width / width))
-      return {
-        x: col * width + cx,
-        y: row * height + cy,
-        delay: Math.random() * 5,
-        duration: Math.random() * 3 + 2,
-      }
-    }
+    [dimensions.width, dimensions.height, width, height, cx, cy]
   )
 
   return (
@@ -124,7 +128,7 @@ export function DotPattern({
           <stop offset="100%" stopColor="currentColor" stopOpacity="0" />
         </radialGradient>
       </defs>
-      {dots.map((dot, index) => (
+      {dots.map((dot) => (
         <motion.circle
           key={`${dot.x}-${dot.y}`}
           cx={dot.x}

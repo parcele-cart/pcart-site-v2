@@ -40,23 +40,6 @@ const staggerTimings: Record<AnimationType, number> = {
   line: 0.1,
 }
 
-const defaultContainerVariants: Variants = {
-  hidden: { opacity: 1 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.05,
-    },
-  },
-  exit: {
-    opacity: 0,
-    transition: {
-      staggerChildren: 0.05,
-      staggerDirection: -1,
-    },
-  },
-}
-
 const defaultItemVariants: Variants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1 },

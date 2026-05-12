@@ -193,8 +193,8 @@ export function Hero() {
                 <Image
                   src="/images/smartpos hero.png"
                   alt="SmartPOS ParceleCart"
-                  width={800}
-                  height={925}
+                  width={1200}
+                  height={1200}
                   className="h-[340px] sm:h-[400px] lg:h-[500px] w-auto object-contain drop-shadow-none sm:drop-shadow-[0_0_80px_rgba(94,242,117,0.2)]"
                   priority
                   placeholder="blur"

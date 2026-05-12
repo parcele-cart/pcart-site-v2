@@ -23,26 +23,33 @@ export const Meteors = ({
   angle = 215,
   className,
 }: MeteorsProps) => {
-  const [meteorStyles, setMeteorStyles] = useState<Array<React.CSSProperties>>(
-    []
-  )
+  const [meteorStyles, setMeteorStyles] = useState<
+    Array<React.CSSProperties & { "--angle"?: string }>
+  >([])
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
     const styles = [...new Array(number)].map(() => ({
       "--angle": -angle + "deg",
       top: "-5%",
-      left: `calc(0% + ${Math.floor(Math.random() * window.innerWidth)}px)`,
+      left: `${Math.floor(Math.random() * 100)}%`,
       animationDelay: Math.random() * (maxDelay - minDelay) + minDelay + "s",
       animationDuration:
         Math.floor(Math.random() * (maxDuration - minDuration) + minDuration) +
         "s",
-    }))
+    })) as Array<React.CSSProperties & { "--angle"?: string }>
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMeteorStyles(styles)
+    setMounted(true)
   }, [number, minDelay, maxDelay, minDuration, maxDuration, angle])
+
+  if (!mounted) {
+    return <>{[...new Array(number)].map((_, i) => <span key={i} />)}</>
+  }
 
   return (
     <>
-      {[...meteorStyles].map((style, idx) => (
+      {meteorStyles.map((style, idx) => (
         // Meteor Head
         <span
           key={idx}
