@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(npx shadcn@latest:*)",
+      "Bash(rm:*)",
+      "Bash(npm cache:*)",
+      "Bash(npx next:*)",
+      "Bash(npm run:*)",
+      "Bash(timeout 15 npx:*)",
+      "Bash(npx:*)",
+      "Bash(netstat -ano)",
+      "Bash(xargs -r taskkill /F /PID)",
+      "Bash(taskkill:*)",
+      "Bash(cmd:*)",
+      "mcp___magicuidesign_mcp__getBackgrounds",
+      "mcp___magicuidesign_mcp__getTextAnimations",
+      "mcp___magicuidesign_mcp__getSpecialEffects"
+    ]
+  },
+  "enabledMcpjsonServers": [
+    "shadcn",
+    "@magicuidesign/mcp"
+  ],
+  "enabledPlugins": {
+    "superpowers@claude-plugins-official": true,
+    "code-review@claude-plugins-official": true,
+    "github@claude-plugins-official": true
+  }
+}
