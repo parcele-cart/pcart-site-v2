@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { useTheme } from "next-themes"
 import {
   AnimatePresence,
   HTMLMotionProps,
@@ -24,6 +25,9 @@ export function Pointer({
   children,
   ...props
 }: HTMLMotionProps<"div">): React.ReactNode {
+  const { resolvedTheme } = useTheme()
+  const isDark = resolvedTheme === "dark"
+  
   const x = useMotionValue(0)
   const y = useMotionValue(0)
   const [isActive, setIsActive] = useState<boolean>(false)
@@ -116,15 +120,15 @@ export function Pointer({
               isHoveringClickable ? (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
+                  width="32"
+                  height="32"
                   viewBox="0 0 24 24"
                   className={cn(className)}
                 >
                   <path
                     d="M9 11.5V4.5a1.5 1.5 0 0 1 3 0v4a1.5 1.5 0 0 1 3 0v1a1.5 1.5 0 0 1 3 0v1a1.5 1.5 0 0 1 3 0v4c0 3.314-2.686 6-6 6h-2.032A6 6 0 0 1 7 14.768V13.5a1.5 1.5 0 0 1 2-1.415V11.5z"
-                    fill="black"
-                    stroke="white"
+                    fill={isDark ? "white" : "black"}
+                    stroke={isDark ? "black" : "white"}
                     strokeWidth="1.5"
                     strokeLinejoin="round"
                   />
@@ -135,11 +139,12 @@ export function Pointer({
                   fill="currentColor"
                   strokeWidth="1"
                   viewBox="0 0 16 16"
-                  height="16"
-                  width="16"
+                  height="24"
+                  width="24"
                   xmlns="http://www.w3.org/2000/svg"
                   className={cn(
-                    "rotate-[-70deg] stroke-white text-black",
+                    "rotate-[-70deg]",
+                    isDark ? "stroke-black text-white" : "stroke-white text-black",
                     className
                   )}
                 >

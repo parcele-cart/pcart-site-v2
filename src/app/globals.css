@@ -3,6 +3,28 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
+  --background: #FFFFFF;
+  --foreground: #0E182A;
+  --brand-blue: #2F3A59;
+  --brand-blue-light: #455473;
+  --brand-green: #3D9A64;
+  --brand-neon: #3D9A64;
+  --brand-gray: #0E182A;
+  --brand-black: #FFFFFF;
+
+  /* Rainbow button colors */
+  --color-1: #5EF275;
+  --color-2: #3D9A64;
+  --color-3: #2F3A59;
+  --color-4: #3D9A64;
+  --color-5: #5EF275;
+  --magic-card-gradient: #FFFFFF;
+  --dot-inactive: rgba(0, 0, 0, 0.2);
+  --card-bg-hover: rgba(0, 0, 0, 0.02);
+  --particle-color: #3D9A64;
+}
+
+.dark {
   --background: #0E182A;
   --foreground: #F3F3F3;
   --brand-blue: #2F3A59;
@@ -18,6 +40,10 @@
   --color-3: #2F3A59;
   --color-4: #3D9A64;
   --color-5: #5EF275;
+  --magic-card-gradient: #111827;
+  --dot-inactive: rgba(255, 255, 255, 0.2);
+  --card-bg-hover: rgba(255, 255, 255, 0.02);
+  --particle-color: #5EF275;
 }
 
 @theme inline {
@@ -146,9 +172,14 @@ body {
 
 /* Glassmorphism utility */
 .glass {
-  background: rgba(13, 13, 13, 0.7);
+  background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.dark .glass {
+  background: rgba(13, 13, 13, 0.7);
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 

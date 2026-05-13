@@ -44,7 +44,7 @@ export function Problems() {
   return (
     <section className="relative py-24 lg:py-32">
       {/* Subtle gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-brand-black via-[#0F1419] to-brand-black" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background dark:from-brand-black via-background dark:via-[#0F1419] to-background dark:to-brand-black" />
 
       {/* Dot pattern background */}
       <div
@@ -61,10 +61,10 @@ export function Problems() {
           <div className="grid grid-cols-2 gap-12 items-start">
             {/* LEFT column: sticky heading */}
             <div className="lg:sticky lg:top-[30vh] self-start">
-              <h2 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white mb-4">
+              <h2 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl text-foreground dark:text-white mb-4">
                 Nenhum sistema genérico entende como um cartório funciona.
               </h2>
-              <p className="text-xs sm:text-sm lg:text-base text-gray-400">
+              <p className="text-xs sm:text-sm lg:text-base text-gray-600 dark:text-gray-400">
                 Maquininhas comuns pedem &ldquo;contrato social&rdquo;, não conhecem as diferentes
                 atribuições e cobram com pouca transparência. Depois, sua equipe
                 passa horas conciliando. Todo mês.
@@ -86,11 +86,11 @@ export function Problems() {
                   <span className="text-3xl font-bold text-brand-green glow-green-text opacity-70 font-display">
                     {problem.number}
                   </span>
-                  <h3 className="text-base sm:text-lg font-semibold text-white mt-3 mb-3">
+                  <h3 className="text-base sm:text-lg font-semibold text-foreground dark:text-white mt-3 mb-3">
                     {problem.title}
                   </h3>
-                  <p className="text-base text-gray-400 mb-4">{problem.description}</p>
-                  <div className="border-t border-white/5 pt-4 flex items-start gap-3">
+                  <p className="text-base text-gray-600 dark:text-gray-400 mb-4">{problem.description}</p>
+                  <div className="border-t border-foreground/5 dark:border-white/5 pt-4 flex items-start gap-3">
                     <Check className="h-5 w-5 text-brand-green glow-green-text shrink-0 mt-0.5" />
                     <p className="text-base font-medium text-brand-green glow-green-text">
                       {problem.solution}
@@ -109,12 +109,12 @@ export function Problems() {
           {/* Header */}
           <div className="max-w-5xl mb-10 sm:mb-12">
             <BlurFade inView>
-              <h2 className="font-display text-xl sm:text-2xl md:text-3xl text-white mb-4">
+              <h2 className="font-display text-xl sm:text-2xl md:text-3xl text-foreground dark:text-white mb-4">
                 Nenhum sistema genérico entende como um cartório funciona.
               </h2>
             </BlurFade>
             <BlurFade delay={0.1} inView>
-              <p className="text-xs sm:text-sm text-gray-400">
+              <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                 Maquininhas comuns pedem &ldquo;contrato social&rdquo;, não conhecem as diferentes
                 atribuições e cobram com pouca transparência. Depois, sua equipe
                 passa horas conciliando. Todo mês.
@@ -130,11 +130,11 @@ export function Problems() {
                   <span className="text-3xl font-bold text-brand-green glow-green-text opacity-70 font-display">
                     {problem.number}
                   </span>
-                  <h3 className="text-base sm:text-lg font-semibold text-white mt-3 mb-3">
+                  <h3 className="text-base sm:text-lg font-semibold text-foreground dark:text-white mt-3 mb-3">
                     {problem.title}
                   </h3>
-                  <p className="text-base text-gray-400 mb-4">{problem.description}</p>
-                  <div className="border-t border-white/5 pt-4 flex items-start gap-3">
+                  <p className="text-base text-gray-600 dark:text-gray-400 mb-4">{problem.description}</p>
+                  <div className="border-t border-foreground/5 dark:border-white/5 pt-4 flex items-start gap-3">
                     <Check className="h-5 w-5 text-brand-green glow-green-text shrink-0 mt-0.5" />
                     <p className="text-base font-medium text-brand-green glow-green-text">
                       {problem.solution}

@@ -27,9 +27,9 @@ const linha2 = listaCompleta.slice(metade)
 
 function MarqueeCard({ text }: { text: string }) {
   return (
-    <div className="flex items-center rounded-full border border-white/10 bg-[#0A0F14] shadow-md px-5 py-2.5 hover:border-brand-green/30 hover:bg-[#111827] transition-all duration-300 gap-2">
+    <div className="flex items-center rounded-full border border-foreground/10 dark:border-white/10 bg-background dark:bg-[#0A0F14] shadow-md px-5 py-2.5 hover:border-brand-green/30 hover:bg-[var(--card-bg-hover)] transition-all duration-300 gap-2">
       <span className="w-1.5 h-1.5 rounded-full bg-brand-green/50 shrink-0" />
-      <span className="text-sm text-gray-300 font-medium whitespace-nowrap">{text}</span>
+      <span className="text-sm text-gray-700 dark:text-gray-300 font-medium whitespace-nowrap">{text}</span>
     </div>
   )
 }
@@ -37,7 +37,7 @@ function MarqueeCard({ text }: { text: string }) {
 export function Partners() {
   return (
     <section className="py-16 sm:py-20 lg:py-24 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-brand-black via-[#0A0F14] to-brand-black z-0" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background dark:from-brand-black via-background dark:via-[#0A0F14] to-background dark:to-brand-black z-0" />
 
       <AnimatedGridPattern
         numSquares={30}
@@ -59,29 +59,22 @@ export function Partners() {
             </Badge>
           </BlurFade>
           <BlurFade delay={0.1} inView>
-            <h2 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white mb-4">
+            <h2 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl text-foreground dark:text-white mb-4">
               Cartórios e parceiros que confiam na ParceleCart
             </h2>
           </BlurFade>
           <BlurFade delay={0.2} inView>
-            <p className="text-xs sm:text-sm lg:text-base text-gray-400">
-              Mais de 500 serventias extrajudiciais e entidades de classe que já
-              fazem parte do nosso ecossistema de pagamentos.
+            <p className="text-xs sm:text-sm lg:text-base text-gray-600 dark:text-gray-400">
+              Presença consolidada junto a serventias extrajudiciais e entidades de classe por meio do nosso ecossistema de pagamentos.
             </p>
-          </BlurFade>
-          <BlurFade delay={0.3} inView>
-            <div className="flex items-baseline gap-2 mt-6 justify-center">
-              <NumberTicker value={500} suffix="+" className="text-4xl lg:text-5xl font-bold text-brand-green font-display glow-green-text" />
-              <span className="text-sm text-gray-500">serventias extrajudiciais</span>
-            </div>
           </BlurFade>
         </div>
 
         {/* Marquee rows with fade masks */}
         <div className="relative space-y-4">
           {/* Fade masks on edges */}
-          <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-32 z-10 bg-gradient-to-r from-brand-black to-transparent" />
-          <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-32 z-10 bg-gradient-to-l from-brand-black to-transparent" />
+          <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-32 z-10 bg-gradient-to-r from-background dark:from-brand-black to-transparent" />
+          <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-32 z-10 bg-gradient-to-l from-background dark:from-brand-black to-transparent" />
 
           <Marquee speed={120} pauseOnHover>
             {linha1.map((name) => (

@@ -8,6 +8,7 @@ import { BlurFade } from "@/components/ui/blur-fade"
 import { TextAnimate } from "@/components/ui/text-animate"
 import { MagicCard } from "@/components/ui/magic-card"
 import { CreditCard, QrCode, Link2, ShieldCheck } from "lucide-react"
+import { useTheme } from "next-themes"
 
 const floatingCards = [
   { icon: CreditCard, title: "Crédito em até 21x", subtitle: "Receba em D+1" },
@@ -19,13 +20,19 @@ const floatingCards = [
 const partners = ["Siscart", "4 Hands", "CSI", "Inova", "VizWise"]
 
 export function Hero() {
+  const { resolvedTheme } = useTheme()
+  const isDark = resolvedTheme === "dark"
+  const dotColor = isDark ? "#5EF275" : "#3D9A64"
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden pt-16">
+      {/* Background gradient (responsive) */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background dark:from-brand-black via-background dark:via-[#0A0F14] to-background dark:to-brand-black" />
+
       {/* Desktop Background gradients (Heavy Blur) */}
       <div className="absolute inset-0 pointer-events-none hidden lg:block">
-        <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-brand-green/5 rounded-full blur-[140px]" />
-        <div className="absolute bottom-0 right-1/4 w-[300px] h-[300px] bg-brand-blue/15 rounded-full blur-[80px]" />
+        <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-brand-green/5 dark:bg-brand-green/5 rounded-full blur-[140px]" />
+        <div className="absolute bottom-0 right-1/4 w-[300px] h-[300px] bg-brand-blue/10 dark:bg-brand-blue/15 rounded-full blur-[80px]" />
       </div>
 
 
@@ -33,7 +40,7 @@ export function Hero() {
       <div
         className="absolute inset-0 pointer-events-none hidden lg:block opacity-30"
         style={{
-          backgroundImage: 'radial-gradient(circle, #5EF275 1px, transparent 1px)',
+          backgroundImage: `radial-gradient(circle, ${dotColor} 1px, transparent 1px)`,
           backgroundSize: '20px 20px',
           maskImage: 'radial-gradient(1000px circle at center, white, transparent)',
           WebkitMaskImage: 'radial-gradient(1000px circle at center, white, transparent)',
@@ -44,7 +51,7 @@ export function Hero() {
       <div
         className="absolute inset-0 pointer-events-none lg:hidden opacity-20"
         style={{
-          backgroundImage: 'radial-gradient(circle, #5EF275 1px, transparent 1px)',
+          backgroundImage: `radial-gradient(circle, ${dotColor} 1px, transparent 1px)`,
           backgroundSize: '20px 20px',
           maskImage: 'radial-gradient(100% 100% at center, white, transparent)',
           WebkitMaskImage: 'radial-gradient(100% 100% at center, white, transparent)'
@@ -69,13 +76,13 @@ export function Hero() {
                 by="word"
                 animation="blurInUp"
                 duration={0.4}
-                className="font-display text-2xl sm:text-3xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl leading-[1.1] text-white mb-6"
+                className="font-display text-2xl sm:text-3xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl leading-[1.1] text-foreground dark:text-white mb-6"
               >
                 Pagamentos eletrônicos para cartórios. Do jeito que o setor precisa.
               </TextAnimate>
 
               <BlurFade delay={0.3} inView>
-                <p className="text-xs sm:text-sm lg:text-base text-gray-400 max-w-xl mb-4 lg:mb-8">
+                <p className="text-xs sm:text-sm lg:text-base text-gray-600 dark:text-gray-400 max-w-xl mb-4 lg:mb-8">
                   Pix, cartão parcelado em até 21x e boleto — com repasse automático
                   de taxas, conforme o Provimento nº&nbsp;127/2022 do CNJ. Sem
                   mensalidade. Sem fidelidade.
@@ -122,10 +129,10 @@ export function Hero() {
           >
             {/* Glow behind the device */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <div className="w-96 h-96 bg-brand-green/10 rounded-full blur-[100px] hidden sm:block" />
+              <div className="w-96 h-96 bg-brand-green/10 dark:bg-brand-green/10 rounded-full blur-[100px] hidden sm:block" />
               <div
-                className="w-[280px] h-[360px] opacity-30 sm:hidden"
-                style={{ background: 'radial-gradient(circle, rgba(94, 242, 117, 1) 0%, rgba(94, 242, 117, 0) 70%)' }}
+                className="w-[280px] h-[360px] opacity-20 dark:opacity-30 sm:hidden"
+                style={{ background: `radial-gradient(circle, ${dotColor} 1%, rgba(94, 242, 117, 0) 70%)` }}
               />
             </div>
 
@@ -162,13 +169,13 @@ export function Hero() {
                         className="rounded-xl"
                         gradientFrom="#5EF275"
                         gradientTo="#2F3A59"
-                        gradientColor="#111827"
+                        gradientColor="var(--magic-card-gradient)"
                         gradientSize={150}
                       >
                         <div className="glass rounded-xl px-4 py-3 flex items-center gap-3 w-[180px]">
                           <card.icon className="h-6 w-6 text-brand-green shrink-0" />
                           <div>
-                            <p className="text-sm font-semibold text-white leading-tight">{card.title}</p>
+                            <p className="text-sm font-semibold text-foreground dark:text-white leading-tight">{card.title}</p>
                             <p className="text-xs text-gray-500 leading-tight">{card.subtitle}</p>
                           </div>
                         </div>
@@ -232,13 +239,13 @@ export function Hero() {
                         className="rounded-xl"
                         gradientFrom="#5EF275"
                         gradientTo="#2F3A59"
-                        gradientColor="#111827"
+                        gradientColor="var(--magic-card-gradient)"
                         gradientSize={150}
                       >
                         <div className="glass rounded-xl px-4 py-3 flex items-center gap-3 w-[180px]">
                           <card.icon className="h-6 w-6 text-brand-green shrink-0" />
                           <div>
-                            <p className="text-sm font-semibold text-white leading-tight">{card.title}</p>
+                            <p className="text-sm font-semibold text-foreground dark:text-white leading-tight">{card.title}</p>
                             <p className="text-xs text-gray-500 leading-tight">{card.subtitle}</p>
                           </div>
                         </div>
@@ -262,8 +269,8 @@ export function Hero() {
                 >
                   <card.icon className="h-5 w-5 text-brand-green mb-1" />
                   <div className="flex flex-col items-center">
-                    <p className="text-[12px] font-semibold text-white leading-tight">{card.title}</p>
-                    <p className="text-[10px] text-gray-400 mt-1 leading-tight">{card.subtitle}</p>
+                    <p className="text-[12px] font-semibold text-foreground dark:text-white leading-tight">{card.title}</p>
+                    <p className="text-[10px] text-gray-600 dark:text-gray-400 mt-1 leading-tight">{card.subtitle}</p>
                   </div>
                 </motion.div>
               ))}

@@ -11,6 +11,7 @@ import {
 import { Badge } from "@/components/ui/badge"
 import { BlurFade } from "@/components/ui/blur-fade"
 import { ease } from "@/lib/utils"
+import { useTheme } from "next-themes"
 
 const testimonials = [
   {
@@ -34,6 +35,11 @@ const testimonials = [
 ]
 
 export function Testimonials() {
+  const { resolvedTheme } = useTheme()
+  const isDark = resolvedTheme === "dark"
+  const dotColor = isDark ? "#5EF275" : "#3D9A64"
+  const glowOpacity = isDark ? "bg-brand-green/5" : "bg-brand-green/10"
+
   const sectionRef = useRef<HTMLElement>(null)
   const [activeIndex, setActiveIndex] = useState(0)
   const activeIndexRef = useRef(0)
@@ -60,17 +66,17 @@ export function Testimonials() {
   return (
     <section ref={sectionRef} className="min-h-[200vh] relative">
       {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-brand-black via-[#0F1419] to-brand-black" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background dark:from-brand-black via-background dark:via-[#0F1419] to-background dark:to-brand-black" />
       {/* Dot pattern */}
       <div
-        className="absolute inset-0 opacity-[0.02] pointer-events-none"
+        className="absolute inset-0 opacity-[0.03] pointer-events-none"
         style={{
-          backgroundImage: `radial-gradient(circle, #5EF275 1px, transparent 1px)`,
+          backgroundImage: `radial-gradient(circle, ${dotColor} 1px, transparent 1px)`,
           backgroundSize: "32px 32px",
         }}
       />
       {/* Subtle glow */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-brand-green/5 rounded-full blur-[140px] pointer-events-none" />
+      <div className={`absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[400px] ${glowOpacity} rounded-full blur-[140px] pointer-events-none`} />
 
       <div className="sticky top-0 min-h-screen flex items-center justify-center">
         <div className="relative z-10 px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] w-full">
@@ -82,7 +88,7 @@ export function Testimonials() {
               </Badge>
             </BlurFade>
             <BlurFade delay={0.1} inView>
-              <h2 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white mb-4">
+              <h2 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl text-foreground dark:text-white mb-4">
                 Os cartórios que já transformaram sua operação financeira
               </h2>
             </BlurFade>
@@ -102,10 +108,10 @@ export function Testimonials() {
                 exit={{ opacity: 0, scale: 0.97 }}
                 transition={{ duration: 0.4, ease }}
               >
-                <p className="text-lg sm:text-xl lg:text-2xl text-white leading-relaxed mb-8">
+                <p className="text-lg sm:text-xl lg:text-2xl text-foreground dark:text-white leading-relaxed mb-8">
                   {testimonials[activeIndex].quote}
                 </p>
-                <p className="text-sm sm:text-base font-semibold text-white">
+                <p className="text-sm sm:text-base font-semibold text-foreground dark:text-white">
                   {testimonials[activeIndex].name}
                 </p>
                 <p className="text-xs sm:text-sm text-gray-500 mt-1">
@@ -121,7 +127,7 @@ export function Testimonials() {
                   key={i}
                   animate={{
                     width: i === activeIndex ? 24 : 8,
-                    backgroundColor: i === activeIndex ? "#5EF275" : "rgba(255,255,255,0.2)",
+                    backgroundColor: i === activeIndex ? "#5EF275" : "var(--dot-inactive)",
                   }}
                   transition={{ duration: 0.3, ease }}
                   className="h-2 rounded-full"

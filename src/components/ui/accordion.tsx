@@ -66,7 +66,7 @@ function AccordionItem({ value, className, children }: AccordionItemProps) {
 
   return (
     <AccordionItemContext.Provider value={{ value, isOpen }}>
-      <div className={cn("border-b border-white/10", className)} data-state={isOpen ? "open" : "closed"}>
+      <div className={cn("border-b border-foreground/10 dark:border-white/10", className)} data-state={isOpen ? "open" : "closed"}>
         {children}
       </div>
     </AccordionItemContext.Provider>
@@ -117,7 +117,7 @@ function AccordionContent({ className, children }: AccordionContentProps) {
         isOpen ? "max-h-96 pb-4 opacity-100" : "max-h-0 opacity-0"
       )}
     >
-      <div className={cn("text-sm text-gray-400", className)}>{children}</div>
+      <div className={cn("text-sm text-gray-600 dark:text-gray-400", className)}>{children}</div>
     </div>
   )
 }

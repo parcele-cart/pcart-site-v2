@@ -14,7 +14,7 @@ const RainbowButton = React.forwardRef<HTMLButtonElement, RainbowButtonProps>(
       <Comp
         ref={ref}
         className={cn(
-          "group relative inline-flex h-11 cursor-none items-center justify-center gap-2 whitespace-nowrap rounded-xl border border-white/10 border-b-0 bg-[#0D0D0D] px-8 py-2 text-sm font-semibold text-white outline-none transition-all duration-300 hover:scale-[1.02] hover:-translate-y-0.5 hover:shadow-lg hover:shadow-brand-blue-light/20 active:scale-[0.96] active:translate-y-0 focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50",
+          "group relative inline-flex h-11 cursor-none items-center justify-center gap-2 whitespace-nowrap rounded-xl border border-foreground/10 dark:border-white/10 border-b-0 bg-background dark:bg-[#0D0D0D] px-8 py-2 text-sm font-semibold text-foreground dark:text-white outline-none transition-all duration-300 hover:scale-[1.02] hover:-translate-y-0.5 hover:shadow-lg hover:shadow-brand-blue-light/20 active:scale-[0.96] active:translate-y-0 focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50",
           /* Rainbow border effect layers (bottom curve only via mask) */
           "before:absolute before:inset-[-2px] before:-z-10 before:rounded-[13px] before:animate-rainbow before:bg-[linear-gradient(90deg,var(--color-1),var(--color-2),var(--color-3),var(--color-4),var(--color-5))] before:bg-[length:200%] before:opacity-100 before:[mask-image:linear-gradient(to_bottom,transparent_calc(100%-2px),white_calc(100%-2px))] before:[mask-composite:exclude] before:[mask-clip:padding-box]",
           /* Base sizing and flex properties */

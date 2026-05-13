@@ -14,7 +14,25 @@ type Circle = {
   dy: number
 }
 
-export function Particles() {
+interface ParticlesProps {
+  quantity?: number
+  staticity?: number
+  ease?: number
+  color?: string
+  size?: number
+  className?: string
+  opacity?: number
+}
+
+export function Particles({
+  quantity = 30,
+  staticity = 50,
+  ease = 50,
+  color = "#ffffff",
+  size = 1,
+  className = "",
+  opacity = 0.6,
+}: ParticlesProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const ctxRef = useRef<CanvasRenderingContext2D | null>(null)
 
@@ -22,11 +40,6 @@ export function Particles() {
   const rafID = useRef<number | null>(null)
 
   const mouse = useRef({ x: 0, y: 0 })
-
-  // ⚙️ config
-  const quantity = 30
-  const staticity = 50
-  const ease = 50
 
   // 🎯 helpers
   const resizeCanvas = () => {
@@ -56,10 +69,19 @@ export function Particles() {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
   }
 
+  const hexToRgb = (hex: string): number[] => {
+    hex = hex.replace("#", "")
+    const r = parseInt(hex.substring(0, 2), 16)
+    const g = parseInt(hex.substring(2, 4), 16)
+    const b = parseInt(hex.substring(4, 6), 16)
+    return [r, g, b]
+  }
+
   const drawCircle = (circle: Circle) => {
     const ctx = ctxRef.current
     if (!ctx) return
 
+    const rgb = hexToRgb(color)
     ctx.beginPath()
     ctx.arc(
       circle.x + circle.translateX,
@@ -68,7 +90,7 @@ export function Particles() {
       0,
       Math.PI * 2
     )
-    ctx.fillStyle = `rgba(255,255,255,${circle.alpha})`
+    ctx.fillStyle = `rgba(${rgb[0]},${rgb[1]},${rgb[2]},${circle.alpha})`
     ctx.fill()
   }
 
@@ -81,9 +103,9 @@ export function Particles() {
       y: Math.random() * window.innerHeight,
       translateX: 0,
       translateY: 0,
-      size: Math.random() * 2 + 1,
+      size: Math.random() * 2 + size,
       alpha: 0,
-      targetAlpha: Math.random() * 0.6 + 0.1,
+      targetAlpha: Math.random() * opacity + 0.1,
       dx: (Math.random() - 0.5) * 0.2,
       dy: (Math.random() - 0.5) * 0.2,
     }))
@@ -148,12 +170,12 @@ export function Particles() {
 
       if (rafID.current) cancelAnimationFrame(rafID.current)
     }
-  }, [])
+  }, [quantity, staticity, ease, color, size])
 
   return (
     <canvas
       ref={canvasRef}
-      className="pointer-events-none fixed inset-0 z-0"
+      className={className}
     />
   )
 }

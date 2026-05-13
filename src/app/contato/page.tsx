@@ -29,7 +29,7 @@ export default function ContatoPage() {
           by="word"
           animation="blurInUp"
           duration={0.4}
-          className="font-display text-2xl sm:text-3xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl leading-[1.1] text-white mb-6"
+          className="font-display text-2xl sm:text-3xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl leading-[1.1] text-foreground dark:text-white mb-6"
         >
           ./contato
         </TextAnimate>

@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge"
 import { ease } from "@/lib/utils"
 import { motion } from "motion/react"
 import { Shield, Headset, Plug, Scale } from "lucide-react"
+import { useTheme } from "next-themes"
 
 const differentiators = [
   {
@@ -33,82 +34,62 @@ const differentiators = [
 ]
 
 export function Metrics() {
+  const { resolvedTheme } = useTheme()
+  const isDark = resolvedTheme === "dark"
+  const patternColor = isDark ? "#ffffff" : "#000000"
+
   return (
     <section className="py-16 sm:py-20 lg:py-32 relative">
       {/* Base Dark Background */}
-      <div className="absolute inset-0 bg-[#0A0F14] z-0" />
+      <div className="absolute inset-0 bg-background dark:bg-[#0A0F14] z-0" />
 
       {/* Striped Pattern Overlay */}
-      <div
-        className="absolute inset-0 opacity-[0.03] z-0"
+      <div 
+        className="absolute inset-0 z-0 opacity-[0.03] dark:opacity-[0.05]"
         style={{
-          backgroundImage: `repeating-linear-gradient(
-            -45deg,
-            transparent,
-            transparent 4px,
-            #ffffff 4px,
-            #ffffff 8px
-          )`
+          backgroundImage: `repeating-linear-gradient(45deg, ${patternColor}, ${patternColor} 1px, transparent 1px, transparent 10px)`
         }}
       />
 
-      {/* Fade Gradients for blending edges */}
-      <div className="absolute inset-0 bg-gradient-to-b from-brand-black via-transparent to-brand-black z-0 pointer-events-none" />
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-green/20 to-transparent" />
-      <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-brand-green/20 to-transparent" />
-
-      <div className="relative z-10 px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px]">
-        {/* Header */}
-        <div className="mb-10 sm:mb-12 lg:mb-20">
+      <div className="container relative z-10 mx-auto px-4">
+        <div className="flex flex-col items-center text-center mb-16 lg:mb-24">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ ease }}
+            transition={{ duration: 0.5, ease }}
           >
-            <Badge variant="neon" className="mb-4">
-              Por que a ParceleCart
+            <Badge variant="neon" className="mb-6 uppercase tracking-widest">
+              Diferenciais que importam
             </Badge>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-foreground dark:text-white mb-6">
+              Por que os maiores cartórios<br className="hidden md:block" /> escolhem a ParceleCart?
+            </h2>
+            <p className="max-w-2xl text-lg text-gray-500 dark:text-gray-400">
+              Mais que tecnologia, entregamos a segurança jurídica e a eficiência operacional que sua serventia exige.
+            </p>
           </motion.div>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1, ease }}
-            className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white"
-          >
-            O que nos torna diferentes de qualquer outro gateway
-          </motion.h2>
         </div>
 
-        {/* Differentiators List */}
-        <div className="divide-y divide-white/5">
-          {differentiators.map((item, i) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+          {differentiators.map((item, index) => (
             <motion.div
               key={item.title}
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ delay: i * 0.12, duration: 0.5, ease }}
-              className="py-8 sm:py-10 lg:py-12 flex flex-col sm:flex-row items-start gap-4 sm:gap-6 lg:gap-8"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1, ease }}
+              className="group"
             >
-              <motion.div
-                initial={{ scale: 0.85, opacity: 0 }}
-                whileInView={{ scale: 1, opacity: 1 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ delay: i * 0.12 + 0.1, duration: 0.4, ease }}
-                className="shrink-0 w-12 h-12 lg:w-14 lg:h-14 rounded-xl bg-brand-green/10 border border-brand-green/20 flex items-center justify-center"
-              >
-                <item.icon className="w-6 h-6 lg:w-7 lg:h-7 text-brand-green" />
-              </motion.div>
-              <div>
-                <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold text-white mb-2 lg:mb-3">
-                  {item.title}
-                </h3>
-                <p className="text-sm sm:text-base lg:text-lg text-gray-400 leading-relaxed max-w-2xl">
-                  {item.description}
-                </p>
+              <div className="mb-6 inline-flex items-center justify-center w-12 h-12 rounded-xl bg-brand-green/10 text-brand-green group-hover:bg-brand-green group-hover:text-white transition-all duration-300">
+                <item.icon size={24} />
               </div>
+              <h3 className="text-xl font-bold text-foreground dark:text-white mb-3 group-hover:text-brand-green transition-colors">
+                {item.title}
+              </h3>
+              <p className="text-gray-500 dark:text-gray-400 leading-relaxed">
+                {item.description}
+              </p>
             </motion.div>
           ))}
         </div>

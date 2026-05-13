@@ -1,88 +1,157 @@
 import Image from "next/image"
+import Link from "next/link"
+import { Facebook, Instagram, Linkedin, MessageCircle } from "lucide-react"
 
 export function Footer() {
+  const currentYear = new Date().getFullYear()
+
+  const productLinks = [
+    { label: "Solução", href: "#solucao" },
+    { label: "Como Funciona", href: "#como-funciona" },
+    { label: "FAQ", href: "#faq" },
+    { label: "Sobre Nós", href: "/sobre-nos" },
+    { label: "Acessar Plataforma", href: "https://portal.parcelecart.com.br", isExternal: true },
+  ]
+
+  const supportLinks = [
+    { label: "Fale com um Especialista", href: "/contato" },
+    { label: "Ouvidoria", href: "/ouvidoria" },
+    { label: "Canal de Denúncias", href: "/canal-de-denuncias" },
+    { label: "Canal de LGPD", href: "/canal-de-atendimento-lgpd" },
+    { label: "Suporte WhatsApp", href: "https://api.whatsapp.com/send/?phone=5511914379025", isExternal: true },
+  ]
+
+  const institutionalLinks = [
+    { label: "Termos de Credenciamento", href: "/termos-de-credenciamento" },
+    { label: "Política de Privacidade", href: "/politica-de-privacidade" },
+    { label: "Segurança Cibernética", href: "/politica-de-seguranca-da-informacao-e-cibernetica" },
+    { label: "Política PLD-CFT", href: "/politica-de-pld-cft" },
+    { label: "Código de Ética", href: "/codigo-de-etica" },
+  ]
+
   return (
-    <footer className="bg-[#080808] border-t border-white/5">
-      <div className="px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12">
-          {/* Brand */}
-          <div className="md:col-span-2">
-            <div className="mb-4">
+    <footer className="bg-[#fcfcfc] dark:bg-[#050505] border-t border-foreground/5 dark:border-white/5">
+      <div className="px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] py-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+
+          {/* Column 1: Brand */}
+          <div className="space-y-8">
+            <Link href="/" className="inline-block">
               <Image
                 src="/images/logotipo parcelecart branco.png"
                 alt="ParceleCart"
-                width={160}
-                height={36}
-                className="h-10 w-auto"
+                width={180}
+                height={40}
+                className="h-10 w-auto dark:invert-0 invert opacity-90 hover:opacity-100 transition-opacity"
               />
-            </div>
-            <p className="text-base text-gray-500 max-w-sm">
-              Plataforma de pagamentos eletrônicos exclusiva para cartórios
-              brasileiros. Pix, cartão parcelado em até 21x e boleto com repasse
-              automático de taxas.
+            </Link>
+            <p className="text-[15px] leading-relaxed text-gray-500 dark:text-gray-400 max-w-xs">
+              Tecnologia de ponta em pagamentos eletrônicos para a rotina extrajudicial brasileira.
+              Segurança jurídica e eficiência operacional em cada transação.
             </p>
           </div>
 
-          {/* Links */}
+          {/* Column 2: Explore */}
           <div>
-            <h4 className="text-base font-semibold text-white mb-4">Produto</h4>
-            <ul className="space-y-2">
-              <li>
-                <a href="#solucao" className="text-base text-gray-500 hover:text-white transition-colors">
-                  Solução
-                </a>
-              </li>
-              <li>
-                <a href="#como-funciona" className="text-base text-gray-500 hover:text-white transition-colors">
-                  Como Funciona
-                </a>
-              </li>
-              <li>
-                <a href="#faq" className="text-base text-gray-500 hover:text-white transition-colors">
-                  FAQ
-                </a>
-              </li>
+            <h4 className="text-sm font-bold text-foreground dark:text-white mb-8 relative inline-block">
+              Explore
+              <span className="absolute -bottom-2 left-0 w-8 h-[2px] bg-brand-green" />
+            </h4>
+            <ul className="space-y-4">
+              {productLinks.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    target={link.isExternal ? "_blank" : undefined}
+                    className="text-[15px] text-gray-500 dark:text-gray-400 hover:text-brand-green dark:hover:text-brand-green transition-colors flex items-center group"
+                  >
+                    <span className="w-0 group-hover:w-2 h-[1px] bg-brand-green mr-0 group-hover:mr-2 transition-all duration-300" />
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
+          {/* Column 3: Canais */}
           <div>
-            <h4 className="text-base font-semibold text-white mb-4">Contato</h4>
-            <ul className="space-y-2">
-              <li>
-                <a href="/contato" className="text-base text-gray-500 hover:text-white transition-colors">
-                  Fale com um Especialista
-                </a>
-              </li>
-              <li>
-                <a href="https://portal.parcelecart.com.br" className="text-base text-gray-500 hover:text-white transition-colors">
-                  Acessar Plataforma
-                </a>
-              </li>
-            </ul>
-
-            <h4 className="text-base font-semibold text-white mb-4 mt-8">Legal</h4>
-            <ul className="space-y-2">
-              <li>
-                <a href="/privacidade" className="text-base text-gray-500 hover:text-white transition-colors">
-                  Política de Privacidade
-                </a>
-              </li>
-              <li>
-                <a href="/termos" className="text-base text-gray-500 hover:text-white transition-colors">
-                  Termos de Uso
-                </a>
-              </li>
+            <h4 className="text-sm font-bold text-foreground dark:text-white mb-8 relative inline-block">
+              Canais
+              <span className="absolute -bottom-2 left-0 w-8 h-[2px] bg-brand-green" />
+            </h4>
+            <ul className="space-y-4">
+              {supportLinks.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    target={link.isExternal ? "_blank" : undefined}
+                    className="text-[15px] text-gray-500 dark:text-gray-400 hover:text-brand-green dark:hover:text-brand-green transition-colors flex items-center group"
+                  >
+                    <span className="w-0 group-hover:w-2 h-[1px] bg-brand-green mr-0 group-hover:mr-2 transition-all duration-300" />
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
+
+          {/* Column 4: Institucional */}
+          <div>
+            <h4 className="text-sm font-bold text-foreground dark:text-white mb-8 relative inline-block">
+              Institucional
+              <span className="absolute -bottom-2 left-0 w-8 h-[2px] bg-brand-green" />
+            </h4>
+            <ul className="space-y-4">
+              {institutionalLinks.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    className="text-[15px] text-gray-500 dark:text-gray-400 hover:text-brand-green dark:hover:text-brand-green transition-colors flex items-center group"
+                  >
+                    <span className="w-0 group-hover:w-2 h-[1px] bg-brand-green mr-0 group-hover:mr-2 transition-all duration-300" />
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
         </div>
 
-        {/* Divider */}
-        <div className="mt-12 pt-8 border-t border-white/5">
-          <p className="text-xs text-gray-600">
-            &copy; {new Date().getFullYear()} ParceleCart. Todos os direitos
-            reservados. Certificação PCI-DSS. Servidores no Brasil, em
-            conformidade com a LGPD.
-          </p>
+        {/* Footer Bottom */}
+        <div className="mt-20 pt-10 border-t border-foreground/5 dark:border-white/5">
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8">
+            <div className="space-y-4">
+              <p className="text-xs text-gray-500 dark:text-gray-500 leading-relaxed max-w-2xl">
+                <span className="font-semibold text-foreground/70 dark:text-white/60">PCART SOLUÇÕES EM PAGAMENTO S.A.</span> | CNPJ: 46.037.774/0001-98 <br className="hidden sm:block" />
+                Av. São Gabriel, 201, Cj 105 - Jardim Paulista, São Paulo/SP - CEP 01435-001
+              </p>
+              <p className="text-xs text-gray-400 dark:text-gray-600">
+                &copy; {currentYear} ParceleCart | Desenvolvida com muito empenho especialmente para cartórios!
+              </p>
+            </div>
+
+            {/* Social Media Links */}
+            <div className="flex items-center gap-3">
+              {[
+                { icon: <Facebook className="h-5 w-5" />, href: "#", label: "Facebook" },
+                { icon: <Instagram className="h-5 w-5" />, href: "#", label: "Instagram" },
+                { icon: <Linkedin className="h-5 w-5" />, href: "#", label: "LinkedIn" },
+                { icon: <MessageCircle className="h-5 w-5" />, href: "https://api.whatsapp.com/send/?phone=5511914379025", label: "WhatsApp" },
+              ].map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-11 h-11 flex items-center justify-center rounded-xl border border-foreground/10 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-brand-green hover:border-brand-green/50 hover:bg-brand-green/5 transition-all duration-300 hover:scale-105"
+                  aria-label={social.label}
+                >
+                  {social.icon}
+                </a>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </footer>

@@ -84,12 +84,12 @@ export function FAQ() {
             </Badge>
           </BlurFade>
           <BlurFade delay={0.1} inView>
-            <h2 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white mb-4">
+            <h2 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl text-foreground dark:text-white mb-4">
               Perguntas que todo tabelião faz
             </h2>
           </BlurFade>
           <BlurFade delay={0.2} inView>
-            <p className="text-xs sm:text-sm lg:text-base text-gray-400">
+            <p className="text-xs sm:text-sm lg:text-base text-gray-600 dark:text-gray-400">
               Tire suas dúvidas sobre implantação, integração e operação.
             </p>
           </BlurFade>
@@ -100,7 +100,7 @@ export function FAQ() {
           <Accordion type="single">
             {faqItems.map((item, i) => (
               <AccordionItem key={i} value={`item-${i}`}>
-                <AccordionTrigger className="text-white text-left text-base md:text-lg">
+                <AccordionTrigger className="text-foreground dark:text-white text-left text-base md:text-lg">
                   {item.question}
                 </AccordionTrigger>
                 <AccordionContent className="text-sm md:text-base">{item.answer}</AccordionContent>

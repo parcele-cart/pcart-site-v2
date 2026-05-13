@@ -6,11 +6,13 @@ import Image from "next/image"
 import { RainbowButton } from "@/components/ui/rainbow-button"
 import { Menu, X } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { ThemeToggle } from "@/components/theme-toggle"
 
 const navLinks = [
   { label: "Solução", href: "#solucao" },
   { label: "Como Funciona", href: "#como-funciona" },
   { label: "FAQ", href: "#faq" },
+  { label: "Sobre Nós", href: "/sobre-nos" },
   { label: "Contato", href: "/contato" },
 ]
 
@@ -74,7 +76,7 @@ export function Navbar() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b",
         scrolled
-          ? "bg-brand-black/80 backdrop-blur-xl glass border-white/5"
+          ? "bg-background dark:bg-brand-black/80 backdrop-blur-xl glass border-foreground/5 dark:border-white/5"
           : "bg-transparent border-transparent"
       )}
     >
@@ -94,7 +96,7 @@ export function Navbar() {
               alt="ParceleCart"
               width={160}
               height={36}
-              className="h-10 w-auto"
+              className="h-10 w-auto dark:invert-0 invert"
               priority
             />
           </Link>
@@ -109,7 +111,7 @@ export function Navbar() {
                   href={link.href}
                   className={cn(
                     "text-base transition-colors",
-                    isActive ? "text-brand-green" : "text-gray-400 hover:text-white"
+                    isActive ? "text-brand-green" : "text-foreground/70 hover:text-foreground"
                   )}
                 >
                   {link.label}
@@ -118,21 +120,25 @@ export function Navbar() {
             })}
           </div>
 
-          {/* CTA */}
-          <div className="hidden md:block">
+          {/* CTA and Theme Toggle */}
+          <div className="hidden md:flex items-center gap-4">
+            <ThemeToggle />
             <RainbowButton asChild>
               <a href="https://portal.parcelecart.com.br">Acessar Plataforma</a>
             </RainbowButton>
           </div>
 
-          {/* Mobile Menu Toggle */}
-          <button
-            className="md:hidden text-white cursor-none"
-            onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label="Menu"
-          >
-            {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
+          {/* Mobile Menu Toggle and Theme Toggle */}
+          <div className="flex items-center gap-3 md:hidden">
+            <ThemeToggle />
+            <button
+              className="text-foreground cursor-none"
+              onClick={() => setMobileOpen(!mobileOpen)}
+              aria-label="Menu"
+            >
+              {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -140,15 +146,15 @@ export function Navbar() {
       <div
         className={cn(
           "md:hidden overflow-hidden transition-all duration-300 ease-in-out",
-          mobileOpen ? "max-h-80 border-b border-white/5 opacity-100 visible" : "max-h-0 opacity-0 invisible"
+          mobileOpen ? "max-h-80 border-b border-foreground/5 dark:border-white/5 opacity-100 visible" : "max-h-0 opacity-0 invisible"
         )}
       >
-        <div className="bg-brand-black/95 backdrop-blur-2xl px-5 py-4 space-y-3 glass">
+        <div className="bg-background dark:bg-brand-black/95 backdrop-blur-2xl px-5 py-4 space-y-3 glass border-t border-foreground/5">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="block text-base text-gray-400 hover:text-white transition-colors py-2"
+              className="block text-base text-foreground/70 hover:text-foreground transition-colors py-2"
               onClick={() => setMobileOpen(false)}
             >
               {link.label}

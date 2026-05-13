@@ -2,6 +2,7 @@
 
 import { useState, useRef, useCallback } from "react"
 import { AnimatePresence, motion, useScroll, useTransform, useMotionValueEvent } from "motion/react"
+import { useTheme } from "next-themes"
 import { Badge } from "@/components/ui/badge"
 import { BlurFade } from "@/components/ui/blur-fade"
 import { ShineBorder } from "@/components/ui/shine-border"
@@ -62,12 +63,26 @@ const features = [
 const featureThresholds = features.map((_, i) => i / features.length)
 
 function FeatureBackground() {
+  const { resolvedTheme } = useTheme()
+  const isDark = resolvedTheme === "dark"
+  const particleColor = isDark ? "#5EF275" : "#3D9A64"
+  const particleOpacity = isDark ? 0.6 : 0.8
+  const glowGreenOpacity = isDark ? "bg-brand-green/5" : "bg-brand-green/10"
+  const glowBlueOpacity = isDark ? "bg-brand-blue/10" : "bg-brand-blue/15"
+
   return (
     <>
-      <div className="absolute inset-0 bg-gradient-to-b from-brand-black via-[#0D1117] to-brand-black" />
-      <Particles className="absolute inset-0" quantity={50} staticity={70} color="#5EF275" size={0.6} />
-      <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-brand-green/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 left-1/4 w-[300px] h-[300px] bg-brand-blue/10 rounded-full blur-[80px] pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background dark:from-brand-black via-background dark:via-[#0D1117] to-background dark:to-brand-black" />
+      <Particles
+        className="absolute inset-0"
+        quantity={50}
+        staticity={70}
+        color={particleColor}
+        opacity={particleOpacity}
+        size={0.6}
+      />
+      <div className={`absolute top-1/4 right-0 w-[500px] h-[500px] ${glowGreenOpacity} rounded-full blur-[120px] pointer-events-none`} />
+      <div className={`absolute bottom-0 left-1/4 w-[300px] h-[300px] ${glowBlueOpacity} rounded-full blur-[80px] pointer-events-none`} />
     </>
   )
 }
@@ -91,7 +106,7 @@ function FeatureProgressBar({
   const isCurrent = index === activeIndex
 
   return (
-    <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-white/10 overflow-hidden rounded-full">
+    <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-foreground/10 overflow-hidden rounded-full">
       <motion.div
         className="w-full bg-brand-green origin-top"
         style={{
@@ -125,13 +140,13 @@ function FeatureContent({
           </Badge>
         </BlurFade>
         <BlurFade delay={0.1} inView>
-          <h2 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white mb-4">
+          <h2 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl text-foreground dark:text-white mb-4">
             Seis funcionalidades que os gateways genéricos não têm — e o
             cartório precisa.
           </h2>
         </BlurFade>
         <BlurFade delay={0.2} inView>
-          <p className="text-xs sm:text-sm lg:text-base text-gray-400">
+          <p className="text-xs sm:text-sm lg:text-base text-gray-600 dark:text-gray-400">
             Construídas do zero para serventias extrajudiciais. Nenhuma dessas
             funcionalidades existe em Stone, Cielo ou InfinitePay.
           </p>
@@ -150,8 +165,8 @@ function FeatureContent({
               key={feature.number}
               onClick={() => onTabClick(i)}
               className={`w-full text-left p-4 rounded-xl transition-all duration-300 cursor-pointer relative ${i === activeIndex
-                ? "bg-white/5 shadow-[inset_0_0_20px_rgba(94,242,117,0.05)]"
-                : "hover:bg-white/[0.02]"
+                ? "bg-foreground/5 shadow-[inset_0_0_20px_rgba(94,242,117,0.1)] dark:shadow-[inset_0_0_20px_rgba(94,242,117,0.05)]"
+                : "hover:bg-[var(--card-bg-hover)]"
                 }`}
             >
               <FeatureProgressBar
@@ -167,7 +182,7 @@ function FeatureContent({
                   {feature.number}
                 </span>
                 <span
-                  className={`text-base font-medium transition-colors duration-300 ${i === activeIndex ? "text-white" : "text-gray-400"
+                  className={`text-base font-medium transition-colors duration-300 ${i === activeIndex ? "text-foreground dark:text-white" : "text-gray-600 dark:text-gray-400"
                     }`}
                 >
                   {feature.title}
@@ -192,10 +207,10 @@ function FeatureContent({
               <span className="text-xs text-brand-green font-semibold uppercase tracking-widest">
                 {active.highlight}
               </span>
-              <h3 className="font-display text-xl sm:text-2xl text-white mt-3 mb-4">
+              <h3 className="font-display text-xl sm:text-2xl text-foreground dark:text-white mt-3 mb-4">
                 {active.title}
               </h3>
-              <p className="text-gray-400 leading-relaxed mb-6">
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
                 {active.description}
               </p>
               <div className="rounded-xl bg-brand-green/5 border border-brand-green/10 p-4">

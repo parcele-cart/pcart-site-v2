@@ -34,7 +34,7 @@ export function HowItWorks() {
   return (
     <section id="como-funciona" className="py-16 sm:py-20 lg:py-24 relative overflow-hidden">
       {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-brand-black via-[#0D1117] to-brand-black" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background dark:from-brand-black via-background dark:via-[#0D1117] to-background dark:to-brand-black" />
 
       {/* Dot pattern */}
       <div
@@ -54,12 +54,12 @@ export function HowItWorks() {
             </Badge>
           </BlurFade>
           <BlurFade delay={0.1} inView>
-            <h2 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white mb-4">
+            <h2 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl text-foreground dark:text-white mb-4">
               Três passos para simplificar tudo
             </h2>
           </BlurFade>
           <BlurFade delay={0.2} inView>
-            <p className="text-xs sm:text-sm lg:text-base text-gray-400">
+            <p className="text-xs sm:text-sm lg:text-base text-gray-600 dark:text-gray-400">
               Da integração ao primeiro recebimento em minutos, não meses.
             </p>
           </BlurFade>
@@ -83,15 +83,15 @@ export function HowItWorks() {
                 {/* Number + Icon */}
                 <div className="relative inline-flex items-center justify-center w-16 h-16 lg:w-20 lg:h-20 rounded-full bg-brand-green/10 border border-brand-green/20 mb-6 z-10">
                   <step.icon className="w-7 h-7 lg:w-8 lg:h-8 text-brand-green" />
-                  <span className="absolute -top-2 -right-2 w-7 h-7 rounded-full bg-brand-black border border-brand-green/30 flex items-center justify-center text-xs font-bold text-brand-green font-display">
+                  <span className="absolute -top-2 -right-2 w-7 h-7 rounded-full bg-background dark:bg-brand-black border border-brand-green/30 flex items-center justify-center text-xs font-bold text-brand-green font-display">
                     {step.number}
                   </span>
                 </div>
 
-                <h3 className="font-display text-base sm:text-lg lg:text-xl text-white mb-3">
+                <h3 className="font-display text-base sm:text-lg lg:text-xl text-foreground dark:text-white mb-3">
                   {step.title}
                 </h3>
-                <p className="text-sm text-gray-400 max-w-xs mx-auto">
+                <p className="text-sm text-gray-600 dark:text-gray-400 max-w-xs mx-auto">
                   {step.description}
                 </p>
               </div>

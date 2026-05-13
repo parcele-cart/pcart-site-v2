@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { Pointer } from "@/components/ui/pointer";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -41,15 +42,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" className="dark" suppressHydrationWarning>
+    <html lang="pt-BR" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${dmSans.variable} antialiased selection:bg-brand-blue-light/30 selection:text-white cursor-none`}
+        className={`${inter.variable} ${dmSans.variable} antialiased selection:bg-brand-blue-light/30 selection:text-foreground dark:text-white cursor-none`}
         suppressHydrationWarning
       >
-        <Pointer />
-        <Navbar />
-        {children}
-        <Footer />
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <Pointer />
+          <Navbar />
+          {children}
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );
