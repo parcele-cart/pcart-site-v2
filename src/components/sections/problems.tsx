@@ -4,6 +4,7 @@ import { motion } from "motion/react"
 import { Check } from "lucide-react"
 import { BlurFade } from "@/components/ui/blur-fade"
 import { ease } from "@/lib/utils"
+import Image from "next/image"
 
 const problems = [
   {
@@ -69,6 +70,20 @@ export function Problems() {
                 atribuições e cobram com pouca transparência. Depois, sua equipe
                 passa horas conciliando. Todo mês.
               </p>
+              <BlurFade inView delay={0.1}>
+                <div className="relative group">
+                  <div className="absolute -inset-4 bg-brand-green/10 blur-3xl rounded-full opacity-50" />
+                  <div className="relative">
+                    <Image
+                      src="/images/hero-receivables.webp"
+                      alt="Recebíveis Cartórios"
+                      width={600}
+                      height={400}
+                      className="w-full h-auto object-cover transform transition-transform duration-700 group-hover:scale-105"
+                    />
+                  </div>
+                </div>
+              </BlurFade>
             </div>
 
             {/* RIGHT column: naturally scrolling problem cards */}
