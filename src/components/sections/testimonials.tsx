@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useState } from "react"
+import { useRef, useState, useEffect } from "react"
 import {
   motion,
   useScroll,
@@ -11,7 +11,6 @@ import {
 import { Badge } from "@/components/ui/badge"
 import { BlurFade } from "@/components/ui/blur-fade"
 import { ease } from "@/lib/utils"
-import { useTheme } from "next-themes"
 
 const testimonials = [
   {
@@ -35,14 +34,10 @@ const testimonials = [
 ]
 
 export function Testimonials() {
-  const { resolvedTheme } = useTheme()
-  const isDark = resolvedTheme === "dark"
-  const dotColor = isDark ? "#5EF275" : "#3D9A64"
-  const glowOpacity = isDark ? "bg-brand-green/5" : "bg-brand-green/10"
-
   const sectionRef = useRef<HTMLElement>(null)
   const [activeIndex, setActiveIndex] = useState(0)
   const activeIndexRef = useRef(0)
+  const [mounted, setMounted] = useState(false)
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -55,6 +50,10 @@ export function Testimonials() {
     [0, testimonials.length - 1]
   )
 
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
   useMotionValueEvent(scrollIndex, "change", (latest) => {
     const rounded = Math.max(0, Math.min(testimonials.length - 1, Math.round(latest)))
     if (rounded !== activeIndexRef.current) {
@@ -63,20 +62,32 @@ export function Testimonials() {
     }
   })
 
+  if (!mounted) {
+    return (
+      <section ref={sectionRef} className="min-h-[400vh] relative">
+        <div className="sticky top-0 min-h-screen flex items-center justify-center">
+          <div className="animate-pulse bg-foreground/5 w-24 h-8 rounded-full" />
+        </div>
+      </section>
+    )
+  }
+
   return (
-    <section ref={sectionRef} className="min-h-[200vh] relative">
+    <section ref={sectionRef} className="min-h-[400vh] relative">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-background dark:from-brand-black via-background dark:via-[#0F1419] to-background dark:to-brand-black" />
-      {/* Dot pattern */}
+      
+      {/* Dot pattern - Using CSS variable to prevent hydration mismatch */}
       <div
         className="absolute inset-0 opacity-[0.03] pointer-events-none"
         style={{
-          backgroundImage: `radial-gradient(circle, ${dotColor} 1px, transparent 1px)`,
+          backgroundImage: `radial-gradient(circle, var(--brand-green) 1px, transparent 1px)`,
           backgroundSize: "32px 32px",
         }}
       />
+      
       {/* Subtle glow */}
-      <div className={`absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[400px] ${glowOpacity} rounded-full blur-[140px] pointer-events-none`} />
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-brand-green/5 dark:bg-brand-green/10 rounded-full blur-[140px] pointer-events-none" />
 
       <div className="sticky top-0 min-h-screen flex items-center justify-center">
         <div className="relative z-10 px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] w-full">
@@ -123,14 +134,24 @@ export function Testimonials() {
             {/* Animated progress dots */}
             <div className="flex justify-center gap-2 mt-10">
               {testimonials.map((_, i) => (
-                <motion.div
+                <motion.button
                   key={i}
+                  type="button"
+                  aria-label={`Ver depoimento ${i + 1}`}
                   animate={{
                     width: i === activeIndex ? 24 : 8,
-                    backgroundColor: i === activeIndex ? "#5EF275" : "var(--dot-inactive)",
+                    backgroundColor: i === activeIndex ? "var(--brand-neon)" : "var(--dot-inactive)",
                   }}
                   transition={{ duration: 0.3, ease }}
-                  className="h-2 rounded-full"
+                  className="h-2 rounded-full cursor-pointer transition-colors border-none outline-none"
+                  onClick={() => {
+                    if (sectionRef.current) {
+                      const sectionTop = sectionRef.current.offsetTop;
+                      const sectionHeight = sectionRef.current.offsetHeight;
+                      const scrollTarget = sectionTop + (i / (testimonials.length - 1)) * (sectionHeight - window.innerHeight);
+                      window.scrollTo({ top: scrollTarget, behavior: 'smooth' });
+                    }
+                  }}
                 />
               ))}
             </div>

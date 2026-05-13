@@ -17,12 +17,8 @@ const floatingCards = [
   { icon: ShieldCheck, title: "PCI DSS", subtitle: "Segurança certificada" },
 ]
 
-const partners = ["Siscart", "4 Hands", "CSI", "Inova", "VizWise"]
-
 export function Hero() {
-  const { resolvedTheme } = useTheme()
-  const isDark = resolvedTheme === "dark"
-  const dotColor = isDark ? "#5EF275" : "#3D9A64"
+  const partners = ["Siscart", "4 Hands", "CSI", "Inova", "VizWise"]
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden pt-16">
@@ -40,7 +36,7 @@ export function Hero() {
       <div
         className="absolute inset-0 pointer-events-none hidden lg:block opacity-30"
         style={{
-          backgroundImage: `radial-gradient(circle, ${dotColor} 1px, transparent 1px)`,
+          backgroundImage: `radial-gradient(circle, var(--brand-green) 1px, transparent 1px)`,
           backgroundSize: '20px 20px',
           maskImage: 'radial-gradient(1000px circle at center, white, transparent)',
           WebkitMaskImage: 'radial-gradient(1000px circle at center, white, transparent)',
@@ -51,7 +47,7 @@ export function Hero() {
       <div
         className="absolute inset-0 pointer-events-none lg:hidden opacity-20"
         style={{
-          backgroundImage: `radial-gradient(circle, ${dotColor} 1px, transparent 1px)`,
+          backgroundImage: `radial-gradient(circle, var(--brand-green) 1px, transparent 1px)`,
           backgroundSize: '20px 20px',
           maskImage: 'radial-gradient(100% 100% at center, white, transparent)',
           WebkitMaskImage: 'radial-gradient(100% 100% at center, white, transparent)'
@@ -132,7 +128,7 @@ export function Hero() {
               <div className="w-96 h-96 bg-brand-green/10 dark:bg-brand-green/10 rounded-full blur-[100px] hidden sm:block" />
               <div
                 className="w-[280px] h-[360px] opacity-20 dark:opacity-30 sm:hidden"
-                style={{ background: `radial-gradient(circle, ${dotColor} 1%, rgba(94, 242, 117, 0) 70%)` }}
+                style={{ background: `radial-gradient(circle, var(--brand-green) 1%, rgba(94, 242, 117, 0) 70%)` }}
               />
             </div>
 

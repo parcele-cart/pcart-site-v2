@@ -15,14 +15,10 @@ const trustBadges = [
 ]
 
 export function FinalCTA() {
-  const { resolvedTheme } = useTheme()
-  const isDark = resolvedTheme === "dark"
-  const blueOpacity = isDark ? "via-brand-blue/30" : "via-brand-blue/10"
-
   return (
     <section className="py-16 sm:py-20 lg:py-24 relative overflow-hidden">
       {/* Background gradient */}
-      <div className={`absolute inset-0 bg-gradient-to-b from-background dark:from-brand-black ${blueOpacity} to-background dark:to-brand-black`} />
+      <div className="absolute inset-0 bg-gradient-to-b from-background dark:from-brand-black via-brand-blue/10 dark:via-brand-blue/30 to-background dark:to-brand-black" />
 
       {/* Meteors background */}
       <Meteors number={30} />

@@ -54,9 +54,7 @@ export default function Home() {
         <Metrics />
       </div>
       <Testimonials />
-      <div className="content-auto">
-        <FAQ />
-      </div>
+      <FAQ />
       <div className="content-auto">
         <FinalCTA />
       </div>

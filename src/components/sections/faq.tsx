@@ -8,7 +8,10 @@ import {
   AccordionItem,
   AccordionTrigger,
   AccordionContent,
+  useAccordionItem,
 } from "@/components/ui/accordion"
+import { Plus, Minus, ArrowUpRight } from "lucide-react"
+import { cn } from "@/lib/utils"
 
 const faqItems = [
   {
@@ -68,56 +71,87 @@ const faqItems = [
   },
 ]
 
+function FAQTrigger({ question, index }: { question: string; index: number }) {
+  const { isOpen } = useAccordionItem()
+  
+  return (
+    <div className="flex items-start justify-between w-full gap-4 md:gap-8 group">
+      <div className="flex items-start gap-4 md:gap-8">
+        <span className="text-xs md:text-sm font-mono text-gray-400 mt-1.5 md:mt-2 shrink-0">
+          {(index + 1).toString().padStart(2, '0')}
+        </span>
+        <span className={cn(
+          "text-lg md:text-xl lg:text-2xl font-medium text-left transition-colors duration-300",
+          isOpen ? "text-brand-green" : "text-foreground dark:text-white group-hover:text-brand-green/80"
+        )}>
+          {question}
+        </span>
+      </div>
+      <div className="mt-1 md:mt-2 shrink-0">
+        {isOpen ? (
+          <Minus className="h-5 w-5 md:h-6 md:w-6 text-brand-green" />
+        ) : (
+          <Plus className="h-5 w-5 md:h-6 md:w-6 text-gray-400 group-hover:text-brand-green transition-colors" />
+        )}
+      </div>
+    </div>
+  )
+}
+
 export function FAQ() {
   return (
-    <section id="faq" className="py-16 sm:py-20 lg:py-24 relative overflow-hidden">
-      {/* Background radial glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-blue/10 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 right-1/3 w-[300px] h-[300px] bg-brand-green/5 rounded-full blur-[100px] pointer-events-none" />
+    <section id="faq" className="bg-background">
+      <div className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-16 py-20 sm:py-24 lg:py-32">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start">
+          
+          {/* Left Column: Sticky Header */}
+          <div className="lg:col-span-5 h-full">
+            <div className="lg:sticky lg:top-32 space-y-6 md:space-y-8">
+              <Badge variant="neon" className="px-4 py-1">
+                FAQ
+              </Badge>
+              
+              <div className="space-y-4 md:space-y-6">
+                <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl text-foreground dark:text-white leading-[1.1] tracking-tight">
+                  Perguntas que todo <span className="text-brand-green italic">tabelião</span> faz.
+                </h2>
+                
+                <p className="text-lg text-gray-600 dark:text-gray-400 max-w-md leading-relaxed">
+                  Tudo o que você precisa saber antes de modernizar os pagamentos do seu cartório com a ParceleCart.
+                </p>
+              </div>
 
-      <div className="relative z-10 mx-auto max-w-5xl px-5 sm:px-8 lg:px-16">
-        {/* Header */}
-        <div className="text-center mb-10 sm:mb-12">
-          <BlurFade inView>
-            <Badge variant="neon" className="mb-4">
-              Dúvidas frequentes
-            </Badge>
-          </BlurFade>
-          <BlurFade delay={0.1} inView>
-            <h2 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl text-foreground dark:text-white mb-4">
-              Perguntas que todo tabelião faz
-            </h2>
-          </BlurFade>
-          <BlurFade delay={0.2} inView>
-            <p className="text-xs sm:text-sm lg:text-base text-gray-600 dark:text-gray-400">
-              Tire suas dúvidas sobre implantação, integração e operação.
-            </p>
-          </BlurFade>
-        </div>
-
-        {/* Accordion */}
-        <BlurFade delay={0.3} inView>
-          <Accordion type="single">
-            {faqItems.map((item, i) => (
-              <AccordionItem key={i} value={`item-${i}`}>
-                <AccordionTrigger className="text-foreground dark:text-white text-left text-base md:text-lg">
-                  {item.question}
-                </AccordionTrigger>
-                <AccordionContent className="text-sm md:text-base">{item.answer}</AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </BlurFade>
-
-        {/* Footer CTA */}
-        <BlurFade delay={0.4} inView>
-          <div className="text-center mt-12">
-            <p className="text-sm text-gray-500 mb-4">Tem outra dúvida?</p>
-            <Button variant="outline" asChild>
-              <a href="/contato">Fale com um Especialista</a>
-            </Button>
+              <Button variant="outline" size="lg" asChild className="group rounded-full px-8 border-gray-200 dark:border-gray-800 hover:bg-brand-green hover:text-white hover:border-brand-green transition-all duration-300">
+                <a href="/contato" className="flex items-center gap-2 text-base font-medium">
+                  Fale com um Especialista
+                  <ArrowUpRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+                </a>
+              </Button>
+            </div>
           </div>
-        </BlurFade>
+
+          {/* Right Column: Accordion */}
+          <div className="lg:col-span-7">
+            <BlurFade delay={0.4} inView>
+              <Accordion type="single" className="w-full border-t border-gray-200 dark:border-gray-800">
+                {faqItems.map((item, i) => (
+                  <AccordionItem 
+                    key={i} 
+                    value={`item-${i}`} 
+                    className="border-b border-gray-200 dark:border-gray-800 py-2 md:py-4"
+                  >
+                    <AccordionTrigger hideChevron className="hover:no-underline py-6">
+                      <FAQTrigger question={item.question} index={i} />
+                    </AccordionTrigger>
+                    <AccordionContent className="pl-10 md:pl-20 pr-4 md:pr-12 text-base md:text-lg text-gray-600 dark:text-gray-400 leading-relaxed pb-8">
+                      {item.answer}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </BlurFade>
+          </div>
+        </div>
       </div>
     </section>
   )

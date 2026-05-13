@@ -34,9 +34,6 @@ const differentiators = [
 ]
 
 export function Metrics() {
-  const { resolvedTheme } = useTheme()
-  const isDark = resolvedTheme === "dark"
-  const patternColor = isDark ? "#ffffff" : "#000000"
 
   return (
     <section className="py-16 sm:py-20 lg:py-32 relative">
@@ -47,7 +44,7 @@ export function Metrics() {
       <div 
         className="absolute inset-0 z-0 opacity-[0.03] dark:opacity-[0.05]"
         style={{
-          backgroundImage: `repeating-linear-gradient(45deg, ${patternColor}, ${patternColor} 1px, transparent 1px, transparent 10px)`
+          backgroundImage: `repeating-linear-gradient(45deg, var(--foreground), var(--foreground) 1px, transparent 1px, transparent 10px)`
         }}
       />
 

@@ -55,10 +55,18 @@ interface AccordionItemProps {
   children: React.ReactNode
 }
 
-const AccordionItemContext = React.createContext<{ value: string; isOpen: boolean }>({
+export const AccordionItemContext = React.createContext<{ value: string; isOpen: boolean }>({
   value: "",
   isOpen: false,
 })
+
+export function useAccordionItem() {
+  const context = React.useContext(AccordionItemContext)
+  if (!context) {
+    throw new Error("useAccordionItem must be used within an AccordionItem")
+  }
+  return context
+}
 
 function AccordionItem({ value, className, children }: AccordionItemProps) {
   const { openItems } = React.useContext(AccordionContext)
@@ -76,9 +84,10 @@ function AccordionItem({ value, className, children }: AccordionItemProps) {
 interface AccordionTriggerProps {
   className?: string
   children: React.ReactNode
+  hideChevron?: boolean
 }
 
-function AccordionTrigger({ className, children }: AccordionTriggerProps) {
+function AccordionTrigger({ className, children, hideChevron = false }: AccordionTriggerProps) {
   const { toggle } = React.useContext(AccordionContext)
   const { value, isOpen } = React.useContext(AccordionItemContext)
 
@@ -92,12 +101,14 @@ function AccordionTrigger({ className, children }: AccordionTriggerProps) {
       aria-expanded={isOpen}
     >
       {children}
-      <ChevronDown
-        className={cn(
-          "h-4 w-4 shrink-0 text-brand-green transition-transform duration-200",
-          isOpen && "rotate-180"
-        )}
-      />
+      {!hideChevron && (
+        <ChevronDown
+          className={cn(
+            "h-4 w-4 shrink-0 text-brand-green transition-transform duration-200",
+            isOpen && "rotate-180"
+          )}
+        />
+      )}
     </button>
   )
 }

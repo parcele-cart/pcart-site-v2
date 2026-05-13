@@ -63,13 +63,6 @@ const features = [
 const featureThresholds = features.map((_, i) => i / features.length)
 
 function FeatureBackground() {
-  const { resolvedTheme } = useTheme()
-  const isDark = resolvedTheme === "dark"
-  const particleColor = isDark ? "#5EF275" : "#3D9A64"
-  const particleOpacity = isDark ? 0.6 : 0.8
-  const glowGreenOpacity = isDark ? "bg-brand-green/5" : "bg-brand-green/10"
-  const glowBlueOpacity = isDark ? "bg-brand-blue/10" : "bg-brand-blue/15"
-
   return (
     <>
       <div className="absolute inset-0 bg-gradient-to-b from-background dark:from-brand-black via-background dark:via-[#0D1117] to-background dark:to-brand-black" />
@@ -77,12 +70,12 @@ function FeatureBackground() {
         className="absolute inset-0"
         quantity={50}
         staticity={70}
-        color={particleColor}
-        opacity={particleOpacity}
+        color="#3D9A64" // Using static green, Particles will adjust opacity
+        opacity={0.6}
         size={0.6}
       />
-      <div className={`absolute top-1/4 right-0 w-[500px] h-[500px] ${glowGreenOpacity} rounded-full blur-[120px] pointer-events-none`} />
-      <div className={`absolute bottom-0 left-1/4 w-[300px] h-[300px] ${glowBlueOpacity} rounded-full blur-[80px] pointer-events-none`} />
+      <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-brand-green/10 dark:bg-brand-green/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 left-1/4 w-[300px] h-[300px] bg-brand-blue/15 dark:bg-brand-blue/10 rounded-full blur-[80px] pointer-events-none" />
     </>
   )
 }

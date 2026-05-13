@@ -2,7 +2,12 @@ import Image from "next/image";
 import { BlurFade } from "@/components/ui/blur-fade";
 import { Badge } from "@/components/ui/badge";
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 
+const FAQ = dynamic(
+  () => import("@/components/sections/faq").then((mod) => mod.FAQ),
+  { loading: () => <div className="min-h-150" /> },
+);
 export const metadata: Metadata = {
   title: "Sobre Nós — ParceleCart",
   description: "Conheça a história da ParceleCart: tecnologia de ponta criada por quem entende de cartórios.",
@@ -150,6 +155,9 @@ export default function SobreNosPage() {
           </BlurFade>
         </div>
       </section>
+      <div className="content-auto">
+        <FAQ />
+      </div>
     </main>
   );
 }
