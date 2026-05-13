@@ -1,6 +1,6 @@
 import { InstitutionalHeader } from "@/components/sections/institutional-header";
 import { BlurFade } from "@/components/ui/blur-fade";
-import { Button } from "@/components/ui/button";
+import { ContactForm } from "@/components/forms/contact-form";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -42,43 +42,7 @@ export default function OuvidoriaPage() {
           {/* Right Side: Form */}
           <BlurFade delay={0.5} inView>
             <div className="bg-white dark:bg-white/5 border border-foreground/5 dark:border-white/10 rounded-3xl p-8 sm:p-12 shadow-2xl shadow-brand-green/5">
-              <form className="space-y-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  {/* Name */}
-                  <div className="space-y-2">
-                    <label className="text-sm font-semibold text-foreground/70 dark:text-gray-400 ml-1">Nome</label>
-                    <input 
-                      type="text" 
-                      placeholder="Seu nome completo"
-                      className="w-full h-12 px-4 rounded-xl bg-gray-50 dark:bg-white/5 border border-foreground/10 dark:border-white/10 focus:outline-none focus:ring-2 focus:ring-brand-green/30 focus:border-brand-green transition-all placeholder:text-gray-400"
-                    />
-                  </div>
-                  
-                  {/* Email */}
-                  <div className="space-y-2">
-                    <label className="text-sm font-semibold text-foreground/70 dark:text-gray-400 ml-1">Email</label>
-                    <input 
-                      type="email" 
-                      placeholder="exemplo@email.com"
-                      className="w-full h-12 px-4 rounded-xl bg-gray-50 dark:bg-white/5 border border-foreground/10 dark:border-white/10 focus:outline-none focus:ring-2 focus:ring-brand-green/30 focus:border-brand-green transition-all placeholder:text-gray-400"
-                    />
-                  </div>
-                </div>
-
-                {/* Message */}
-                <div className="space-y-2">
-                  <label className="text-sm font-semibold text-foreground/70 dark:text-gray-400 ml-1">Sua mensagem</label>
-                  <textarea 
-                    placeholder="Como podemos te ajudar hoje?"
-                    rows={6}
-                    className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-white/5 border border-foreground/10 dark:border-white/10 focus:outline-none focus:ring-2 focus:ring-brand-green/30 focus:border-brand-green transition-all placeholder:text-gray-400 resize-none"
-                  />
-                </div>
-
-                <Button className="w-full sm:w-auto h-12 px-8 bg-brand-blue hover:bg-brand-blue/90 text-white rounded-xl text-base font-semibold shadow-lg shadow-brand-blue/20 transition-all active:scale-[0.98]">
-                  Enviar para ouvidoria
-                </Button>
-              </form>
+              <ContactForm origin="Ouvidoria" />
             </div>
           </BlurFade>
         </div>

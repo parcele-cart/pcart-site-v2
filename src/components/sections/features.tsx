@@ -116,7 +116,7 @@ function FeatureCard({
         "bg-brand-green dark:bg-zinc-900/90 border border-brand-green/20 dark:border-white/10 shadow-xl dark:shadow-2xl"
       )}>
         <ShineBorder 
-          color={["#3D9A64", "#5EF275", "#2F3A59"]} 
+          shineColor={["#3D9A64", "#5EF275", "#2F3A59"]} 
           duration={12} 
           borderWidth={1}
         />
