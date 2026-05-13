@@ -1,12 +1,12 @@
 "use client"
 
-import { useState, useRef, useCallback } from "react"
-import { AnimatePresence, motion, useScroll, useTransform, useMotionValueEvent } from "motion/react"
-import { useTheme } from "next-themes"
+import { useRef } from "react"
+import { motion, useScroll, useTransform } from "motion/react"
 import { Badge } from "@/components/ui/badge"
 import { BlurFade } from "@/components/ui/blur-fade"
 import { ShineBorder } from "@/components/ui/shine-border"
 import { Particles } from "@/components/ui/particles"
+import { cn, ease } from "@/lib/utils"
 
 const features = [
   {
@@ -31,8 +31,7 @@ const features = [
     highlight: "Todos os meios de pagamento, presencial e digital",
     description:
       "PIX por QR Code ou link, boleto bancário, cartão de débito e crédito parcelado em até 21 vezes — disponível no POS presencial, no link de pagamento digital e via API para automação completa. Nenhum usuário sai sem pagar por falta de opção.",
-    metric:
-      "6 meios de pagamento. 1 plataforma. Credenciamento em 3 a 7 dias úteis.",
+    metric: "6 meios de pagamento. 1 plataforma. Credenciamento em 3 a 7 dias úteis.",
   },
   {
     number: "04",
@@ -60,17 +59,15 @@ const features = [
   },
 ]
 
-const featureThresholds = features.map((_, i) => i / features.length)
-
 function FeatureBackground() {
   return (
     <>
-      <div className="absolute inset-0 bg-gradient-to-b from-background dark:from-brand-black via-background dark:via-[#0D1117] to-background dark:to-brand-black" />
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-50 via-white to-slate-50 dark:from-brand-black dark:via-[#0D1117] dark:to-brand-black" />
       <Particles
         className="absolute inset-0"
         quantity={50}
         staticity={70}
-        color="#3D9A64" // Using static green, Particles will adjust opacity
+        color="#3D9A64"
         opacity={0.6}
         size={0.6}
       />
@@ -80,205 +77,137 @@ function FeatureBackground() {
   )
 }
 
-function FeatureProgressBar({
-  index,
-  activeIndex,
-  scrollYProgress,
-}: {
-  index: number
-  activeIndex: number
-  scrollYProgress: ReturnType<typeof useScroll>["scrollYProgress"]
+function FeatureCard({ 
+  feature, 
+  index, 
+  scrollYProgress 
+}: { 
+  feature: typeof features[0], 
+  index: number, 
+  scrollYProgress: any 
 }) {
-  const zoneStart = index / features.length
-  const zoneEnd = (index + 1) / features.length
-
-  // Progress within this feature's scroll zone (0 to 1)
-  const progress = useTransform(scrollYProgress, [zoneStart, zoneEnd], [0, 1], { clamp: true })
-
-  const isPast = index < activeIndex
-  const isCurrent = index === activeIndex
+  const start = index * 0.15
+  const end = (index + 1) * 0.15
+  
+  // Clean, snappy transitions
+  // Entrance: Card slides up from bottom
+  const y = useTransform(scrollYProgress, [start - 0.1, start], ["100%", "0%"], { clamp: true })
+  
+  // Depth: Card scales down slightly when next one starts coming
+  const scale = useTransform(scrollYProgress, [start, end, end + 0.1], [1, 1, 0.95], { clamp: true })
+  
+  // Opacity: Fades in and then dims slightly when covered
+  const opacity = useTransform(scrollYProgress, [start - 0.05, start, end, end + 0.1], [0, 1, 1, 0.8], { clamp: true })
 
   return (
-    <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-foreground/10 overflow-hidden rounded-full">
-      <motion.div
-        className="w-full bg-brand-green origin-top"
-        style={{
-          height: isPast ? "100%" : isCurrent ? undefined : "0%",
-          scaleY: isCurrent ? progress : undefined,
-        }}
-        initial={!isPast && !isCurrent ? { scaleY: 0 } : undefined}
-      />
-    </div>
-  )
-}
-
-function FeatureContent({
-  activeIndex,
-  active,
-  onTabClick,
-  scrollYProgress,
-}: {
-  activeIndex: number
-  active: typeof features[number]
-  onTabClick: (i: number) => void
-  scrollYProgress: ReturnType<typeof useScroll>["scrollYProgress"]
-}) {
-  return (
-    <>
-      {/* Header */}
-      <div className="max-w-5xl mb-10 sm:mb-12 lg:mb-16">
-        <BlurFade inView>
-          <Badge variant="neon" className="mb-4">
-            O que você ganha com a ParceleCart
-          </Badge>
-        </BlurFade>
-        <BlurFade delay={0.1} inView>
-          <h2 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl text-foreground dark:text-white mb-4">
-            Seis funcionalidades que os gateways genéricos não têm — e o
-            cartório precisa.
-          </h2>
-        </BlurFade>
-        <BlurFade delay={0.2} inView>
-          <p className="text-xs sm:text-sm lg:text-base text-gray-600 dark:text-gray-400">
-            Construídas do zero para serventias extrajudiciais. Nenhuma dessas
-            funcionalidades existe em Stone, Cielo ou InfinitePay.
-          </p>
-        </BlurFade>
-        <p className="text-sm text-gray-600 mt-2 lg:hidden">
-          Toque em cada item para ver os detalhes
-        </p>
-      </div>
-
-      {/* Feature selector + detail */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Left: Feature list with progress bars */}
-        <div className="space-y-2">
-          {features.map((feature, i) => (
-            <button
-              key={feature.number}
-              onClick={() => onTabClick(i)}
-              className={`w-full text-left p-4 rounded-xl transition-all duration-300 cursor-pointer relative ${i === activeIndex
-                ? "bg-foreground/5 shadow-[inset_0_0_20px_rgba(94,242,117,0.1)] dark:shadow-[inset_0_0_20px_rgba(94,242,117,0.05)]"
-                : "hover:bg-[var(--card-bg-hover)]"
-                }`}
-            >
-              <FeatureProgressBar
-                index={i}
-                activeIndex={activeIndex}
-                scrollYProgress={scrollYProgress}
-              />
-              <div className="flex items-start gap-3 pl-3">
-                <span
-                  className={`text-sm font-bold transition-colors duration-300 ${i === activeIndex ? "text-brand-green" : "text-gray-600"
-                    }`}
-                >
-                  {feature.number}
-                </span>
-                <span
-                  className={`text-base font-medium transition-colors duration-300 ${i === activeIndex ? "text-foreground dark:text-white" : "text-gray-600 dark:text-gray-400"
-                    }`}
-                >
-                  {feature.title}
-                </span>
-              </div>
-            </button>
-          ))}
-        </div>
-
-        {/* Right: Detail */}
-        <div className="relative min-h-[300px]">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeIndex}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="glass rounded-2xl p-10 relative overflow-hidden"
-            >
-              <ShineBorder />
-              <span className="text-xs text-brand-green font-semibold uppercase tracking-widest">
-                {active.highlight}
+    <motion.div
+      style={{
+        y,
+        scale,
+        opacity,
+        zIndex: index + 1,
+        position: "absolute",
+        inset: 0,
+      }}
+      className="flex items-center justify-center p-4 sm:p-0"
+    >
+      <div className={cn(
+        "rounded-[2rem] p-8 sm:p-12 lg:p-16 h-full w-full relative overflow-hidden flex flex-col justify-center transition-all duration-500 backdrop-blur-xl",
+        "bg-brand-green dark:bg-zinc-900/90 border border-brand-green/20 dark:border-white/10 shadow-xl dark:shadow-2xl"
+      )}>
+        <ShineBorder 
+          color={["#3D9A64", "#5EF275", "#2F3A59"]} 
+          duration={12} 
+          borderWidth={1}
+        />
+        
+        <div className="flex flex-col gap-6 lg:gap-10 relative z-10">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <span className="text-5xl sm:text-7xl font-display font-bold text-white/20 dark:text-brand-green/20 leading-none transition-colors duration-500">
+                {feature.number}
               </span>
-              <h3 className="font-display text-xl sm:text-2xl text-foreground dark:text-white mt-3 mb-4">
-                {active.title}
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
-                {active.description}
-              </p>
-              <div className="rounded-xl bg-brand-green/5 border border-brand-green/10 p-4">
-                <p className="text-sm text-brand-green font-medium">
-                  {active.metric}
-                </p>
-              </div>
-            </motion.div>
-          </AnimatePresence>
+              <div className="h-px w-16 sm:w-24 bg-gradient-to-r from-white/30 dark:from-brand-green/40 to-transparent transition-colors duration-500" />
+            </div>
+            <Badge variant="outline" className="px-4 py-1.5 text-xs border-white/20 text-white dark:border-brand-green/20 dark:text-brand-green">
+              {feature.highlight}
+            </Badge>
+          </div>
+
+          <div className="space-y-4 sm:space-y-6">
+            <h3 className="font-display text-2xl sm:text-3xl lg:text-5xl text-white dark:text-white leading-[1.1] tracking-tight">
+              {feature.title}
+            </h3>
+            <p className="text-sm sm:text-base lg:text-xl text-white/90 dark:text-gray-400 leading-relaxed max-w-4xl">
+              {feature.description}
+            </p>
+          </div>
+          
+          <div className="inline-flex items-center gap-4 rounded-2xl bg-white dark:bg-brand-green/5 border border-white/10 dark:border-brand-green/10 p-5 pr-8 w-fit shadow-xl dark:shadow-[0_0_20px_rgba(94,242,117,0.05)] transition-colors duration-500">
+            <div className="w-2.5 h-2.5 rounded-full bg-brand-green dark:bg-brand-green shadow-[0_0_10px_rgba(61,154,100,0.4)] dark:shadow-[0_0_10px_rgba(94,242,117,0.8)]" />
+            <p className="text-sm sm:text-lg text-[#1A4731] dark:text-brand-green font-bold">
+              {feature.metric}
+            </p>
+          </div>
         </div>
       </div>
-    </>
+    </motion.div>
   )
 }
 
 export function Features() {
-  const [activeIndex, setActiveIndex] = useState(0)
-  const wrapperRef = useRef<HTMLDivElement>(null)
-  const activeIndexRef = useRef(0)
-  const active = features[activeIndex]
-
+  const containerRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
-    target: wrapperRef,
-    offset: ["start start", "end end"],
+    target: containerRef,
+    offset: ["start start", "end end"]
   })
-
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    let newIndex = 0
-    for (let i = featureThresholds.length - 1; i >= 0; i--) {
-      if (latest >= featureThresholds[i]) {
-        newIndex = i
-        break
-      }
-    }
-    const clamped = Math.max(0, Math.min(features.length - 1, newIndex))
-    if (clamped !== activeIndexRef.current) {
-      activeIndexRef.current = clamped
-      setActiveIndex(clamped)
-    }
-  })
-
-  const handleManualClick = useCallback((i: number) => {
-    activeIndexRef.current = i
-    setActiveIndex(i)
-  }, [])
 
   return (
-    <>
-      {/* Desktop: scroll-driven wrapper */}
-      <div ref={wrapperRef} className="hidden lg:block min-h-[300vh] relative">
-        <section id="solucao" className="sticky top-0 min-h-screen flex items-center py-16 sm:py-20 lg:py-24 relative overflow-hidden">
-          <FeatureBackground />
-          <div className="relative z-10 px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] w-full">
-            <FeatureContent
-              activeIndex={activeIndex}
-              active={active}
-              onTabClick={handleManualClick}
-              scrollYProgress={scrollYProgress}
-            />
-          </div>
-        </section>
-      </div>
-
-      {/* Mobile: standard layout, no scroll-driven switching */}
-      <section id="solucao-mobile" className="lg:hidden py-16 sm:py-20 relative overflow-hidden">
+    <section 
+      ref={containerRef}
+      id="solucao" 
+      className="relative min-h-[500vh] bg-background dark:bg-brand-black"
+    >
+      <div className="sticky top-0 h-screen w-full flex items-center overflow-hidden">
         <FeatureBackground />
-        <div className="relative z-10 px-5 sm:px-8">
-          <FeatureContent
-            activeIndex={activeIndex}
-            active={active}
-            onTabClick={(i) => setActiveIndex(i)}
-            scrollYProgress={scrollYProgress}
-          />
+        
+        <div className="relative z-10 px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] w-full h-full max-h-[90vh] flex items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-12 lg:gap-24 items-center w-full">
+            
+            {/* Left Side: Fixed Title */}
+            <div className="max-w-xl">
+              <BlurFade inView>
+                <Badge variant="neon" className="mb-6">
+                  Diferenciais Exclusivos
+                </Badge>
+              </BlurFade>
+              
+              <div className="space-y-8">
+                <h2 className="font-display text-3xl sm:text-5xl lg:text-6xl text-foreground dark:text-white leading-[1.05] tracking-tighter">
+                  Funcionalidades que o <span className="text-brand-green">cartório precisa</span>.
+                </h2>
+                <p className="text-sm sm:text-base lg:text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
+                  Construídas do zero para serventias extrajudiciais. Nenhuma dessas funcionalidades existe em adquirentes comuns.
+                </p>
+                <div className="h-1 w-20 bg-gradient-to-r from-brand-green to-transparent rounded-full" />
+              </div>
+            </div>
+
+            {/* Right Side: Simple Clean Stacked Cards */}
+            <div className="relative h-[500px] sm:h-[600px] lg:h-[650px] w-full">
+              {features.map((feature, i) => (
+                <FeatureCard 
+                  key={feature.number} 
+                  feature={feature} 
+                  index={i} 
+                  scrollYProgress={scrollYProgress} 
+                />
+              ))}
+            </div>
+            
+          </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   )
 }
