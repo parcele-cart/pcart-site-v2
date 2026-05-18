@@ -90,14 +90,23 @@ function FeatureCard({
   const end = (index + 1) * 0.15
   
   // Clean, snappy transitions
-  // Entrance: Card slides up from bottom
-  const y = useTransform(scrollYProgress, [start - 0.1, start], ["100%", "0%"], { clamp: true })
+  // Entrance: Card slides up from bottom. Index 0 is already visible.
+  const yInput = index === 0 ? [0, 1] : [Math.max(0, start - 0.1), Math.max(0, start)]
+  const yOutput = index === 0 ? ["0%", "0%"] : ["100%", "0%"]
+  const y = useTransform(scrollYProgress, yInput, yOutput, { clamp: true })
   
   // Depth: Card scales down slightly when next one starts coming
-  const scale = useTransform(scrollYProgress, [start, end, end + 0.1], [1, 1, 0.95], { clamp: true })
+  const scaleInput = [Math.max(0, start), Math.min(1, end), Math.min(1, end + 0.1)]
+  const scale = useTransform(scrollYProgress, scaleInput, [1, 1, 0.95], { clamp: true })
   
   // Opacity: Fades in and then dims slightly when covered
-  const opacity = useTransform(scrollYProgress, [start - 0.05, start, end, end + 0.1], [0, 1, 1, 0.8], { clamp: true })
+  const opacityInput = index === 0 
+    ? [0, Math.min(1, end), Math.min(1, end + 0.1)] 
+    : [Math.max(0, start - 0.05), Math.max(0, start), Math.min(1, end), Math.min(1, end + 0.1)]
+  const opacityOutput = index === 0 
+    ? [1, 1, 0.8] 
+    : [0, 1, 1, 0.8]
+  const opacity = useTransform(scrollYProgress, opacityInput, opacityOutput, { clamp: true })
 
   return (
     <motion.div

@@ -38,11 +38,18 @@ export function Footer() {
           <div className="space-y-8">
             <Link href="/" className="inline-block">
               <Image
-                src="/images/logotipo parcelecart branco.png"
+                src="/images/logo-dark-theme.png"
                 alt="ParceleCart"
                 width={180}
                 height={40}
-                className="h-10 w-auto dark:invert-0 invert opacity-90 hover:opacity-100 transition-opacity"
+                className="h-10 w-auto hidden dark:block opacity-90 hover:opacity-100 transition-opacity"
+              />
+              <Image
+                src="/images/logo-light-theme.png"
+                alt="ParceleCart"
+                width={180}
+                height={40}
+                className="h-10 w-auto block dark:hidden opacity-90 hover:opacity-100 transition-opacity"
               />
             </Link>
             <p className="text-[15px] leading-relaxed text-gray-500 dark:text-gray-400 max-w-xs">

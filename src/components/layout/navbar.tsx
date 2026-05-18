@@ -92,11 +92,19 @@ export function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center">
             <Image
-              src="/images/logotipo parcelecart branco.png"
+              src="/images/logo-dark-theme.png"
               alt="ParceleCart"
               width={160}
               height={36}
-              className="h-10 w-auto dark:invert-0 invert"
+              className="h-10 w-auto hidden dark:block"
+              priority
+            />
+            <Image
+              src="/images/logo-light-theme.png"
+              alt="ParceleCart"
+              width={160}
+              height={36}
+              className="h-10 w-auto block dark:hidden"
               priority
             />
           </Link>
