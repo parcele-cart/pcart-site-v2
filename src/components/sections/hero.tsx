@@ -93,7 +93,7 @@ export function Hero() {
                     <a href="/contato">Fale com um Especialista</a>
                   </Button>
                   <Button variant="outline" size="lg" asChild>
-                    <a href="#solucao">Ver como funciona</a>
+                    <a href="/#solucao">Ver como funciona</a>
                   </Button>
                 </div>
               </BlurFade>

@@ -6,9 +6,9 @@ export function Footer() {
   const currentYear = new Date().getFullYear()
 
   const productLinks = [
-    { label: "Solução", href: "#solucao", isExternal: false },
-    { label: "Como Funciona", href: "#como-funciona", isExternal: false },
-    { label: "FAQ", href: "#faq", isExternal: false },
+    { label: "Solução", href: "/#solucao", isExternal: false },
+    { label: "Como Funciona", href: "/#como-funciona", isExternal: false },
+    { label: "FAQ", href: "/#faq", isExternal: false },
     { label: "Sobre Nós", href: "/sobre-nos", isExternal: false },
     { label: "Acessar Plataforma", href: "https://portal.parcelecart.com.br", isExternal: true },
   ]

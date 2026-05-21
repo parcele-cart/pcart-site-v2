@@ -49,7 +49,7 @@ export function FinalCTA() {
               <a href="/contato">Fale com um Especialista</a>
             </Button>
             <Button variant="outline" size="lg" asChild>
-              <a href="#solucao">Conhecer a Solução</a>
+              <a href="/#solucao">Conhecer a Solução</a>
             </Button>
           </div>
         </BlurFade>

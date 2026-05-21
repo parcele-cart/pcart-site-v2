@@ -9,9 +9,9 @@ import { cn } from "@/lib/utils"
 import { ThemeToggle } from "@/components/theme-toggle"
 
 const navLinks = [
-  { label: "Solução", href: "#solucao" },
-  { label: "Como Funciona", href: "#como-funciona" },
-  { label: "FAQ", href: "#faq" },
+  { label: "Solução", href: "/#solucao" },
+  { label: "Como Funciona", href: "/#como-funciona" },
+  { label: "FAQ", href: "/#faq" },
   { label: "Sobre Nós", href: "/sobre-nos" },
   { label: "Contato", href: "/contato" },
 ]
@@ -112,9 +112,9 @@ export function Navbar() {
           {/* Desktop Links */}
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => {
-              const isActive = link.href.startsWith("#") && activeSection === link.href.slice(1)
+              const isActive = link.href.includes("#") && activeSection === link.href.split("#")[1]
               return (
-                <a
+                <Link
                   key={link.href}
                   href={link.href}
                   className={cn(
@@ -123,7 +123,7 @@ export function Navbar() {
                   )}
                 >
                   {link.label}
-                </a>
+                </Link>
               )
             })}
           </div>
@@ -159,14 +159,14 @@ export function Navbar() {
       >
         <div className="bg-background dark:bg-brand-black/95 backdrop-blur-2xl px-5 py-4 space-y-3 glass border-t border-foreground/5">
           {navLinks.map((link) => (
-            <a
+            <Link
               key={link.href}
               href={link.href}
               className="block text-base text-foreground/70 hover:text-foreground transition-colors py-2"
               onClick={() => setMobileOpen(false)}
             >
               {link.label}
-            </a>
+            </Link>
           ))}
           <RainbowButton className="w-full mt-2" asChild>
             <a href="https://portal.parcelecart.com.br">Acessar Plataforma</a>
