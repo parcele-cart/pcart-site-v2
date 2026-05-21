@@ -106,7 +106,7 @@ export function Hero() {
                   </span>
                   <div className="flex flex-wrap gap-5">
                     {partners.map((p) => (
-                      <span key={p} className="text-sm text-gray-500 font-medium">
+                      <span key={p} className="text-normal text-gray-500 font-bold">
                         {p}
                       </span>
                     ))}
@@ -132,54 +132,8 @@ export function Hero() {
               />
             </div>
 
-            {/* 3-column grid: [left cards | image | right cards] */}
-            <div className="relative z-10 flex justify-center sm:grid sm:grid-cols-[auto_1fr_auto] items-center gap-1 w-full">
-
-              {/* Left cards */}
-              <div className="hidden sm:flex flex-col gap-30 -mr-3 z-20">
-                {[floatingCards[0], floatingCards[2]].map((card, i) => (
-                  <motion.div
-                    key={card.title}
-                    initial={{ opacity: 0, x: -16 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{
-                      opacity: { duration: 0.4, delay: 0.8 + i * 0.15 },
-                      x: { duration: 0.4, delay: 0.8 + i * 0.15 },
-                    }}
-                    whileHover={{ scale: 1.05 }}
-                  >
-                    <motion.div
-                      whileInView={{ y: [0, -4, 0] }}
-                      viewport={{ once: false, amount: 0.1 }}
-                      transition={{
-                        y: {
-                          duration: 3 + i * 0.5,
-                          repeat: Infinity,
-                          repeatType: "loop",
-                          ease: "easeInOut",
-                          delay: 1.2 + i * 0.3,
-                        },
-                      }}
-                    >
-                      <MagicCard
-                        className="rounded-xl"
-                        gradientFrom="#5EF275"
-                        gradientTo="#2F3A59"
-                        gradientColor="var(--magic-card-gradient)"
-                        gradientSize={150}
-                      >
-                        <div className="glass rounded-xl px-4 py-3 flex items-center gap-3 w-[180px]">
-                          <card.icon className="h-6 w-6 text-brand-green shrink-0" />
-                          <div>
-                            <p className="text-sm font-semibold text-foreground dark:text-white leading-tight">{card.title}</p>
-                            <p className="text-xs text-gray-500 leading-tight">{card.subtitle}</p>
-                          </div>
-                        </div>
-                      </MagicCard>
-                    </motion.div>
-                  </motion.div>
-                ))}
-              </div>
+            {/* 2-column layout: [image | cards column] */}
+            <div className="relative z-10 flex justify-center sm:grid sm:grid-cols-[1fr_auto] items-center gap-1 w-full">
 
               {/* POS image with floating animation */}
               <motion.div
@@ -198,36 +152,36 @@ export function Hero() {
                   alt="SmartPOS ParceleCart"
                   width={1200}
                   height={1200}
-                  className="h-[340px] sm:h-[400px] lg:h-[500px] w-auto object-contain drop-shadow-none sm:drop-shadow-[0_0_80px_rgba(94,242,117,0.2)]"
+                  className="h-[380px] sm:h-[460px] lg:h-[580px] w-auto object-contain drop-shadow-none sm:drop-shadow-[0_0_80px_rgba(94,242,117,0.2)]"
                   priority
                   placeholder="blur"
                   blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAL0lEQVR4nGNgYGD4z8DAwMDAxMDAwMDAwPD/PwMDA8N/BgYGBob/DAwMDP8ZGBgYABuOBgVnK+XrAAAAAElFTkSuQmCC"
                 />
               </motion.div>
 
-              {/* Right cards */}
-              <div className="hidden sm:flex flex-col gap-30 -ml-3 z-20">
-                {[floatingCards[1], floatingCards[3]].map((card, i) => (
+              {/* Right column: all 4 cards stacked */}
+              <div className="hidden sm:flex flex-col gap-3 z-20 -ml-24 md:-ml-32">
+                {floatingCards.map((card, i) => (
                   <motion.div
                     key={card.title}
                     initial={{ opacity: 0, x: 16 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{
-                      opacity: { duration: 0.4, delay: 0.9 + i * 0.15 },
-                      x: { duration: 0.4, delay: 0.9 + i * 0.15 },
+                      opacity: { duration: 0.4, delay: 0.7 + i * 0.12 },
+                      x: { duration: 0.4, delay: 0.7 + i * 0.12 },
                     }}
                     whileHover={{ scale: 1.05 }}
                   >
                     <motion.div
-                      whileInView={{ y: [0, -5, 0] }}
+                      whileInView={{ y: [0, -4, 0] }}
                       viewport={{ once: false, amount: 0.1 }}
                       transition={{
                         y: {
-                          duration: 3.5 + i * 0.5,
+                          duration: 3 + i * 0.4,
                           repeat: Infinity,
                           repeatType: "loop",
                           ease: "easeInOut",
-                          delay: 1.0 + i * 0.4,
+                          delay: 1.0 + i * 0.25,
                         },
                       }}
                     >
@@ -238,7 +192,7 @@ export function Hero() {
                         gradientColor="var(--magic-card-gradient)"
                         gradientSize={150}
                       >
-                        <div className="glass rounded-xl px-4 py-3 flex items-center gap-3 w-[180px]">
+                        <div className="glass rounded-xl px-4 py-3 flex items-center gap-3 w-[216px]">
                           <card.icon className="h-6 w-6 text-brand-green shrink-0" />
                           <div>
                             <p className="text-sm font-semibold text-foreground dark:text-white leading-tight">{card.title}</p>

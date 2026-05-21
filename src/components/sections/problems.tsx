@@ -43,16 +43,29 @@ const problems = [
 
 export function Problems() {
   return (
-    <section className="relative py-24 lg:py-32">
+    <section className="relative">
       {/* Subtle gradient background */}
       <div className="absolute inset-0 bg-gradient-to-b from-background dark:from-brand-black via-background dark:via-[#0F1419] to-background dark:to-brand-black" />
 
-      {/* Dot pattern background */}
+      {/* Dot pattern — desktop */}
       <div
-        className="absolute inset-0 opacity-[0.03]"
+        className="absolute inset-0 pointer-events-none hidden lg:block opacity-30"
         style={{
-          backgroundImage: `radial-gradient(circle, #5EF275 1px, transparent 1px)`,
-          backgroundSize: "24px 24px",
+          backgroundImage: `radial-gradient(circle, var(--brand-green) 1px, transparent 1px)`,
+          backgroundSize: '20px 20px',
+          maskImage: 'radial-gradient(1000px circle at center, white, transparent)',
+          WebkitMaskImage: 'radial-gradient(1000px circle at center, white, transparent)',
+        }}
+      />
+
+      {/* Dot pattern — mobile */}
+      <div
+        className="absolute inset-0 pointer-events-none lg:hidden opacity-20"
+        style={{
+          backgroundImage: `radial-gradient(circle, var(--brand-green) 1px, transparent 1px)`,
+          backgroundSize: '20px 20px',
+          maskImage: 'radial-gradient(100% 100% at center, white, transparent)',
+          WebkitMaskImage: 'radial-gradient(100% 100% at center, white, transparent)',
         }}
       />
 
@@ -60,34 +73,36 @@ export function Problems() {
       <div className="hidden lg:block">
         <div className="relative z-10 px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] w-full">
           <div className="grid grid-cols-2 gap-12 items-start">
-            {/* LEFT column: sticky heading */}
-            <div className="lg:sticky lg:top-[30vh] self-start">
-              <h2 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl text-foreground dark:text-white mb-4">
-                Nenhum sistema genérico entende como um cartório funciona.
-              </h2>
-              <p className="text-xs sm:text-sm lg:text-base text-gray-600 dark:text-gray-400">
-                Maquininhas comuns pedem &ldquo;contrato social&rdquo;, não conhecem as diferentes
-                atribuições e cobram com pouca transparência. Depois, sua equipe
-                passa horas conciliando. Todo mês.
-              </p>
-              <BlurFade inView delay={0.1}>
-                <div className="relative group">
-                  <div className="absolute -inset-4 bg-brand-green/10 blur-3xl rounded-full opacity-50" />
-                  <div className="relative">
-                    <Image
-                      src="/images/hero-receivables.webp"
-                      alt="Recebíveis Cartórios"
-                      width={600}
-                      height={400}
-                      className="w-full h-auto object-cover transform transition-transform duration-700 group-hover:scale-105"
-                    />
+            {/* LEFT column: sticky heading — fills viewport height, content centred */}
+            <div className="sticky top-0 h-screen flex items-center self-start">
+              <div className="w-full">
+                <h2 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl text-foreground dark:text-white mb-4">
+                  Nenhum sistema genérico entende como um cartório funciona.
+                </h2>
+                <p className="text-xs sm:text-sm lg:text-base text-gray-600 dark:text-gray-400">
+                  Maquininhas comuns pedem &ldquo;contrato social&rdquo;, não conhecem as diferentes
+                  atribuições e cobram com pouca transparência. Depois, sua equipe
+                  passa horas conciliando. Todo mês.
+                </p>
+                <BlurFade inView delay={0.1}>
+                  <div className="relative group">
+                    <div className="absolute -inset-4 bg-brand-green/10 blur-3xl rounded-full opacity-50" />
+                    <div className="relative py-12">
+                      <Image
+                        src="/images/hero-dashboards.png"
+                        alt="Recebíveis Cartórios"
+                        width={600}
+                        height={400}
+                        className="w-full h-auto object-cover transform transition-transform duration-700 group-hover:scale-105"
+                      />
+                    </div>
                   </div>
-                </div>
-              </BlurFade>
+                </BlurFade>
+              </div>
             </div>
 
             {/* RIGHT column: naturally scrolling problem cards */}
-            <div className="flex flex-col gap-6 pt-8 pb-16">
+            <div className="flex flex-col gap-6 py-32">
               {problems.map((problem, i) => (
                 <motion.div
                   key={problem.number}

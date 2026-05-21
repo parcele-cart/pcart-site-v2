@@ -1,12 +1,11 @@
 "use client"
 
-import { useRef } from "react"
-import { motion, useScroll, useTransform } from "motion/react"
+import { useRef, useState } from "react"
+import { motion, AnimatePresence, useScroll, useSpring, useMotionValueEvent } from "motion/react"
 import { Badge } from "@/components/ui/badge"
 import { BlurFade } from "@/components/ui/blur-fade"
 import { ShineBorder } from "@/components/ui/shine-border"
 import { Particles } from "@/components/ui/particles"
-import { cn, ease } from "@/lib/utils"
 
 const features = [
   {
@@ -77,143 +76,145 @@ function FeatureBackground() {
   )
 }
 
-function FeatureCard({ 
-  feature, 
-  index, 
-  scrollYProgress 
-}: { 
-  feature: typeof features[0], 
-  index: number, 
-  scrollYProgress: any 
-}) {
-  const start = index * 0.15
-  const end = (index + 1) * 0.15
-  
-  // Clean, snappy transitions
-  // Entrance: Card slides up from bottom. Index 0 is already visible.
-  const yInput = index === 0 ? [0, 1] : [Math.max(0, start - 0.1), Math.max(0, start)]
-  const yOutput = index === 0 ? ["0%", "0%"] : ["100%", "0%"]
-  const y = useTransform(scrollYProgress, yInput, yOutput, { clamp: true })
-  
-  // Depth: Card scales down slightly when next one starts coming
-  const scaleInput = [Math.max(0, start), Math.min(1, end), Math.min(1, end + 0.1)]
-  const scale = useTransform(scrollYProgress, scaleInput, [1, 1, 0.95], { clamp: true })
-  
-  // Opacity: Fades in and then dims slightly when covered
-  const opacityInput = index === 0 
-    ? [0, Math.min(1, end), Math.min(1, end + 0.1)] 
-    : [Math.max(0, start - 0.05), Math.max(0, start), Math.min(1, end), Math.min(1, end + 0.1)]
-  const opacityOutput = index === 0 
-    ? [1, 1, 0.8] 
-    : [0, 1, 1, 0.8]
-  const opacity = useTransform(scrollYProgress, opacityInput, opacityOutput, { clamp: true })
-
+function FeatureCard({ feature }: { feature: (typeof features)[0] }) {
   return (
-    <motion.div
-      style={{
-        y,
-        scale,
-        opacity,
-        zIndex: index + 1,
-        position: "absolute",
-        inset: 0,
-      }}
-      className="flex items-center justify-center p-4 sm:p-0"
-    >
-      <div className={cn(
-        "rounded-[2rem] p-8 sm:p-12 lg:p-16 h-full w-full relative overflow-hidden flex flex-col justify-center transition-all duration-500 backdrop-blur-xl",
-        "bg-brand-green dark:bg-zinc-900/90 border border-brand-green/20 dark:border-white/10 shadow-xl dark:shadow-2xl"
-      )}>
-        <ShineBorder 
-          shineColor={["#3D9A64", "#5EF275", "#2F3A59"]} 
-          duration={12} 
-          borderWidth={1}
-        />
-        
-        <div className="flex flex-col gap-6 lg:gap-10 relative z-10">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <span className="text-5xl sm:text-7xl font-display font-bold text-white/20 dark:text-brand-green/20 leading-none transition-colors duration-500">
-                {feature.number}
-              </span>
-              <div className="h-px w-16 sm:w-24 bg-gradient-to-r from-white/30 dark:from-brand-green/40 to-transparent transition-colors duration-500" />
-            </div>
-            <Badge variant="outline" className="px-4 py-1.5 text-xs border-white/20 text-white dark:border-brand-green/20 dark:text-brand-green">
-              {feature.highlight}
-            </Badge>
-          </div>
+    <div className="rounded-[2rem] p-6 sm:p-8 lg:p-10 h-full w-full relative overflow-hidden flex flex-col justify-center backdrop-blur-xl bg-brand-green dark:bg-zinc-900/90 border border-brand-green/20 dark:border-white/10 shadow-xl dark:shadow-2xl">
+      <ShineBorder
+        shineColor={["#3D9A64", "#5EF275", "#2F3A59"]}
+        duration={12}
+        borderWidth={1}
+      />
 
-          <div className="space-y-4 sm:space-y-6">
-            <h3 className="font-display text-2xl sm:text-3xl lg:text-5xl text-white dark:text-white leading-[1.1] tracking-tight">
-              {feature.title}
-            </h3>
-            <p className="text-sm sm:text-base lg:text-xl text-white/90 dark:text-gray-400 leading-relaxed max-w-4xl">
-              {feature.description}
-            </p>
+      <div className="flex flex-col gap-6 lg:gap-10 relative z-10">
+        {/* Header row: number + highlight badge */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <span className="text-5xl sm:text-7xl font-display font-bold text-white/50 dark:text-brand-green/50 leading-none">
+              {feature.number}
+            </span>
+            <div className="h-px w-16 sm:w-24 bg-gradient-to-r from-white/30 dark:from-brand-green/40 to-transparent" />
           </div>
-          
-          <div className="inline-flex items-center gap-4 rounded-2xl bg-white dark:bg-brand-green/5 border border-white/10 dark:border-brand-green/10 p-5 pr-8 w-fit shadow-xl dark:shadow-[0_0_20px_rgba(94,242,117,0.05)] transition-colors duration-500">
-            <div className="w-2.5 h-2.5 rounded-full bg-brand-green dark:bg-brand-green shadow-[0_0_10px_rgba(61,154,100,0.4)] dark:shadow-[0_0_10px_rgba(94,242,117,0.8)]" />
-            <p className="text-sm sm:text-lg text-[#1A4731] dark:text-brand-green font-bold">
-              {feature.metric}
-            </p>
-          </div>
+          <Badge
+            variant="outline"
+            className="px-4 py-1.5 text-base border-white/30 text-white dark:border-brand-green/20 dark:text-brand-green font-medium"
+          >
+            {feature.highlight}
+          </Badge>
+        </div>
+
+        {/* Title + description */}
+        <div className="space-y-4 sm:space-y-6">
+          <h3 className="font-display text-2xl sm:text-3xl lg:text-5xl text-white dark:text-white leading-[1.1] tracking-tight">
+            {feature.title}
+          </h3>
+          <p className="text-sm sm:text-base lg:text-lg text-white/80 dark:text-gray-400 leading-relaxed max-w-4xl">
+            {feature.description}
+          </p>
+        </div>
+
+        {/* Metric pill */}
+        <div className="inline-flex items-center gap-4 rounded-2xl bg-white dark:bg-brand-green/5 border border-white/20 dark:border-brand-green/10 p-4 pr-6 w-fit shadow-xl dark:shadow-[0_0_20px_rgba(94,242,117,0.05)]">
+          <div className="w-2.5 h-2.5 rounded-full bg-brand-green dark:bg-brand-green shadow-[0_0_10px_rgba(61,154,100,0.4)] dark:shadow-[0_0_10px_rgba(94,242,117,0.8)]" />
+          <p className="text-sm sm:text-lg text-[#1A4731] dark:text-brand-green font-bold">
+            {feature.metric}
+          </p>
         </div>
       </div>
-    </motion.div>
+    </div>
   )
 }
 
 export function Features() {
   const containerRef = useRef<HTMLDivElement>(null)
+  const [activeIndex, setActiveIndex] = useState(0)
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start start", "end end"]
+    offset: ["start start", "end end"],
+  })
+
+  // Smooth spring so transitions aren't jumpy
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 60,
+    damping: 20,
+    restDelta: 0.001,
+  })
+
+  useMotionValueEvent(smoothProgress, "change", (latest) => {
+    // Clamp into [0, features.length - 1]
+    const raw = Math.floor(latest * features.length)
+    setActiveIndex(Math.min(features.length - 1, Math.max(0, raw)))
   })
 
   return (
-    <section 
+    // Each feature gets ~1 viewport of scroll room
+    <section
       ref={containerRef}
-      id="solucao" 
-      className="relative min-h-[500vh] bg-background dark:bg-brand-black"
+      id="solucao"
+      className="relative bg-background dark:bg-brand-black"
+      style={{ minHeight: `${features.length * 100}vh` }}
     >
       <div className="sticky top-0 h-screen w-full flex items-center overflow-hidden">
         <FeatureBackground />
-        
+
         <div className="relative z-10 px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] w-full h-full max-h-[90vh] flex items-center">
-          <div className="grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-12 lg:gap-24 items-center w-full">
-            
-            {/* Left Side: Fixed Title */}
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-10 lg:gap-16 items-center w-full">
+
+            {/* Left — stays fixed */}
             <div className="max-w-xl">
               <BlurFade inView>
                 <Badge variant="neon" className="mb-6">
                   Diferenciais Exclusivos
                 </Badge>
               </BlurFade>
-              
+
               <div className="space-y-8">
                 <h2 className="font-display text-3xl sm:text-5xl lg:text-6xl text-foreground dark:text-white leading-[1.05] tracking-tighter">
-                  Funcionalidades que o <span className="text-brand-green">cartório precisa</span>.
+                  Funcionalidades que o{" "}
+                  <span className="text-brand-green">cartório precisa</span>.
                 </h2>
                 <p className="text-sm sm:text-base lg:text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
-                  Construídas do zero para serventias extrajudiciais. Nenhuma dessas funcionalidades existe em adquirentes comuns.
+                  Construídas do zero para serventias extrajudiciais. Nenhuma
+                  dessas funcionalidades existe em adquirentes comuns.
                 </p>
-                <div className="h-1 w-20 bg-gradient-to-r from-brand-green to-transparent rounded-full" />
+
+                {/* Visual step indicator */}
+                <div className="flex items-center gap-1.5 pt-2">
+                  {features.map((_, i) => (
+                    <motion.div
+                      key={i}
+                      animate={{
+                        width: activeIndex === i ? 28 : 8,
+                        backgroundColor:
+                          i <= activeIndex
+                            ? "var(--brand-green)"
+                            : "rgba(94,242,117,0.15)",
+                        opacity: i <= activeIndex ? 1 : 0.5,
+                      }}
+                      transition={{ duration: 0.22, ease: "easeInOut" }}
+                      className="h-1.5 rounded-full"
+                    />
+                  ))}
+                </div>
               </div>
             </div>
 
-            {/* Right Side: Simple Clean Stacked Cards */}
-            <div className="relative h-[500px] sm:h-[600px] lg:h-[650px] w-full">
-              {features.map((feature, i) => (
-                <FeatureCard 
-                  key={feature.number} 
-                  feature={feature} 
-                  index={i} 
-                  scrollYProgress={scrollYProgress} 
-                />
-              ))}
+            {/* Right — crossfading cards */}
+            <div className="relative h-[420px] sm:h-[500px] lg:h-[560px] w-full">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeIndex}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.22, ease: "easeInOut" }}
+                  className="absolute inset-0"
+                >
+                  <FeatureCard feature={features[activeIndex]} />
+                </motion.div>
+              </AnimatePresence>
             </div>
-            
+
           </div>
         </div>
       </div>

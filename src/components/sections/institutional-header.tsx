@@ -26,7 +26,7 @@ export function InstitutionalHeader({
     <section className="relative pt-32 pb-12 lg:pt-48 lg:pb-16 overflow-hidden border-b border-foreground/5 dark:border-white/5">
       {/* Background System */}
       <div className="absolute inset-0 bg-gradient-to-br from-background via-background/95 to-brand-green/5 dark:from-brand-black dark:via-brand-black dark:to-brand-green/10" />
-      
+
       <Particles
         className="absolute inset-0"
         quantity={30}
@@ -43,7 +43,7 @@ export function InstitutionalHeader({
       <div className={`relative z-10 px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] ${centered ? "text-center" : ""}`}>
         <div className={`max-w-4xl ${centered ? "mx-auto" : ""}`}>
           <BlurFade delay={0.1} inView>
-            <Badge variant="neon" className="mb-8">
+            <Badge variant="neon" className="mb-4 text-sm">
               {subtitle}
             </Badge>
           </BlurFade>

@@ -35,7 +35,7 @@ export default function SobreNosPage() {
         <BlurFade delay={0.2} inView>
           <div className="relative aspect-[16/9] w-full max-w-6xl mx-auto overflow-hidden rounded-[2.5rem] shadow-2xl">
             <Image
-              src="https://images.unsplash.com/photo-1556740734-7f1a0297ba16?q=80&w=2070&auto=format&fit=crop"
+              src="/images/about-01.webp"
               alt="Terminal ParceleCart"
               fill
               className="object-cover"
@@ -77,7 +77,7 @@ export default function SobreNosPage() {
           <BlurFade delay={0.4} inView>
             <div className="relative aspect-[4/3] rounded-[2rem] overflow-hidden shadow-xl">
               <Image
-                src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=2070&auto=format&fit=crop"
+                src="/images/about-02.png"
                 alt="Trabalhando em tecnologia"
                 fill
                 className="object-cover"
@@ -91,17 +91,17 @@ export default function SobreNosPage() {
       <section className="px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] mb-32 bg-gray-50/50 dark:bg-white/[0.02] py-24 -mx-5 sm:-mx-8 lg:-mx-16 xl:-mx-32 2xl:-mx-[150px]">
         <div className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px]">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
-            <BlurFade delay={0.3} inView>
-              <div className="relative aspect-[4/3] rounded-[2rem] overflow-hidden shadow-xl lg:order-1 order-2">
+            <BlurFade delay={0.3} inView className="order-2 lg:order-1">
+              <div className="relative aspect-[4/3] rounded-[2rem] overflow-hidden shadow-xl">
                 <Image
-                  src="https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=2070&auto=format&fit=crop"
+                  src="/images/about-03.png"
                   alt="Painel de tecnologia"
                   fill
                   className="object-cover"
                 />
               </div>
             </BlurFade>
-            <BlurFade delay={0.4} inView className="lg:order-2 order-1">
+            <BlurFade delay={0.4} inView className="order-1 lg:order-2">
               <div className="space-y-6">
                 <h3 className="font-display text-2xl sm:text-3xl text-foreground dark:text-white font-bold">
                   Tecnologia à serviço da segurança jurídica
@@ -146,7 +146,7 @@ export default function SobreNosPage() {
           <BlurFade delay={0.4} inView>
             <div className="relative aspect-[4/3] rounded-[2rem] overflow-hidden shadow-xl">
               <Image
-                src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?q=80&w=2070&auto=format&fit=crop"
+                src="/images/about-04.png"
                 alt="Parceria e colaboração"
                 fill
                 className="object-cover"
