@@ -1,23 +1,23 @@
 import { InstitutionalHeader } from "@/components/sections/institutional-header";
 import { BlurFade } from "@/components/ui/blur-fade";
 import { ContactForm } from "@/components/forms/contact-form";
-import { CalendarDays, MessageCircle, Phone, ArrowRight } from "lucide-react";
+import { CalendarDays, MessageCircle, Phone, ArrowRight, InfoIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Contato — ParceleCart",
+  title: "Suporte — ParceleCart",
   description: "Entre em contato conosco através dos nossos canais de atendimento ou envie uma mensagem.",
 };
 
-const contactChannels = [
+const listChannels = [
   {
     number: "01",
-    title: "Agendar Reunião",
-    description: "Consultoria personalizada para o seu cartório.",
-    icon: CalendarDays,
-    action: "Agendar agora",
-    link: "#",
+    title: "Suporte e Contato",
+    description: "Atendimento suporte@parcelecart.com.br ou (11) 96398-2811.",
+    icon: InfoIcon,
+    action: "Entrar em contato",
+    link: "mailto:suporte@parcelecart.com.br",
   },
   {
     number: "02",
@@ -25,7 +25,7 @@ const contactChannels = [
     description: "Atendimento imediato e simplificado via chat.",
     icon: MessageCircle,
     action: "Iniciar chat",
-    link: "https://wa.me/5511999999999",
+    link: "https://wa.me/5511963982811",
   },
   {
     number: "03",
@@ -33,7 +33,7 @@ const contactChannels = [
     description: "Suporte especializado por voz em horário comercial.",
     icon: Phone,
     action: "Ligar agora",
-    link: "tel:+5511999999999",
+    link: "tel:+5511963982811",
   },
 ];
 
@@ -41,8 +41,8 @@ export default function ContatoPage() {
   return (
     <main className="min-h-screen bg-background dark:bg-brand-black">
       <InstitutionalHeader
-        title="Entre em contato como preferir"
-        subtitle="Escolha o canal que melhor atende sua necessidade e fale com nosso time hoje mesmo."
+        title="Suporte especializado"
+        subtitle="Atendimento rápido e humanizado para auxiliar sua operação sempre que precisar."
         centered
       />
 
@@ -50,7 +50,7 @@ export default function ContatoPage() {
 
         {/* 3 Individual Channel Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-          {contactChannels.map((channel, i) => (
+          {listChannels.map((channel, i) => (
             <BlurFade key={channel.title} delay={0.2 + i * 0.1} inView>
               <div className="group bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/8 rounded-3xl p-8 lg:p-10 flex flex-col items-center text-center gap-6 shadow-sm hover:shadow-xl hover:shadow-brand-green/8 dark:hover:shadow-brand-green/5 hover:-translate-y-1 transition-all duration-500 h-full">
                 {/* Icon */}

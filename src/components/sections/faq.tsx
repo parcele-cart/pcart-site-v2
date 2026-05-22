@@ -73,7 +73,7 @@ const faqItems = [
 
 function FAQTrigger({ question, index }: { question: string; index: number }) {
   const { isOpen } = useAccordionItem()
-  
+
   return (
     <div className="flex items-start justify-between w-full gap-4 md:gap-8 group">
       <div className="flex items-start gap-4 md:gap-8">
@@ -103,19 +103,19 @@ export function FAQ() {
     <section id="faq" className="bg-background">
       <div className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-16 py-20 sm:py-24 lg:py-32">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start">
-          
+
           {/* Left Column: Sticky Header */}
           <div className="lg:col-span-5 h-full">
             <div className="lg:sticky lg:top-32 space-y-6 md:space-y-8">
               <Badge variant="neon" className="px-4 py-1">
                 FAQ
               </Badge>
-              
+
               <div className="space-y-4 md:space-y-6">
                 <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl text-foreground dark:text-white leading-[1.1] tracking-tight">
                   Perguntas que todo <span className="text-brand-green italic">tabelião</span> faz.
                 </h2>
-                
+
                 <p className="text-lg text-gray-600 dark:text-gray-400 max-w-md leading-relaxed">
                   Tudo o que você precisa saber antes de modernizar os pagamentos do seu cartório com a ParceleCart.
                 </p>
@@ -135,9 +135,9 @@ export function FAQ() {
             <BlurFade delay={0.4} inView>
               <Accordion type="single" className="w-full border-t border-gray-200 dark:border-gray-800">
                 {faqItems.map((item, i) => (
-                  <AccordionItem 
-                    key={i} 
-                    value={`item-${i}`} 
+                  <AccordionItem
+                    key={i}
+                    value={`item-${i}`}
                     className="border-b border-gray-200 dark:border-gray-800 py-2 md:py-4"
                   >
                     <AccordionTrigger hideChevron className="hover:no-underline py-6">

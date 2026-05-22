@@ -20,7 +20,7 @@ export default function CodeOfEthicsPage() {
       />
       
       <div className="px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] py-12">
-        <div className="max-w-7xl text-foreground/90 dark:text-gray-300 space-y-12 leading-relaxed text-base sm:text-lg">
+        <div className="w-full text-foreground/90 dark:text-gray-300 space-y-12 leading-relaxed text-base sm:text-lg">
           
           <section>
             <h2 className="text-xl sm:text-2xl font-bold text-brand-green mb-6">Capítulo I – Da Aplicabilidade</h2>

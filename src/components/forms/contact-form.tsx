@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Loader2, CheckCircle2, AlertCircle } from "lucide-react"
 
 interface ContactFormProps {
-  origin: "LGPD" | "Canal de Denúncias" | "Ouvidoria"
+  origin: "LGPD" | "Canal de Denúncias" | "Ouvidoria" | "Contato"
 }
 
 export function ContactForm({ origin }: ContactFormProps) {

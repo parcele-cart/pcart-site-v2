@@ -35,12 +35,12 @@ const differentiators = [
 
 export function Metrics() {
   return (
-    <section className="py-20 sm:py-24 lg:py-32 relative overflow-hidden bg-background">
+    <section className="py-16 sm:py-20 lg:py-20 relative overflow-hidden bg-background">
       {/* Background gradients */}
       <div className="absolute top-1/2 right-0 w-[600px] h-[600px] bg-brand-green/5 rounded-full blur-[140px] pointer-events-none" />
 
       {/* Striped Pattern Overlay */}
-      <div 
+      <div
         className="absolute inset-0 z-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none"
         style={{
           backgroundImage: `repeating-linear-gradient(45deg, var(--foreground), var(--foreground) 1px, transparent 1px, transparent 10px)`
@@ -48,32 +48,32 @@ export function Metrics() {
       />
 
       <div className="container relative z-10 mx-auto px-6 sm:px-10 lg:px-16">
-        {/* Header - Aligned to the left to match the content below */}
-        <div className="flex flex-col items-start text-left mb-16 lg:mb-24 max-w-3xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease }}
-          >
-            <Badge variant="neon" className="mb-6 uppercase tracking-widest px-4 py-1">
-              Diferenciais que importam
-            </Badge>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-foreground dark:text-white mb-6 leading-tight">
-              Por que os maiores cartórios escolhem a ParceleCart?
-            </h2>
-            <p className="text-lg text-gray-500 dark:text-gray-400">
-              Mais que tecnologia, entregamos a segurança jurídica e a eficiência operacional que sua serventia exige.
-            </p>
-          </motion.div>
-        </div>
-
         {/* Content Grid: 2 Columns */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
-          
-          {/* Left Column: 2x2 Grid of Items */}
-          <div className="lg:col-span-7 order-2 lg:order-1">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-12 lg:gap-x-12 lg:gap-y-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
+
+          {/* Left Column: Header + 2x2 Grid of Items */}
+          <div className="lg:col-span-7 space-y-12">
+            {/* Header */}
+            <div className="flex flex-col items-start text-left max-w-3xl">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, ease }}
+              >
+                <Badge variant="neon" className="mb-4 uppercase tracking-widest px-4 py-1">
+                  Diferenciais que importam
+                </Badge>
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-foreground dark:text-white mb-4 leading-tight">
+                  Por que os maiores cartórios escolhem a ParceleCart?
+                </h2>
+                <p className="text-base lg:text-lg text-gray-500 dark:text-gray-400">
+                  Mais que tecnologia, entregamos a segurança jurídica e a eficiência operacional que sua serventia exige.
+                </p>
+              </motion.div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-8 lg:gap-x-8 lg:gap-y-10">
               {differentiators.map((item, index) => (
                 <motion.div
                   key={item.title}
@@ -83,13 +83,13 @@ export function Metrics() {
                   transition={{ duration: 0.8, delay: index * 0.15, ease }}
                   className="group relative"
                 >
-                  <div className="mb-6 inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-brand-green/10 text-brand-green group-hover:bg-brand-green group-hover:text-white transition-all duration-500 shadow-sm">
-                    <item.icon size={28} />
+                  <div className="mb-4 inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-brand-green/10 text-brand-green group-hover:bg-brand-green group-hover:text-white transition-all duration-500 shadow-sm">
+                    <item.icon size={24} />
                   </div>
-                  <h3 className="text-xl font-bold text-foreground dark:text-white mb-3 group-hover:text-brand-green transition-colors duration-300">
+                  <h3 className="text-lg lg:text-xl font-bold text-foreground dark:text-white mb-2 group-hover:text-brand-green transition-colors duration-300">
                     {item.title}
                   </h3>
-                  <p className="text-gray-500 dark:text-gray-400 leading-relaxed text-sm lg:text-base">
+                  <p className="text-gray-500 dark:text-gray-400 leading-relaxed text-sm">
                     {item.description}
                   </p>
                 </motion.div>
@@ -98,8 +98,8 @@ export function Metrics() {
           </div>
 
           {/* Right Column: Dashboard Image */}
-          <motion.div 
-            className="lg:col-span-5 order-1 lg:order-2 relative flex justify-center"
+          <motion.div
+            className="lg:col-span-5 relative flex justify-center w-full"
             initial={{ opacity: 0, scale: 0.9, x: 20 }}
             whileInView={{ opacity: 1, scale: 1, x: 0 }}
             viewport={{ once: true }}
@@ -110,25 +110,25 @@ export function Metrics() {
               <div className="w-[140%] aspect-square bg-brand-green/10 dark:bg-brand-green/5 rounded-full blur-[100px] animate-pulse" />
               <div className="absolute w-[100%] aspect-square border border-brand-green/20 rounded-full animate-[ping_3s_infinite]" />
             </div>
-            
+
             <div className="relative z-10 w-full">
               <motion.div
-                animate={{ 
+                animate={{
                   y: [0, -15, 0],
                   rotate: [0, 2, 0]
                 }}
-                transition={{ 
-                  duration: 8, 
-                  repeat: Infinity, 
-                  ease: "easeInOut" 
+                transition={{
+                  duration: 8,
+                  repeat: Infinity,
+                  ease: "easeInOut"
                 }}
               >
                 <Image
-                  src="/images/hero-mobile-01.webp"
+                  src="/images/hero-metrics.png"
                   alt="Dashboard ParceleCart"
                   width={800}
                   height={800}
-                  className="w-full h-auto object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.1)] dark:drop-shadow-[0_20px_50px_rgba(94,242,117,0.15)]"
+                  className="w-full h-auto object-contain mx-auto drop-shadow-[0_20px_50px_rgba(0,0,0,0.1)] dark:drop-shadow-[0_20px_50px_rgba(94,242,117,0.15)]"
                   priority
                 />
               </motion.div>

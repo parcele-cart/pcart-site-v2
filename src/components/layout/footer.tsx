@@ -6,27 +6,25 @@ export function Footer() {
   const currentYear = new Date().getFullYear()
 
   const productLinks = [
-    { label: "Solução", href: "#solucao" },
-    { label: "Como Funciona", href: "#como-funciona" },
-    { label: "FAQ", href: "#faq" },
-    { label: "Sobre Nós", href: "/sobre-nos" },
+    { label: "Solução", href: "/#solucao", isExternal: false },
+    { label: "Como Funciona", href: "/#como-funciona", isExternal: false },
+    { label: "FAQ", href: "/#faq", isExternal: false },
+    { label: "Sobre Nós", href: "/sobre-nos", isExternal: false },
     { label: "Acessar Plataforma", href: "https://portal.parcelecart.com.br", isExternal: true },
   ]
 
   const supportLinks = [
-    { label: "Fale com um Especialista", href: "/contato" },
-    { label: "Ouvidoria", href: "/ouvidoria" },
-    { label: "Canal de Denúncias", href: "/canal-de-denuncias" },
-    { label: "Canal de LGPD", href: "/canal-de-atendimento-lgpd" },
-    { label: "Suporte WhatsApp", href: "https://api.whatsapp.com/send/?phone=5511914379025", isExternal: true },
+    { label: "Fale com um Especialista", href: "/contato", isExternal: false },
+    { label: "Suporte", href: "/suporte", isExternal: false },
+    { label: "Ouvidoria", href: "/ouvidoria", isExternal: false },
   ]
 
   const institutionalLinks = [
-    { label: "Termos de Credenciamento", href: "/termos-de-credenciamento" },
-    { label: "Política de Privacidade", href: "/politica-de-privacidade" },
-    { label: "Segurança Cibernética", href: "/politica-de-seguranca-da-informacao-e-cibernetica" },
-    { label: "Política PLD-CFT", href: "/politica-de-pld-cft" },
-    { label: "Código de Ética", href: "/codigo-de-etica" },
+    { label: "Termos de Credenciamento", href: "/termos-de-credenciamento", isExternal: false },
+    { label: "Política de Privacidade", href: "/politica-de-privacidade", isExternal: false },
+    { label: "Segurança Cibernética", href: "/politica-de-seguranca-da-informacao-e-cibernetica", isExternal: false },
+    { label: "Política PLD-CFT", href: "/politica-de-pld-cft", isExternal: false },
+    { label: "Código de Ética", href: "/codigo-de-etica", isExternal: false },
   ]
 
   return (
@@ -38,11 +36,18 @@ export function Footer() {
           <div className="space-y-8">
             <Link href="/" className="inline-block">
               <Image
-                src="/images/logotipo parcelecart branco.png"
+                src="/images/logo-dark-theme.png"
                 alt="ParceleCart"
                 width={180}
                 height={40}
-                className="h-10 w-auto dark:invert-0 invert opacity-90 hover:opacity-100 transition-opacity"
+                className="h-10 w-auto hidden dark:block opacity-90 hover:opacity-100 transition-opacity"
+              />
+              <Image
+                src="/images/logo-light-theme.png"
+                alt="ParceleCart"
+                width={180}
+                height={40}
+                className="h-10 w-auto block dark:hidden opacity-90 hover:opacity-100 transition-opacity"
               />
             </Link>
             <p className="text-[15px] leading-relaxed text-gray-500 dark:text-gray-400 max-w-xs">
@@ -76,7 +81,7 @@ export function Footer() {
           {/* Column 3: Canais */}
           <div>
             <h4 className="text-sm font-bold text-foreground dark:text-white mb-8 relative inline-block">
-              Canais
+              Atendimento
               <span className="absolute -bottom-2 left-0 w-8 h-[2px] bg-brand-green" />
             </h4>
             <ul className="space-y-4">
@@ -84,7 +89,7 @@ export function Footer() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    target={link.isExternal ? "_blank" : undefined}
+                    target={link?.isExternal ? "_blank" : undefined}
                     className="text-[15px] text-gray-500 dark:text-gray-400 hover:text-brand-green dark:hover:text-brand-green transition-colors flex items-center group"
                   >
                     <span className="w-0 group-hover:w-2 h-[1px] bg-brand-green mr-0 group-hover:mr-2 transition-all duration-300" />
