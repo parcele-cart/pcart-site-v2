@@ -89,14 +89,13 @@ function FeatureCard({ feature }: { feature: (typeof features)[0] }) {
         {/* Header row: number + highlight badge */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <span className="text-5xl sm:text-7xl font-display font-bold text-white/50 dark:text-brand-green/50 leading-none">
+            <span className="text-5xl sm:text-7xl font-display font-bold text-white dark:text-brand-green/50 leading-none">
               {feature.number}
             </span>
-            <div className="h-px w-16 sm:w-24 bg-gradient-to-r from-white/30 dark:from-brand-green/40 to-transparent" />
+            <div className="h-px w-16 sm:w-24 bg-gradient-to-r from-white/90 dark:from-brand-green/40 to-transparent" />
           </div>
           <Badge
-            variant="outline"
-            className="px-4 py-1.5 text-base border-white/30 text-white dark:border-brand-green/20 dark:text-brand-green font-medium"
+            className="px-4 py-1.5 text-base bg-white/80 text-[#2F3A59] border border-[#2F3A59]/15 font-medium dark:bg-transparent dark:border-brand-green/20 dark:text-brand-green"
           >
             {feature.highlight}
           </Badge>
@@ -104,10 +103,10 @@ function FeatureCard({ feature }: { feature: (typeof features)[0] }) {
 
         {/* Title + description */}
         <div className="space-y-4 sm:space-y-6">
-          <h3 className="font-display text-2xl sm:text-3xl lg:text-5xl text-white dark:text-white leading-[1.1] tracking-tight">
+          <h3 className="font-display text-2xl sm:text-3xl lg:text-5xl text-dark dark:text-white leading-[1.1] tracking-tight">
             {feature.title}
           </h3>
-          <p className="text-sm sm:text-base lg:text-lg text-white/80 dark:text-gray-400 leading-relaxed max-w-4xl">
+          <p className="text-sm sm:text-base lg:text-lg text-dark/80 dark:text-gray-400 leading-relaxed max-w-4xl">
             {feature.description}
           </p>
         </div>

@@ -190,13 +190,13 @@ export function Hero() {
                         gradientFrom="#5EF275"
                         gradientTo="#2F3A59"
                         gradientColor="var(--magic-card-gradient)"
-                        gradientSize={150}
+                        gradientSize={195}
                       >
-                        <div className="glass rounded-xl px-4 py-3 flex items-center gap-3 w-[216px]">
-                          <card.icon className="h-6 w-6 text-brand-green shrink-0" />
+                        <div className="glass rounded-xl px-5 py-4 flex items-center gap-4 w-[280px]">
+                          <card.icon className="h-8 w-8 text-brand-green shrink-0" />
                           <div>
-                            <p className="text-sm font-semibold text-foreground dark:text-white leading-tight">{card.title}</p>
-                            <p className="text-xs text-gray-500 leading-tight">{card.subtitle}</p>
+                            <p className="text-base font-semibold text-foreground dark:text-white leading-tight">{card.title}</p>
+                            <p className="text-sm text-gray-500 leading-tight">{card.subtitle}</p>
                           </div>
                         </div>
                       </MagicCard>

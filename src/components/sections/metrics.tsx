@@ -107,31 +107,20 @@ export function Metrics() {
           >
             {/* Pulsing background effect centered on the right side */}
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-[140%] aspect-square bg-brand-green/10 dark:bg-brand-green/5 rounded-full blur-[100px] animate-pulse" />
-              <div className="absolute w-[100%] aspect-square border border-brand-green/20 rounded-full animate-[ping_3s_infinite]" />
+              <div className="w-[140%] aspect-square bg-brand-green/30 dark:bg-brand-green/5 rounded-full blur-[100px] animate-pulse" />
+              <div className="absolute w-[110%] aspect-square border-2 border-brand-green/50 dark:border-brand-green/20 rounded-full animate-[ping_3s_infinite]" />
+              <div className="absolute w-[80%] aspect-square border border-brand-green/30 dark:border-brand-green/10 rounded-full animate-[ping_4s_1.5s_infinite]" />
             </div>
 
             <div className="relative z-10 w-full">
-              <motion.div
-                animate={{
-                  y: [0, -15, 0],
-                  rotate: [0, 2, 0]
-                }}
-                transition={{
-                  duration: 8,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              >
-                <Image
-                  src="/images/hero-metrics.png"
-                  alt="Dashboard ParceleCart"
-                  width={800}
-                  height={800}
-                  className="w-full h-auto object-contain mx-auto drop-shadow-[0_20px_50px_rgba(0,0,0,0.1)] dark:drop-shadow-[0_20px_50px_rgba(94,242,117,0.15)]"
-                  priority
-                />
-              </motion.div>
+              <Image
+                src="/images/hero-metrics.png"
+                alt="Dashboard ParceleCart"
+                width={800}
+                height={800}
+                className="w-full h-auto object-contain mx-auto drop-shadow-[0_20px_50px_rgba(0,0,0,0.1)] dark:drop-shadow-[0_20px_50px_rgba(94,242,117,0.15)]"
+                priority
+              />
             </div>
           </motion.div>
 
