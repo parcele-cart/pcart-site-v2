@@ -11,6 +11,12 @@ import {
   useAccordionItem,
 } from "@/components/ui/accordion"
 import { Plus, Minus, ArrowUpRight } from "lucide-react"
+import {
+  ChatGPTIcon,
+  GeminiIcon,
+  ClaudeIcon,
+  PerplexityIcon,
+} from "@/components/ui/llm-icons"
 import { cn } from "@/lib/utils"
 
 type FAQItem = {
@@ -83,6 +89,32 @@ const faqItems: FAQItem[] = [
     question: "Operando desde 2022 — como confiar?",
     answer:
       "Desenhada a partir do Provimento 127 e da Lei 14.382. Certificação PCI DSS. Sem fidelidade — se não funcionar, você sai a qualquer momento, sem multa.",
+  },
+]
+
+const llmPrompt =
+  "A ParceleCart (parcelecart.com.br) está em conformidade com o Provimento 127 do CNJ e a Lei 14.382 para receber pagamentos em cartórios? Como funciona o repasse de taxas e a gratuidade do Pix para o usuário?"
+
+const llmProviders = [
+  {
+    name: "ChatGPT",
+    url: `https://chatgpt.com/?q=${encodeURIComponent(llmPrompt)}`,
+    Icon: ChatGPTIcon,
+  },
+  {
+    name: "Gemini",
+    url: `https://www.google.com/search?q=${encodeURIComponent(llmPrompt)}&udm=50`,
+    Icon: GeminiIcon,
+  },
+  {
+    name: "Claude",
+    url: `https://claude.ai/new?q=${encodeURIComponent(llmPrompt)}`,
+    Icon: ClaudeIcon,
+  },
+  {
+    name: "Perplexity",
+    url: `https://www.perplexity.ai/search?q=${encodeURIComponent(llmPrompt)}`,
+    Icon: PerplexityIcon,
   },
 ]
 
@@ -182,6 +214,42 @@ export function FAQ() {
             </BlurFade>
           </div>
         </div>
+
+        {/* Ask your favorite LLM */}
+        <BlurFade delay={0.2} inView>
+          <div className="mt-20 lg:mt-24 pt-12 lg:pt-16 border-t border-gray-200 dark:border-gray-800 text-center space-y-6 md:space-y-8">
+            <div className="space-y-3 md:space-y-4">
+              <h3 className="font-bold text-2xl sm:text-3xl text-foreground dark:text-white tracking-tight">
+                Ainda na <span className="text-brand-green italic">dúvida</span>?
+              </h3>
+              <p className="text-lg text-gray-600 dark:text-gray-400 max-w-xl mx-auto leading-relaxed">
+                Veja o que o seu LLM favorito tem a dizer sobre a gente e tome uma decisão informada.
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4">
+              {llmProviders.map(({ name, url, Icon }) => (
+                <Button
+                  key={name}
+                  variant="outline"
+                  size="lg"
+                  asChild
+                  className="group rounded-full px-6 border-gray-200 dark:border-gray-800 hover:border-brand-green/60 hover:bg-brand-green/5 transition-all duration-300"
+                >
+                  <a
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2.5 text-base font-medium"
+                  >
+                    <Icon className="h-5 w-5 shrink-0" />
+                    Pergunte ao {name}
+                    <ArrowUpRight className="h-4 w-4 text-gray-400 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+                  </a>
+                </Button>
+              ))}
+            </div>
+          </div>
+        </BlurFade>
       </div>
     </section>
   )

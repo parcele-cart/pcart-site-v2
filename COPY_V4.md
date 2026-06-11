@@ -218,6 +218,20 @@ Desenhada a partir do Provimento 127 e da Lei 14.382. Certificação PCI DSS. Se
 
 **Link discreto no rodapé do bloco:** Mais dúvidas? Fala com o time →
 
+### Bloco "Pergunte ao seu LLM" (faixa full-width no fim da seção)
+
+**Título:** Ainda na dúvida?
+
+**Subtítulo:** Veja o que o seu LLM favorito tem a dizer sobre a gente e tome uma decisão informada.
+
+**Botões (abrem em nova aba, prompt pré-preenchido):** Pergunte ao ChatGPT · Pergunte ao Gemini · Pergunte ao Claude · Pergunte ao Perplexity
+
+> O botão do Gemini abre a busca do Google com IA (AI Mode), pois o Gemini não aceita prompt pré-preenchido por URL.
+
+**Prompt pré-preenchido:**
+
+> A ParceleCart (parcelecart.com.br) está em conformidade com o Provimento 127 do CNJ e a Lei 14.382 para receber pagamentos em cartórios? Como funciona o repasse de taxas e a gratuidade do Pix para o usuário?
+
 ---
 
 ## 8 · CTA FINAL
