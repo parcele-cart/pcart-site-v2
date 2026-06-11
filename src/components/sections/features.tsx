@@ -9,52 +9,39 @@ import { Particles } from "@/components/ui/particles"
 
 const features = [
   {
-    number: "01",
-    title: "Receitas separadas por atribuição, automaticamente",
-    highlight: "Liquidação em domicílios bancários distintos",
+    number: "01 / 05",
+    title: "Conciliação manual, ITBI e ITCMD na conta da serventia, e ato que não se conclui.",
     description:
-      "Cada pagamento recebido vai direto para a conta correspondente — Notas, Protesto, Registro de Imóveis ou Registro de Títulos. A segregação contábil acontece na origem, sem planilha, sem intervenção manual, sem risco de conciliação incorreta.",
-    metric: "Segregação em D+1, direto no domicílio bancário de cada atribuição.",
+      "Fim de mês vira caça ao comprovante: dezenas de Pix de certidão com o mesmo valor, conferidos um a um. Cada cartão é uma conta de cabeça para chegar ao repasse. E o orçamento de escritura fica parado — você levanta as certidões, faz o trabalho, envia o valor e só recebe de volta as duas marcas azuis no WhatsApp, porque o cliente não tem o valor à vista.",
+    feature: false,
   },
   {
-    number: "02",
-    title: "Parcelamento sem cálculo manual, nunca mais",
-    highlight: "Repasse automático de taxas ao usuário final",
+    number: "02 / 05",
+    title: "A rotina da serventia não cabe em solução genérica — e quem opera cartório sabe.",
     description:
-      "A máquina e o link de pagamento calculam a taxa do parcelamento em tempo real e a aplicam diretamente ao valor cobrado do usuário. Sua equipe não calcula nada. Acontece automaticamente, em conformidade com o Provimento CNJ n. 127/2022.",
-    metric: "Zero erros de cobrança. Zero cálculos manuais. Permitido pelo CNJ.",
+      "Atendimento ao público regulado, emolumentos por ato, segregação por atribuição, repasse para o estado. A solução de pagamento da serventia precisa entender tudo isso.",
+    feature: false,
   },
   {
-    number: "03",
-    title: "O cliente paga como quiser. Você recebe de qualquer jeito.",
-    highlight: "Todos os meios de pagamento, presencial e digital",
+    number: "03 / 05",
+    title: "A infraestrutura de pagamentos feita para cartório.",
     description:
-      "PIX por QR Code ou link, boleto bancário, cartão de débito e crédito parcelado em até 21 vezes — disponível no POS presencial, no link de pagamento digital e via API para automação completa. Nenhum usuário sai sem pagar por falta de opção.",
-    metric: "6 meios de pagamento. 1 plataforma. Credenciamento em 3 a 7 dias úteis.",
+      "Construída por quem conhece o setor por dentro. Integra ao seu sistema de gestão, calcula o repasse de taxas conforme o Provimento 127 e segrega cada atribuição em seu próprio domicílio bancário.",
+    feature: true,
   },
   {
-    number: "04",
-    title: "Relatórios que o regulador aceita. Sem adaptar nada.",
-    highlight: "Comprovantes e recebíveis para o setor extrajudicial",
+    number: "04 / 05",
+    title: "Você passa a operar uma serventia à frente do setor.",
     description:
-      "Documentos de comprovação de transação, relatórios de recebíveis e controles financeiros desenvolvidos especificamente para atender às exigências regulatórias do setor extrajudicial. Prestação de contas feita uma vez, sem retrabalho.",
-    metric: "Compliance regulatório nativo — sem customização adicional.",
+      "Quando a operação financeira flui sem fricção, a serventia inteira muda de patamar. Você fica conhecido pelo cartório que atende bem, recebe rápido e fecha o mês sem planilha.",
+    feature: false,
   },
   {
-    number: "05",
-    title: "A mesma condição para todos os cartórios, sem exceção",
-    highlight: "Tabela de taxas padronizada e isonômica",
+    number: "05 / 05",
+    title: "Fim de mês sem planilha, sem conciliação manual, sem caixa errado.",
     description:
-      "Uma única tabela de taxas aplicada de forma uniforme a todos os cartórios parceiros, independente de porte, região ou atribuição. Sem negociação caso a caso, sem concorrência de preços entre colegas, sem surpresa na fatura.",
-    metric: "Transparência total. Sem mensalidade. Sem aluguel de máquina.",
-  },
-  {
-    number: "06",
-    title: "Conectado ao sistema que você já usa, em minutos",
-    highlight: "Integração via API com os principais sistemas cartoriais",
-    description:
-      "A ParceleCart se integra nativamente com Siscart, 4 Hands, CSI, Inova e VizWise — automatizando cobrança, recebimento e conciliação direto no fluxo do ato praticado. A integração é feita pelo nosso time, sem impacto na sua operação.",
-    metric: "Integração em minutos. Sem equipe de TI necessária.",
+      "Pix com confirmação imediata. Cartão liquidando segregado por atribuição. ITBI e ITCMD no trilho correto, fora da conta da serventia. Você fecha o mês conferindo o relatório, não montando.",
+    feature: false,
   },
 ]
 
@@ -77,8 +64,14 @@ function FeatureBackground() {
 }
 
 function FeatureCard({ feature }: { feature: (typeof features)[0] }) {
+  const featured = feature.feature;
+
   return (
-    <div className="rounded-[2rem] p-6 sm:p-8 lg:p-10 h-full w-full relative overflow-hidden flex flex-col justify-center backdrop-blur-xl bg-brand-green dark:bg-zinc-900/90 border border-brand-green/20 dark:border-white/10 shadow-xl dark:shadow-2xl">
+    <div className={`rounded-[2rem] p-6 sm:p-8 lg:p-10 h-full w-full max-w-[900px] mx-auto relative overflow-hidden flex flex-col justify-center backdrop-blur-xl border shadow-xl transition-all duration-200 ${
+      featured
+        ? "bg-brand-green/95 dark:bg-brand-green/20 border-brand-green/40 shadow-[0_0_80px_rgba(94,242,117,0.25)]"
+        : "bg-brand-green dark:bg-zinc-900/90 border border-brand-green/20 dark:border-white/10 shadow-xl dark:shadow-2xl"
+    }`}>
       <ShineBorder
         shineColor={["#3D9A64", "#5EF275", "#2F3A59"]}
         duration={12}
@@ -86,36 +79,21 @@ function FeatureCard({ feature }: { feature: (typeof features)[0] }) {
       />
 
       <div className="flex flex-col gap-6 lg:gap-10 relative z-10">
-        {/* Header row: number + highlight badge */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <span className="text-5xl sm:text-7xl font-display font-bold text-white dark:text-brand-green/50 leading-none">
-              {feature.number}
-            </span>
-            <div className="h-px w-16 sm:w-24 bg-gradient-to-r from-white/90 dark:from-brand-green/40 to-transparent" />
-          </div>
-          <Badge
-            className="px-4 py-1.5 text-base bg-white/80 text-[#2F3A59] border border-[#2F3A59]/15 font-medium dark:bg-transparent dark:border-brand-green/20 dark:text-brand-green"
-          >
-            {feature.highlight}
-          </Badge>
+        {/* Header row: number */}
+        <div className="flex items-center gap-4">
+          <span className="text-3xl sm:text-3xl font-display font-bold text-white dark:text-brand-green/50 leading-none">
+            {feature.number}
+          </span>
+          <div className="h-px w-16 sm:w-24 bg-gradient-to-r from-white/90 dark:from-brand-green/40 to-transparent" />
         </div>
 
         {/* Title + description */}
         <div className="space-y-4 sm:space-y-6">
-          <h3 className="font-display text-2xl sm:text-3xl lg:text-5xl text-dark dark:text-white leading-[1.1] tracking-tight">
+          <h3 className="font-bold text-2xl sm:text-3xl lg:text-4xl text-dark dark:text-white leading-[1.1] tracking-tight">
             {feature.title}
           </h3>
           <p className="text-sm sm:text-base lg:text-lg text-dark/80 dark:text-gray-400 leading-relaxed max-w-4xl">
             {feature.description}
-          </p>
-        </div>
-
-        {/* Metric pill */}
-        <div className="inline-flex items-center gap-4 rounded-2xl bg-white dark:bg-brand-green/5 border border-white/20 dark:border-brand-green/10 p-4 pr-6 w-fit shadow-xl dark:shadow-[0_0_20px_rgba(94,242,117,0.05)]">
-          <div className="w-2.5 h-2.5 rounded-full bg-brand-green dark:bg-brand-green shadow-[0_0_10px_rgba(61,154,100,0.4)] dark:shadow-[0_0_10px_rgba(94,242,117,0.8)]" />
-          <p className="text-sm sm:text-lg text-[#1A4731] dark:text-brand-green font-bold">
-            {feature.metric}
           </p>
         </div>
       </div>
@@ -157,28 +135,24 @@ export function Features() {
         <FeatureBackground />
 
         <div className="relative z-10 px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] w-full h-full max-h-[90vh] flex items-center">
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-10 lg:gap-16 items-center w-full">
+          <div className="grid grid-cols-1 gap-10 items-center w-full">
 
             {/* Left — stays fixed */}
-            <div className="max-w-xl">
+            <div className="max-w-xl mx-auto text-center">
               <BlurFade inView>
-                <Badge variant="neon" className="mb-6">
-                  Diferenciais Exclusivos
+                <Badge variant="neon" className="mb-6 mx-auto">
+                  A virada
                 </Badge>
               </BlurFade>
 
-              <div className="space-y-8">
-                <h2 className="font-display text-3xl sm:text-5xl lg:text-6xl text-foreground dark:text-white leading-[1.05] tracking-tighter">
-                  Funcionalidades que o{" "}
-                  <span className="text-brand-green">cartório precisa</span>.
+              <div className="space-y-12 text-center">
+                <h2 className="font-display font-bold text-3xl sm:text-4xl lg:text-4xl text-foreground dark:text-white leading-[1.05] tracking-tighter">
+                  Da conciliação manual ao<br/> fim de mês{" "}
+                  <span className="text-brand-green">sem planilha</span>.
                 </h2>
-                <p className="text-sm sm:text-base lg:text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
-                  Construídas do zero para serventias extrajudiciais. Nenhuma
-                  dessas funcionalidades existe em adquirentes comuns.
-                </p>
 
                 {/* Visual step indicator */}
-                <div className="flex items-center gap-1.5 pt-2">
+                {/* <div className="flex justify-center items-center gap-1.5 pt-2">
                   {features.map((_, i) => (
                     <motion.div
                       key={i}
@@ -194,12 +168,12 @@ export function Features() {
                       className="h-1.5 rounded-full"
                     />
                   ))}
-                </div>
+                </div> */}
               </div>
             </div>
 
             {/* Right — crossfading cards */}
-            <div className="relative h-[420px] sm:h-[500px] lg:h-[560px] w-full">
+            <div className="relative h-[420px] sm:h-[420px] lg:h-[420px] w-full">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeIndex}

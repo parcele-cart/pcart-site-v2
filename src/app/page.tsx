@@ -1,5 +1,9 @@
 import dynamic from "next/dynamic";
 import { Hero } from "@/components/sections/hero";
+const TrustBar = dynamic(
+  () => import("@/components/sections/trust-bar").then((mod) => mod.TrustBar),
+  { loading: () => <div className="min-h-24" /> },
+);
 
 const Problems = dynamic(
   () => import("@/components/sections/problems").then((mod) => mod.Problems),
@@ -33,6 +37,14 @@ const FAQ = dynamic(
   () => import("@/components/sections/faq").then((mod) => mod.FAQ),
   { loading: () => <div className="min-h-150" /> },
 );
+const ContactCTA = dynamic(
+  () => import("@/components/sections/contact-cta").then((mod) => mod.ContactCTA),
+  { loading: () => <div className="min-h-150" /> },
+);
+const ContactAction = dynamic(
+  () => import("@/components/sections/contact-action").then((mod) => mod.ContactAction),
+  { loading: () => <div className="min-h-100" /> },
+);
 const FinalCTA = dynamic(
   () => import("@/components/sections/final-cta").then((mod) => mod.FinalCTA),
   { loading: () => <div className="min-h-100" /> },
@@ -42,22 +54,29 @@ export default function Home() {
   return (
     <main>
       <Hero />
-      <Problems />
+      <TrustBar />
       <Features />
       <div className="content-auto">
         <HowItWorks />
       </div>
-      <div className="content-auto">
-        <Partners />
-      </div>
-      <div className="content-auto">
+            <div className="content-auto">
         <Metrics />
       </div>
       <Testimonials />
+       
       <FAQ />
+      <ContactCTA />
+      <ContactAction />
+      {/* <Problems />
+      
+      <div className="content-auto">
+        <Partners />
+      </div>
+
+     
       <div className="content-auto">
         <FinalCTA />
-      </div>
+      </div> */}
     </main>
   );
 }

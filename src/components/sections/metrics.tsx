@@ -4,32 +4,44 @@ import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
 import { ease } from "@/lib/utils"
 import { motion } from "motion/react"
-import { Shield, Headset, Plug, Scale } from "lucide-react"
+import { Shield, Headset, Plug, Scale, DollarSign, CreditCard, GitBranch, Sliders } from "lucide-react"
 
 const differentiators = [
   {
     icon: Scale,
-    title: "Feita para o extrajudicial",
+    title: "01 · Conforme o CNJ, por construção",
     description:
-      "Não somos um gateway genérico adaptado. Cada funcionalidade foi desenhada para a rotina de cartórios — segregação por atribuição, repasse de taxas e relatórios regulatórios nativos.",
+      "A ParceleCart foi desenhada a partir do Provimento 127 do CNJ e da Lei 14.382. Certificação PCI DSS no padrão internacional para transações com cartão.",
   },
   {
-    icon: Shield,
-    title: "Conformidade desde o dia zero",
+    icon: DollarSign,
+    title: "02 · ITBI e ITCMD nunca transitam pela conta da serventia",
     description:
-      "Provimento CNJ n. 127/2022, LGPD, PCI DSS e normas das Corregedorias estaduais. A compliance não é um add-on — é a base de tudo que construímos.",
+      "Cada imposto vai pelo trilho correto, sem passar pela conta do cartório. Zero risco fiscal, zero trabalho para o financeiro, zero conciliação de terceiro.",
   },
   {
-    icon: Headset,
-    title: "Suporte que entende seu balcão",
+    icon: CreditCard,
+    title: "03 · Todos os meios, uma plataforma",
     description:
-      "Nossa equipe conhece a diferença entre um TN e um RI. Atendimento especializado por pessoas que falam a língua do cartório, não scripts genéricos.",
+      "Pix por QR Code (gratuito), boleto, débito e crédito em até 21x — no POS presencial, no link de pagamento e via API. Ninguém sai sem pagar por falta de opção.",
   },
   {
     icon: Plug,
-    title: "Integração sem dor de cabeça",
+    title: "04 · Integrada ao seu sistema de gestão",
     description:
-      "Conectamos com Siscart, 4 Hands, CSI, Inova e VizWise. Nossa equipe faz a integração — sem necessidade de TI no cartório, sem impacto na operação.",
+      "Integração via API com os principais sistemas notariais e registrais. Número de pedido na maquininha e no link, taxas discriminadas no comprovante, conciliação automática.",
+  },
+  {
+    icon: GitBranch,
+    title: "05 · Cada atribuição liquida no domicílio certo",
+    description:
+      "A ParceleCart liquida em domicílios bancários separados por atribuição ou operação (notas/protesto, depósito prévio/emolumentos), sem te obrigar a abrir conta em banco específico. Sua contabilidade recebe os valores já segregados.",
+  },
+  {
+    icon: Sliders,
+    title: "06 · Você no controle, sem amarras",
+    description:
+      "Você define o que repassa e o que absorve em cada meio — Pix, débito, crédito à vista, parcelado — e o usuário vê o valor antes de confirmar, conforme o Provimento 127. Pix QR Code gratuito, taxas padronizadas para qualquer cartório e nenhuma fidelidade: se não fizer sentido, você sai sem multa.",
   },
 ]
 
@@ -49,12 +61,12 @@ export function Metrics() {
 
       <div className="container relative z-10 mx-auto px-6 sm:px-10 lg:px-16">
         {/* Content Grid: 2 Columns */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
 
-          {/* Left Column: Header + 2x2 Grid of Items */}
-          <div className="lg:col-span-7 space-y-12">
-            {/* Header */}
-            <div className="flex flex-col items-start text-left max-w-3xl">
+          {/* Left Column: Header (Fixed) + Scrollable Cards */}
+          <div className="lg:col-span-7 flex flex-col h-screen">
+            {/* Header - stays fixed */}
+            <div className="flex flex-col items-start text-left max-w-3xl pb-8">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -64,42 +76,62 @@ export function Metrics() {
                 <Badge variant="neon" className="mb-4 uppercase tracking-widest px-4 py-1">
                   Diferenciais que importam
                 </Badge>
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-foreground dark:text-white mb-4 leading-tight">
-                  Por que os maiores cartórios escolhem a ParceleCart?
+                <h2 className="text-3xl sm:text-4xl lg:text-4xl font-display font-bold text-foreground dark:text-white mb-4 leading-tight">
+                  Por que dizemos <span className="text-brand-green">"feito para cartório"</span>
                 </h2>
                 <p className="text-base lg:text-lg text-gray-500 dark:text-gray-400">
-                  Mais que tecnologia, entregamos a segurança jurídica e a eficiência operacional que sua serventia exige.
+                  Não é gateway adaptado. É infraestrutura desenhada do zero para a rotina do cartório.
                 </p>
               </motion.div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-8 lg:gap-x-8 lg:gap-y-10">
-              {differentiators.map((item, index) => (
-                <motion.div
-                  key={item.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8, delay: index * 0.15, ease }}
-                  className="group relative"
-                >
-                  <div className="mb-4 inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-brand-green/10 text-brand-green group-hover:bg-brand-green group-hover:text-white transition-all duration-500 shadow-sm">
-                    <item.icon size={24} />
-                  </div>
-                  <h3 className="text-lg lg:text-xl font-bold text-foreground dark:text-white mb-2 group-hover:text-brand-green transition-colors duration-300">
-                    {item.title}
-                  </h3>
-                  <p className="text-gray-500 dark:text-gray-400 leading-relaxed text-sm">
-                    {item.description}
-                  </p>
-                </motion.div>
-              ))}
+            {/* Scrollable Cards List */}
+            <div className="flex-1 overflow-y-auto pr-4">
+              <div className="grid grid-cols-1 gap-0">
+                {differentiators.map((item, index) => {
+                  const itemNumber = String(index + 1).padStart(2, "0")
+                  return (
+                    <motion.div
+                      key={item.title}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8, delay: index * 0.15, ease }}
+                    className={`group relative flex items-start gap-6 py-8 px-0 ${
+                      index !== differentiators.length - 1
+                        ? "border-b border-gray-700/30"
+                        : ""
+                    }`}
+                  >
+                    {/* Icon */}
+                    <div className="flex-shrink-0 inline-flex items-center justify-center w-14 h-14 rounded-xl bg-brand-green/10 text-brand-green border border-brand-green/30 group-hover:bg-brand-green group-hover:text-white group-hover:border-brand-green transition-all duration-500 shadow-sm">
+                      <item.icon size={18} />
+                    </div>
+
+                    {/* Content */}
+                    <div className="flex-1">
+                      <div className="flex items-baseline gap-3 mb-2">
+                        <span className="text-brand-green font-display font-bold text-xl">
+                          {itemNumber}
+                        </span>
+                        <h3 className="text-lg lg:text-xl font-bold text-foreground dark:text-white group-hover:text-brand-green transition-colors duration-300">
+                          {item.title.split(" · ")[1]}
+                        </h3>
+                      </div>
+                      <p className="text-gray-500 dark:text-gray-400 leading-relaxed text-sm">
+                        {item.description}
+                      </p>
+                    </div>
+                  </motion.div>
+                )
+              })}
+              </div>
             </div>
           </div>
 
-          {/* Right Column: Dashboard Image */}
+          {/* Right Column: Sticky Dashboard Image */}
           <motion.div
-            className="lg:col-span-5 relative flex justify-center w-full"
+            className="lg:col-span-5 relative flex justify-center w-full sticky top-0 h-screen items-center"
             initial={{ opacity: 0, scale: 0.9, x: 20 }}
             whileInView={{ opacity: 1, scale: 1, x: 0 }}
             viewport={{ once: true }}

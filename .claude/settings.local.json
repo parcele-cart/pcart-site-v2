@@ -15,7 +15,8 @@
       "Bash(cmd:*)",
       "mcp___magicuidesign_mcp__getBackgrounds",
       "mcp___magicuidesign_mcp__getTextAnimations",
-      "mcp___magicuidesign_mcp__getSpecialEffects"
+      "mcp___magicuidesign_mcp__getSpecialEffects",
+      "Bash(npm audit *)"
     ]
   },
   "enabledMcpjsonServers": [

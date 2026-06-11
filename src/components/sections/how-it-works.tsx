@@ -2,32 +2,34 @@
 
 import { Badge } from "@/components/ui/badge"
 import { BlurFade } from "@/components/ui/blur-fade"
+import { Button } from "@/components/ui/button"
 import { cn, ease } from "@/lib/utils"
+import Image from "next/image"
 import { motion, useScroll, useSpring, useMotionValueEvent } from "motion/react"
-import { Settings, Smartphone, BarChart3 } from "lucide-react"
-import { useRef, useState, useEffect, useCallback } from "react"
+import { Settings, Rocket, Headset } from "lucide-react"
+import { useRef, useState, useCallback } from "react"
 
 const steps = [
   {
     number: "01",
-    icon: Settings,
-    title: "Configure seu cartório",
+    icon: Headset,
+    title: "Passo 01 — Converse com o time",
     description:
-      "Informe suas atribuições (Notas, Protesto, Registro) e domicílios bancários. Fazemos a integração com seu sistema em minutos.",
+      "A gente entende a sua atribuição, seu volume de atos e qual sistema de gestão você usa. Conversa direta com quem conhece o setor — sem formulário de varejo, sem documento que serventia não tem.",
   },
   {
     number: "02",
-    icon: Smartphone,
-    title: "Receba por qualquer canal",
+    icon: Settings,
+    title: "Passo 02 — Receba tudo pronto",
     description:
-      "POS na serventia, Link enviado pelo WhatsApp ou integração via API. O cartório escolhe, a ParceleCart processa.",
+      "Repasse ou absorção de taxas, domicílios bancários por atribuição e integração com o seu sistema de gestão. Tudo ajustado para a sua serventia antes da primeira transação.",
   },
   {
     number: "03",
-    icon: BarChart3,
-    title: "Conciliação automática",
+    icon: Rocket,
+    title: "Passo 03 — Conciliação automática",
     description:
-      "Cada pagamento liquidado no domicílio correto, relatório pronto para a prestação de contas. Zero planilha.",
+      "Maquininha, link de pagamento ou API. Pix e cartão com confirmação imediata, liquidados no domicílio de cada atribuição, ITBI e ITCMD pelo trilho correto, sem passar pela sua conta. Conciliação rodando integrada ao seu sistema, sem planilhas.",
   },
 ]
 
@@ -202,7 +204,7 @@ export function HowItWorks() {
       style={{ minHeight: "300vh" }}
     >
       {/* Sticky wrapper — stays visible while the tall section scrolls */}
-      <div className="sticky top-0 h-screen overflow-hidden flex flex-col justify-center">
+      <div className="sticky top-0 min-h-screen flex flex-col justify-between overflow-visible">
         {/* Background elements */}
         <div className="absolute inset-0 bg-gradient-to-b from-background dark:from-brand-black via-background dark:via-[#0D1117] to-background dark:to-brand-black" />
         <div
@@ -222,15 +224,10 @@ export function HowItWorks() {
               </Badge>
             </BlurFade>
             <BlurFade delay={0.1} inView>
-              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-foreground dark:text-white mb-6 tracking-tight">
-                Três passos para{" "}
-                <span className="text-brand-green">simplificar</span> tudo
+              <h2 className="font-bold text-3xl sm:text-4xl md:text-5xl lg:text-5xl text-foreground dark:text-white mb-6 tracking-tight">
+                Mude a rotina financeira<br/> do {" "}
+                <span className="text-brand-green">seu cartório</span> agora
               </h2>
-            </BlurFade>
-            <BlurFade delay={0.2} inView>
-              <p className="text-sm sm:text-base lg:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                Da integração ao primeiro recebimento em minutos, não meses.
-              </p>
             </BlurFade>
           </div>
 
@@ -246,6 +243,22 @@ export function HowItWorks() {
               />
             ))}
           </div>
+        </div>
+
+        <div className="relative z-10 px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] pb-16 sm:pb-24 lg:pb-32 flex flex-col items-center gap-8">
+          <div className="w-[80%] max-w-[980px] mx-auto">
+            <Image
+              src="/images/hero-dashboards.png"
+              alt="Dashboards ParceleCart"
+              width={1600}
+              height={900}
+              className="w-full h-auto object-contain"
+              priority
+            />
+          </div>
+          <Button size="lg" asChild>
+            <a href="/contato">Fale com o time</a>
+          </Button>
         </div>
       </div>
     </section>

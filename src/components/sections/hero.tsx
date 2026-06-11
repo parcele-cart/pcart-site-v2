@@ -11,10 +11,10 @@ import { CreditCard, QrCode, Link2, ShieldCheck } from "lucide-react"
 import { useTheme } from "next-themes"
 
 const floatingCards = [
-  { icon: CreditCard, title: "Crédito em até 21x", subtitle: "Receba em D+1" },
-  { icon: QrCode, title: "Pix QR Code", subtitle: "Cai na hora, sem taxa" },
-  { icon: Link2, title: "Link de pagamento", subtitle: "Cobre a distância" },
-  { icon: ShieldCheck, title: "PCI DSS", subtitle: "Segurança certificada" },
+  { icon: QrCode, title: "Pix QR Code grátis", subtitle: "confirmação na hora, sem caçar comprovante" },
+  { icon: CreditCard, title: "Crédito em até 21x", subtitle: "a serventia recebe em D+1" },
+  { icon: Link2, title: "Link de pagamento", subtitle: "cobre no WhatsApp, confirmação imediata" },
+  { icon: ShieldCheck, title: "PCI DSS", subtitle: "segurança certificada" },
 ]
 
 export function Hero() {
@@ -74,14 +74,12 @@ export function Hero() {
                 duration={0.4}
                 className="font-display text-2xl sm:text-3xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl leading-[1.1] text-foreground dark:text-white mb-6"
               >
-                Pagamentos eletrônicos para cartórios. Do jeito que o setor precisa.
+                A infraestrutura de pagamentos feita para cartório.
               </TextAnimate>
 
               <BlurFade delay={0.3} inView>
                 <p className="text-xs sm:text-sm lg:text-base text-gray-600 dark:text-gray-400 max-w-xl mb-4 lg:mb-8">
-                  Pix, cartão parcelado em até 21x e boleto — com repasse automático
-                  de taxas, conforme o Provimento nº&nbsp;127/2022 do CNJ. Sem
-                  mensalidade. Sem fidelidade.
+                  Pix, cartão e parcelamento integrados ao seu sistema de gestão. Repasse de taxas automático conforme o Provimento 127 — e ITBI e ITCMD nunca passam pela conta da serventia.
                 </p>
               </BlurFade>
             </div>
@@ -90,16 +88,20 @@ export function Hero() {
               <BlurFade delay={0.4} inView>
                 <div className="flex flex-col sm:flex-row gap-4 mb-10 lg:mb-12">
                   <Button size="lg" asChild>
-                    <a href="/contato">Fale com um Especialista</a>
-                  </Button>
-                  <Button variant="outline" size="lg" asChild>
                     <a href="/#solucao">Ver como funciona</a>
                   </Button>
+                  <Button variant="outline" size="lg" asChild>
+                    <a href="/contato">Falar com especialista</a>
+                  </Button>
+                </div>
+                <div className="flex items-center gap-3 text-xs text-gray-600 mb-10">
+                  <ShieldCheck className="h-5 w-5 text-brand-green" aria-hidden="true" />
+                  <span>Operando desde 2022, em conformidade com o Provimento 127 do CNJ e certificação PCI DSS.</span>
                 </div>
               </BlurFade>
 
               {/* Trust line */}
-              <BlurFade delay={0.6} inView>
+              {/* <BlurFade delay={0.6} inView>
                 <div className="flex flex-col gap-3">
                   <span className="text-xs text-gray-600 uppercase tracking-widest">
                     Integrado com
@@ -112,7 +114,7 @@ export function Hero() {
                     ))}
                   </div>
                 </div>
-              </BlurFade>
+              </BlurFade> */}
             </div>
           </div>
 

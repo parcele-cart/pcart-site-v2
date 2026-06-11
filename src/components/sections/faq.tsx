@@ -13,61 +13,76 @@ import {
 import { Plus, Minus, ArrowUpRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 
-const faqItems = [
+type FAQItem = {
+  question: string
+  answer: string
+  action?: {
+    title: string
+    url: string
+  }
+}
+
+const faqItems: FAQItem[] = [
   {
-    question: "O cartório paga mensalidade ou aluguel de máquina?",
+    question: "Quanto custa para o cartório?",
     answer:
-      "Não. A ParceleCart não cobra mensalidade, aluguel de equipamento ou qualquer taxa fixa. Nossa remuneração ocorre exclusivamente pelas taxas que incidem sobre as transações realizadas — você só paga quando recebe.",
+      "Sem mensalidade, sem aluguel de maquininha, sem fidelidade e sem volume mínimo. Conforme o Provimento 127, o Pix é gratuito para o usuário e o cartório pode repassar os custos das demais transações ao usuário final — operando, na prática, sem custo recorrente. Você só paga quando recebe.",
+    action: {
+      title: "Solicitar proposta",
+      url: "/contato",
+    },
   },
   {
-    question: "Quanto tempo leva para o cartório começar a usar a plataforma?",
+    question: "Já temos Pix e maquininha — para que mudar?",
     answer:
-      "O processo de credenciamento leva entre 3 e 7 dias úteis a partir da assinatura do formulário. Após isso, o seu cartório já está apto a receber por todos os meios de pagamento disponíveis.",
+      "Pix estático exige conciliação manual. Maquininha de varejo não calcula repasse de taxas, não segrega por atribuição e não integra com seu sistema de gestão. A ParceleCart faz tudo isso, com Pix gratuito.",
   },
   {
-    question: "Como as taxas de parcelamento são calculadas e aplicadas?",
+    question: "A taxa de cartão vai encarecer para o cliente?",
     answer:
-      "O cálculo é automático. Tanto a máquina (POS) quanto o link de pagamento calculam e aplicam as taxas ao valor total em tempo real, sem necessidade de cálculo manual pela equipe do cartório. Nenhum erro. Nenhum retrabalho.",
+      "O Provimento 127 do CNJ autoriza o repasse e garante a gratuidade do Pix. O usuário vê o valor antes de confirmar e escolhe como pagar — incluindo Pix gratuito. Quem opta pelo cartão geralmente prefere isso a desistir do ato.",
+    action: {
+      title: "Ver legislação aplicável",
+      url: "/#diferenciais",
+    },
   },
   {
-    question:
-      "Posso escolher se o cartório absorve as taxas ou as repassa ao usuário final?",
+    question: "Posso escolher absorver ou repassar as taxas?",
     answer:
-      'Sim. Via o aplicativo "Taxas ao Portador", você configura a opção de repasse para pagamentos de débito e crédito de acordo com a política do seu cartório. A escolha é sua.',
+      "Sim. A configuração é sua — você pode, por exemplo, absorver no débito e repassar no crédito. O sistema aplica a regra automaticamente a cada transação, sem erro de cálculo.",
   },
   {
-    question: "Quando o cartório recebe os valores das transações?",
+    question: "Como o repasse de taxas é calculado?",
     answer:
-      "Todos os valores transacionados são depositados no próximo dia útil (D+1), diretamente no domicílio bancário correspondente a cada atribuição do cartório.",
+      "Cálculo automático, sem intervenção humana. A ParceleCart identifica o meio de pagamento, aplica a taxa configurada e exibe o valor final ao usuário antes da confirmação — inclusive em ITBI e ITCMD.",
   },
   {
-    question:
-      "O repasse de taxas ao usuário final é permitido pela legislação?",
+    question: "Meu sistema de gestão integra?",
     answer:
-      "Sim. O Provimento CNJ n. 127, de 02 de setembro de 2022, autoriza expressamente o repasse de taxas de parcelamento ao usuário final para pagamentos em débito e crédito. Para pagamentos via PIX, o repasse não é permitido.",
+      "Integração ativa com os principais sistemas notariais e registrais via API — Siscart, 4 Hands, CSI, Inova, VizWise, Minerva e outros. Se o seu ainda não está na lista, a gente conversa com o fornecedor.",
+    action: {
+      title: "Conhecer integrações",
+      url: "/contato",
+    },
   },
   {
-    question: "Quais meios de pagamento estão disponíveis para o cartório?",
+    question: "Quanto tempo leva para começar a usar?",
     answer:
-      "A ParceleCart oferece PIX (por QR Code e link de pagamento), cartão de débito, cartão de crédito à vista e parcelado em até 21 vezes, e boleto bancário — disponíveis presencialmente no POS, de forma digital pelo link de pagamento, ou integrados via API.",
+      "Você fala com o time, a gente configura o sistema com as suas preferências e você já pode enviar links de pagamento no mesmo dia — enquanto a maquininha chega.",
   },
   {
-    question:
-      "Existe volume mínimo de transações para usar a plataforma?",
+    question: "As taxas são iguais para qualquer cartório?",
     answer:
-      "Não. Não há volume mínimo exigido. O cartório começa a usar imediatamente após o credenciamento, sem nenhum compromisso de volume ou metas de transação.",
+      "Sim. Taxas padronizadas e iguais para qualquer serventia, de qualquer estado e porte. Sem letras miúdas.",
+    action: {
+      title: "Solicitar proposta de taxas",
+      url: "/contato",
+    },
   },
   {
-    question:
-      "A plataforma é certificada e segura para dados financeiros do cartório?",
+    question: "Operando desde 2022 — como confiar?",
     answer:
-      "Sim. A ParceleCart possui certificação PCI-DSS, que é o padrão internacional de segurança para processamento de dados de pagamento. Todos os servidores estão hospedados no Brasil, em conformidade com a LGPD.",
-  },
-  {
-    question:
-      "Como funciona a integração com os sistemas que o cartório já utiliza?",
-    answer:
-      "A integração é feita via API com os principais sistemas de gestão notarial e registral do mercado, incluindo Siscart, 4 Hands, CSI, Inova e VizWise. O processo é conduzido pela nossa equipe técnica e leva minutos — sem impacto na operação do cartório e sem necessidade de equipe de TI própria.",
+      "Desenhada a partir do Provimento 127 e da Lei 14.382. Certificação PCI DSS. Sem fidelidade — se não funcionar, você sai a qualquer momento, sem multa.",
   },
 ]
 
@@ -112,21 +127,23 @@ export function FAQ() {
               </Badge>
 
               <div className="space-y-4 md:space-y-6">
-                <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl text-foreground dark:text-white leading-[1.1] tracking-tight">
-                  Perguntas que todo <span className="text-brand-green italic">tabelião</span> faz.
+                <h2 className="font-bold text-4xl sm:text-4xl lg:text-4xl text-foreground dark:text-white leading-[1.1] tracking-tight">
+                  Perguntas que todos <span className="text-brand-green italic">os cartórios</span> fazem.
                 </h2>
 
                 <p className="text-lg text-gray-600 dark:text-gray-400 max-w-md leading-relaxed">
                   Tudo o que você precisa saber antes de modernizar os pagamentos do seu cartório com a ParceleCart.
                 </p>
               </div>
-
-              <Button variant="outline" size="lg" asChild className="group rounded-full px-8 border-gray-200 dark:border-gray-800 hover:bg-brand-green hover:text-white hover:border-brand-green transition-all duration-300">
-                <a href="/contato" className="flex items-center gap-2 text-base font-medium">
-                  Fale com um Especialista
-                  <ArrowUpRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
-                </a>
-              </Button>
+              <div className="flex items-center gap-3 md:gap-4">
+                <span className="text-lg font-light text-foreground dark:text-white">Mais dúvidas?</span>
+                <Button variant="outline" size="lg" asChild className="group rounded-full px-8 border-gray-200 dark:border-gray-800 hover:bg-brand-green hover:text-white hover:border-brand-green transition-all duration-300">
+                  <a href="/contato" className="flex items-center gap-2 text-base font-medium">
+                    Fale com o time
+                    <ArrowUpRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+                  </a>
+                </Button>
+              </div>
             </div>
           </div>
 
@@ -134,7 +151,7 @@ export function FAQ() {
           <div className="lg:col-span-7">
             <BlurFade delay={0.4} inView>
               <Accordion type="single" className="w-full border-t border-gray-200 dark:border-gray-800">
-                {faqItems.map((item, i) => (
+                {faqItems.map((item: FAQItem, i) => (
                   <AccordionItem
                     key={i}
                     value={`item-${i}`}
@@ -143,8 +160,21 @@ export function FAQ() {
                     <AccordionTrigger hideChevron className="hover:no-underline py-6">
                       <FAQTrigger question={item.question} index={i} />
                     </AccordionTrigger>
-                    <AccordionContent className="pl-10 md:pl-20 pr-4 md:pr-12 text-base md:text-lg text-gray-600 dark:text-gray-400 leading-relaxed pb-8">
-                      {item.answer}
+                    <AccordionContent className="pl-10 md:pl-20 pr-4 md:pr-12 pb-8">
+                      <p className="text-base md:text-lg text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                        {item.answer}
+                      </p>
+                      {item.action && (
+                        <a
+                          href={item.action.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 text-brand-green font-medium text-base md:text-lg hover:gap-3 transition-all duration-300 group"
+                        >
+                          {item.action.title}
+                          <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+                        </a>
+                      )}
                     </AccordionContent>
                   </AccordionItem>
                 ))}

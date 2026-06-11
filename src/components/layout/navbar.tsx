@@ -9,11 +9,9 @@ import { cn } from "@/lib/utils"
 import { ThemeToggle } from "@/components/theme-toggle"
 
 const navLinks = [
-  { label: "Solução", href: "/#solucao" },
-  { label: "Como Funciona", href: "/#como-funciona" },
-  { label: "FAQ", href: "/#faq" },
-  { label: "Sobre Nós", href: "/sobre-nos" },
-  { label: "Contato", href: "/contato" },
+  { label: "Como funciona", href: "/#como-funciona" },
+  { label: "Perguntas frequentes", href: "/#faq" },
+  { label: "Diferencial", href: "/sobre-nos" }
 ]
 
 const sectionIds = ["solucao", "como-funciona", "faq"]
