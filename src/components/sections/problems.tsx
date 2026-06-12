@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "motion/react"
-import { Check } from "lucide-react"
+import { Badge } from "@/components/ui/badge"
 import { BlurFade } from "@/components/ui/blur-fade"
 import { ease } from "@/lib/utils"
 import Image from "next/image"
@@ -9,35 +9,33 @@ import Image from "next/image"
 const problems = [
   {
     number: "01",
-    title: "Receitas misturadas, controles confusos",
+    title: "Conciliação manual, ITBI e ITCMD na conta da serventia, e ato que não se conclui.",
     description:
-      "Notas, Protesto, RI e RT na mesma conta geram conciliação manual todo mês — e risco real na prestação de contas regulatória.",
-    solution:
-      "Segregação automática por atribuição desde o primeiro pagamento recebido.",
+      "Fim de mês vira caça ao comprovante: dezenas de Pix de certidão com o mesmo valor, conferidos um a um. Cada cartão é uma conta de cabeça para chegar ao repasse. E o orçamento de escritura fica parado — você levanta as certidões, faz o trabalho, envia o valor e só recebe de volta as duas marcas azuis no WhatsApp, porque o cliente não tem o valor à vista.",
   },
   {
     number: "02",
-    title: "Calcular repasse de taxas consome tempo que você não tem",
+    title: "A rotina da serventia não cabe em solução genérica — e quem opera cartório sabe.",
     description:
-      "A cada parcelamento, alguém calcula manualmente o repasse de taxas. Lento, sujeito a erro e completamente desnecessário.",
-    solution:
-      "O sistema calcula e aplica o repasse automaticamente, sem intervenção humana.",
+      "Atendimento ao público regulado, emolumentos por ato, segregação por atribuição, repasse para o estado. A solução de pagamento da serventia precisa entender tudo isso.",
   },
   {
     number: "03",
-    title: "Usuários que não conseguem pagar — e atos que não se concretizam",
+    title: "A infraestrutura de pagamentos feita para cartório.",
     description:
-      "Sem parcelamento, o usuário sem saldo integral vai embora e o ato não se pratica. Custo real, invisível nos relatórios.",
-    solution:
-      "PIX, boleto, débito e crédito parcelado em até 21x, presencial e digital, em um único lugar.",
+      "Construída por quem conhece o setor por dentro. Integra ao seu sistema de gestão, calcula o repasse de taxas conforme o Provimento 127 e segrega cada atribuição em seu próprio domicílio bancário.",
   },
   {
     number: "04",
-    title: "Relatórios que não atendem o que o regulador exige",
+    title: "Você passa a operar uma serventia à frente do setor.",
     description:
-      "Comprovantes feitos para o varejo não atendem o extrajudicial. Adaptar documentos a cada prestação de contas é retrabalho constante e evitável.",
-    solution:
-      "Relatórios de recebíveis desenvolvidos especificamente para as demandas regulatórias dos cartórios.",
+      "Quando a operação financeira flui sem fricção, a serventia inteira muda de patamar. Você fica conhecido pelo cartório que atende bem, recebe rápido e fecha o mês sem planilha.",
+  },
+  {
+    number: "05",
+    title: "Fim de mês sem planilha, sem conciliação manual, sem caixa errado.",
+    description:
+      "Pix com confirmação imediata. Cartão liquidando segregado por atribuição. ITBI e ITCMD no trilho correto, fora da conta da serventia. Você fecha o mês conferindo o relatório, não montando.",
   },
 ]
 
@@ -74,16 +72,15 @@ export function Problems() {
         <div className="relative z-10 px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] w-full">
           <div className="grid grid-cols-2 gap-12 items-start">
             {/* LEFT column: sticky heading — fills viewport height, content centred */}
-            <div className="sticky top-0 h-screen flex items-center self-start">
+            <div className="sticky top-24 h-[calc(100vh-6rem)] flex items-center self-start">
               <div className="w-full">
-                <h2 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl text-foreground dark:text-white mb-4">
-                  Nenhum sistema genérico entende como um cartório funciona.
+                <Badge variant="neon" className="mb-6">
+                  A virada
+                </Badge>
+                <h2 className="font-display font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl text-foreground dark:text-white leading-[1.05] tracking-tighter mb-4">
+                  Da conciliação manual ao<br /> fim de mês{" "}
+                  <span className="text-brand-green">sem planilha</span>.
                 </h2>
-                <p className="text-xs sm:text-sm lg:text-base text-gray-600 dark:text-gray-400">
-                  Maquininhas comuns pedem &ldquo;contrato social&rdquo;, não conhecem as diferentes
-                  atribuições e cobram com pouca transparência. Depois, sua equipe
-                  passa horas conciliando. Todo mês.
-                </p>
                 <BlurFade inView delay={0.1}>
                   <div className="relative group">
                     <div className="absolute -inset-4 bg-brand-green/10 blur-3xl rounded-full opacity-50" />
@@ -119,13 +116,7 @@ export function Problems() {
                   <h3 className="text-base sm:text-lg font-semibold text-foreground dark:text-white mt-3 mb-3">
                     {problem.title}
                   </h3>
-                  <p className="text-base text-gray-600 dark:text-gray-400 mb-4">{problem.description}</p>
-                  <div className="border-t border-foreground/5 dark:border-white/5 pt-4 flex items-start gap-3">
-                    <Check className="h-5 w-5 text-brand-green glow-green-text shrink-0 mt-0.5" />
-                    <p className="text-base font-medium text-brand-green glow-green-text">
-                      {problem.solution}
-                    </p>
-                  </div>
+                  <p className="text-base text-gray-600 dark:text-gray-400">{problem.description}</p>
                 </motion.div>
               ))}
             </div>
@@ -139,16 +130,13 @@ export function Problems() {
           {/* Header */}
           <div className="max-w-5xl mb-10 sm:mb-12">
             <BlurFade inView>
-              <h2 className="font-display text-xl sm:text-2xl md:text-3xl text-foreground dark:text-white mb-4">
-                Nenhum sistema genérico entende como um cartório funciona.
+              <Badge variant="neon" className="mb-6">
+                A virada
+              </Badge>
+              <h2 className="font-display font-bold text-xl sm:text-2xl md:text-3xl text-foreground dark:text-white leading-[1.05] tracking-tighter mb-4">
+                Da conciliação manual ao<br /> fim de mês{" "}
+                <span className="text-brand-green">sem planilha</span>.
               </h2>
-            </BlurFade>
-            <BlurFade delay={0.1} inView>
-              <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-                Maquininhas comuns pedem &ldquo;contrato social&rdquo;, não conhecem as diferentes
-                atribuições e cobram com pouca transparência. Depois, sua equipe
-                passa horas conciliando. Todo mês.
-              </p>
             </BlurFade>
           </div>
 
@@ -163,13 +151,7 @@ export function Problems() {
                   <h3 className="text-base sm:text-lg font-semibold text-foreground dark:text-white mt-3 mb-3">
                     {problem.title}
                   </h3>
-                  <p className="text-base text-gray-600 dark:text-gray-400 mb-4">{problem.description}</p>
-                  <div className="border-t border-foreground/5 dark:border-white/5 pt-4 flex items-start gap-3">
-                    <Check className="h-5 w-5 text-brand-green glow-green-text shrink-0 mt-0.5" />
-                    <p className="text-base font-medium text-brand-green glow-green-text">
-                      {problem.solution}
-                    </p>
-                  </div>
+                  <p className="text-base text-gray-600 dark:text-gray-400">{problem.description}</p>
                 </div>
               </BlurFade>
             ))}

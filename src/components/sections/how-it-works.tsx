@@ -246,16 +246,7 @@ export function HowItWorks() {
         </div>
 
         <div className="relative z-10 px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] pb-16 sm:pb-24 lg:pb-32 flex flex-col items-center gap-8">
-          <div className="w-[80%] max-w-[980px] mx-auto">
-            <Image
-              src="/images/hero-dashboards.png"
-              alt="Dashboards ParceleCart"
-              width={1600}
-              height={900}
-              className="w-full h-auto object-contain"
-              priority
-            />
-          </div>
+ 
           <Button size="lg" asChild>
             <a href="/contato">Fale com o time</a>
           </Button>

@@ -47,24 +47,26 @@ const differentiators = [
 
 export function Metrics() {
   return (
-    <section className="py-16 sm:py-20 lg:py-20 relative overflow-hidden bg-background">
-      {/* Background gradients */}
-      <div className="absolute top-1/2 right-0 w-[600px] h-[600px] bg-brand-green/5 rounded-full blur-[140px] pointer-events-none" />
+    // Seção alta cria o "trilho" de scroll; o wrapper sticky pina o conteúdo
+    <section className="relative bg-background min-h-[200vh]">
+      <div className="sticky top-0 min-h-screen w-full flex items-center overflow-x-clip py-16">
+        {/* Background gradients */}
+        <div className="absolute top-1/2 right-0 w-[600px] h-[600px] bg-brand-green/5 rounded-full blur-[140px] pointer-events-none" />
 
-      {/* Striped Pattern Overlay */}
-      <div
-        className="absolute inset-0 z-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none"
-        style={{
-          backgroundImage: `repeating-linear-gradient(45deg, var(--foreground), var(--foreground) 1px, transparent 1px, transparent 10px)`
-        }}
-      />
+        {/* Striped Pattern Overlay */}
+        <div
+          className="absolute inset-0 z-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none"
+          style={{
+            backgroundImage: `repeating-linear-gradient(45deg, var(--foreground), var(--foreground) 1px, transparent 1px, transparent 10px)`
+          }}
+        />
 
-      <div className="container relative z-10 mx-auto px-6 sm:px-10 lg:px-16">
+        <div className="container relative z-10 mx-auto py-20 px-6 sm:px-10 lg:px-16 w-full">
         {/* Content Grid: 2 Columns */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
 
-          {/* Left Column: Header (Fixed) + Scrollable Cards */}
-          <div className="lg:col-span-7 flex flex-col h-screen">
+          {/* Left Column: Header + Cards (2 por linha, sem scroll) */}
+          <div className="lg:col-span-7 flex flex-col">
             {/* Header - stays fixed */}
             <div className="flex flex-col items-start text-left max-w-3xl pb-8">
               <motion.div
@@ -85,11 +87,10 @@ export function Metrics() {
               </motion.div>
             </div>
 
-            {/* Scrollable Cards List */}
-            <div className="flex-1 overflow-y-auto pr-4">
-              <div className="grid grid-cols-1 gap-0">
+            {/* Cards List — 2 por linha, sem scroll */}
+            <div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4">
                 {differentiators.map((item, index) => {
-                  const itemNumber = String(index + 1).padStart(2, "0")
                   return (
                     <motion.div
                       key={item.title}
@@ -97,31 +98,22 @@ export function Metrics() {
                       whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.8, delay: index * 0.15, ease }}
-                    className={`group relative flex items-start gap-6 py-8 px-0 ${
-                      index !== differentiators.length - 1
-                        ? "border-b border-gray-700/30"
-                        : ""
-                    }`}
+                    className="group relative flex flex-col py-6 px-0"
                   >
-                    {/* Icon */}
-                    <div className="flex-shrink-0 inline-flex items-center justify-center w-14 h-14 rounded-xl bg-brand-green/10 text-brand-green border border-brand-green/30 group-hover:bg-brand-green group-hover:text-white group-hover:border-brand-green transition-all duration-500 shadow-sm">
-                      <item.icon size={18} />
+                    {/* Linha de cima: ícone + título */}
+                    <div className="flex items-center gap-6">
+                      <div className="flex-shrink-0 inline-flex items-center justify-center w-14 h-14 rounded-xl bg-brand-green/10 text-brand-green border border-brand-green/30 group-hover:bg-brand-green group-hover:text-white group-hover:border-brand-green transition-all duration-500 shadow-sm">
+                        <item.icon size={18} />
+                      </div>
+                      <h3 className="text-lg lg:text-xl font-bold text-foreground dark:text-white group-hover:text-brand-green transition-colors duration-300">
+                        {item.title.split(" · ")[1]}
+                      </h3>
                     </div>
 
-                    {/* Content */}
-                    <div className="flex-1">
-                      <div className="flex items-baseline gap-3 mb-2">
-                        <span className="text-brand-green font-display font-bold text-xl">
-                          {itemNumber}
-                        </span>
-                        <h3 className="text-lg lg:text-xl font-bold text-foreground dark:text-white group-hover:text-brand-green transition-colors duration-300">
-                          {item.title.split(" · ")[1]}
-                        </h3>
-                      </div>
-                      <p className="text-gray-500 dark:text-gray-400 leading-relaxed text-sm">
-                        {item.description}
-                      </p>
-                    </div>
+                    {/* Descrição: largura total, abaixo do ícone e do título */}
+                    <p className="text-gray-500 dark:text-gray-400 leading-relaxed text-sm mt-4">
+                      {item.description}
+                    </p>
                   </motion.div>
                 )
               })}
@@ -131,7 +123,7 @@ export function Metrics() {
 
           {/* Right Column: Sticky Dashboard Image */}
           <motion.div
-            className="lg:col-span-5 relative flex justify-center w-full sticky top-0 h-screen items-center"
+            className="lg:col-span-5 relative flex justify-center w-full items-center"
             initial={{ opacity: 0, scale: 0.9, x: 20 }}
             whileInView={{ opacity: 1, scale: 1, x: 0 }}
             viewport={{ once: true }}
@@ -156,6 +148,7 @@ export function Metrics() {
             </div>
           </motion.div>
 
+          </div>
         </div>
       </div>
     </section>

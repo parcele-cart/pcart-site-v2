@@ -92,7 +92,7 @@ export function Testimonials() {
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-brand-green/5 dark:bg-brand-green/10 rounded-full blur-[140px] pointer-events-none" />
 
       <div className="sticky top-0 min-h-screen flex flex-col justify-between">
-        <div className="relative z-10 px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] w-full">
+        <div className="relative z-10 py-24 px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] w-full">
           <div className="mx-auto max-w-7xl space-y-10 text-center">
             <div className="max-w-3xl mx-auto">
               <BlurFade inView>
@@ -101,7 +101,7 @@ export function Testimonials() {
                 </Badge>
               </BlurFade>
               <BlurFade delay={0.1} inView>
-                <h2 className="font-bold text-3xl sm:text-4xl lg:text-5xl text-foreground dark:text-white mb-4 leading-tight">
+                <h2 className="font-bold text-3xl sm:text-4xl lg:text-4xl text-foreground dark:text-white mb-4 leading-tight">
                   Os cartórios que já transformaram<br />
 sua operação financeira.
                 </h2>

@@ -9,10 +9,6 @@ const Problems = dynamic(
   () => import("@/components/sections/problems").then((mod) => mod.Problems),
   { loading: () => <div className="min-h-150" /> },
 );
-const Features = dynamic(
-  () => import("@/components/sections/features").then((mod) => mod.Features),
-  { loading: () => <div className="min-h-175" /> },
-);
 const HowItWorks = dynamic(
   () =>
     import("@/components/sections/how-it-works").then((mod) => mod.HowItWorks),
@@ -55,9 +51,12 @@ export default function Home() {
     <main>
       <Hero />
       <TrustBar />
-      <Features />
+      <Problems />
       <div className="content-auto">
         <HowItWorks />
+      </div>
+        <div className="content-auto">
+        <Partners />
       </div>
             <div className="content-auto">
         <Metrics />
@@ -65,16 +64,14 @@ export default function Home() {
       <Testimonials />
        
       <FAQ />
-      <ContactCTA />
-      <ContactAction />
-      {/* <Problems />
-      
-      <div className="content-auto">
-        <Partners />
+         <div className="content-auto">
+        <FinalCTA />
       </div>
-
-     
-      <div className="content-auto">
+      {/* <ContactCTA /> */}
+      {/* <ContactAction />
+      */}
+       
+      {/* <div className="content-auto">
         <FinalCTA />
       </div> */}
     </main>

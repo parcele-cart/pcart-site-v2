@@ -131,8 +131,7 @@ export function Footer() {
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8">
             <div className="space-y-4">
               <p className="text-xs text-gray-500 dark:text-gray-500 leading-relaxed max-w-2xl">
-                <span className="font-semibold text-foreground/70 dark:text-white/60">PCART SOLUÇÕES EM PAGAMENTO S.A.</span> | CNPJ: 46.037.774/0001-98 <br className="hidden sm:block" />
-                Av. São Gabriel, 201, Cj 105 - Jardim Paulista, São Paulo/SP - CEP 01435-001
+                <span className="font-semibold text-foreground/70 dark:text-white/60">PCART SOLUÇÕES EM PAGAMENTO S.A.</span> | CNPJ: 46.037.774/0001-98 
               </p>
               <p className="text-xs text-gray-400 dark:text-gray-600">
                 &copy; {currentYear} ParceleCart · Em conformidade com a Lei 14.382 e o Provimento 127 do CNJ · PCI DSS Certified
@@ -141,8 +140,7 @@ export function Footer() {
 
             {/* Social Media Links */}
             <div className="flex items-center gap-3">
-              {[
-                { icon: <Facebook className="h-5 w-5" />, href: "#", label: "Facebook" },
+              {[ 
                 { icon: <Instagram className="h-5 w-5" />, href: "#", label: "Instagram" },
                 { icon: <Linkedin className="h-5 w-5" />, href: "#", label: "LinkedIn" },
                 { icon: <MessageCircle className="h-5 w-5" />, href: "https://api.whatsapp.com/send/?phone=5511914379025", label: "WhatsApp" },

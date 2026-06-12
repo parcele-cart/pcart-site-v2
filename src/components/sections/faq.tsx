@@ -217,36 +217,42 @@ export function FAQ() {
 
         {/* Ask your favorite LLM */}
         <BlurFade delay={0.2} inView>
-          <div className="mt-20 lg:mt-24 pt-12 lg:pt-16 border-t border-gray-200 dark:border-gray-800 text-center space-y-6 md:space-y-8">
-            <div className="space-y-3 md:space-y-4">
-              <h3 className="font-bold text-2xl sm:text-3xl text-foreground dark:text-white tracking-tight">
-                Ainda na <span className="text-brand-green italic">dúvida</span>?
-              </h3>
-              <p className="text-lg text-gray-600 dark:text-gray-400 max-w-xl mx-auto leading-relaxed">
-                Veja o que o seu LLM favorito tem a dizer sobre a gente e tome uma decisão informada.
-              </p>
-            </div>
-            <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4">
-              {llmProviders.map(({ name, url, Icon }) => (
-                <Button
-                  key={name}
-                  variant="outline"
-                  size="lg"
-                  asChild
-                  className="group rounded-full px-6 border-gray-200 dark:border-gray-800 hover:border-brand-green/60 hover:bg-brand-green/5 transition-all duration-300"
-                >
-                  <a
-                    href={url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2.5 text-base font-medium"
+          <div className="mt-20 lg:mt-24 pt-12 lg:pt-16 border-t border-gray-200 dark:border-gray-800">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+              {/* Esquerda: título + descrição */}
+              <div className="space-y-3 md:space-y-4 text-center lg:text-left">
+                <h3 className="font-bold text-2xl sm:text-3xl text-foreground dark:text-white tracking-tight">
+                  Ainda na <span className="text-brand-green italic">dúvida</span>?
+                </h3>
+                <p className="text-lg text-gray-600 dark:text-gray-400 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                  Veja o que o seu LLM favorito tem a dizer sobre a gente e tome uma decisão informada.
+                </p>
+              </div>
+              {/* Direita: grid 2x2 dos LLMs */}
+              <div className="grid grid-cols-2 gap-3 md:gap-4">
+                {llmProviders.map(({ name, url, Icon }) => (
+                  <Button
+                    key={name}
+                    variant="outline"
+                    size="lg"
+                    asChild
+                    className="group w-full h-auto py-4 rounded-full px-6 border-gray-200 dark:border-gray-800 hover:border-brand-green/60 hover:bg-brand-green/5 hover:-translate-y-1 hover:shadow-lg hover:shadow-brand-green/20 transition-all duration-300"
                   >
-                    <Icon className="h-5 w-5 shrink-0" />
-                    Pergunte ao {name}
-                    <ArrowUpRight className="h-4 w-4 text-gray-400 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
-                  </a>
-                </Button>
-              ))}
+                    <a
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-between gap-3 text-base font-medium"
+                    >
+                      <span className="flex items-center gap-2.5">
+                        <Icon className="h-10 w-10 shrink-0 transition-transform duration-300 group-hover:scale-110" />
+                        Pergunte ao {name}
+                      </span>
+                      <ArrowUpRight className="h-4 w-4 shrink-0 text-gray-400 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+                    </a>
+                  </Button>
+                ))}
+              </div>
             </div>
           </div>
         </BlurFade>
