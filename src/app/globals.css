@@ -58,6 +58,10 @@
   --font-display: var(--font-inter);
   --font-body: var(--font-dm-sans);
 
+  /* Container máximo do conteúdo em telas muito grandes (ultrawide).
+     120rem = 1920px. Uso: `max-w-8xl`. O background continua full-width. */
+  --container-8xl: 120rem;
+
   --color-color-1: var(--color-1);
   --color-color-2: var(--color-2);
   --color-color-3: var(--color-3);

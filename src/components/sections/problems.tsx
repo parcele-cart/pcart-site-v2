@@ -69,7 +69,7 @@ export function Problems() {
 
       {/* Desktop layout (lg+): sticky title + scrolling cards */}
       <div className="hidden lg:block">
-        <div className="relative z-10 px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] w-full">
+        <div className="relative z-10 max-w-8xl mx-auto px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] w-full">
           <div className="grid grid-cols-2 gap-12 items-start">
             {/* LEFT column: sticky heading — fills viewport height, content centred */}
             <div className="sticky top-24 h-[calc(100vh-6rem)] flex items-center self-start">

@@ -215,7 +215,7 @@ export function HowItWorks() {
           }}
         />
 
-        <div className="relative z-10 px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] py-16 sm:py-24 lg:py-32">
+        <div className="relative z-10 max-w-8xl mx-auto px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] py-16 sm:py-24 lg:py-32">
           {/* Header — fixed inside the sticky container */}
           <div className="text-center max-w-4xl mx-auto mb-16 lg:mb-20">
             <BlurFade inView>
@@ -245,7 +245,7 @@ export function HowItWorks() {
           </div>
         </div>
 
-        <div className="relative z-10 px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] pb-16 sm:pb-24 lg:pb-32 flex flex-col items-center gap-8">
+        <div className="relative z-10 max-w-8xl mx-auto px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] pb-16 sm:pb-24 lg:pb-32 flex flex-col items-center gap-8">
  
           <Button size="lg" asChild>
             <a href="/contato">Fale com o time</a>

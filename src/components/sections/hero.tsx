@@ -54,7 +54,7 @@ export function Hero() {
         }}
       />
 
-      <div className="relative z-10 px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] py-16 w-full">
+      <div className="relative z-10 max-w-8xl mx-auto px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] py-16 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-10 lg:gap-4 items-center">
 
           {/* ── Left: copy ── */}

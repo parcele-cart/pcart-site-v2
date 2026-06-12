@@ -92,7 +92,7 @@ export function Testimonials() {
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-brand-green/5 dark:bg-brand-green/10 rounded-full blur-[140px] pointer-events-none" />
 
       <div className="sticky top-0 min-h-screen flex flex-col justify-between">
-        <div className="relative z-10 py-24 px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] w-full">
+        <div className="relative z-10 py-24 max-w-8xl mx-auto px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] w-full">
           <div className="mx-auto max-w-7xl space-y-10 text-center">
             <div className="max-w-3xl mx-auto">
               <BlurFade inView>
@@ -144,7 +144,7 @@ sua operação financeira.
           </div>
         </div>
 
-        <div className="relative z-10 px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] pb-10">
+        <div className="relative z-10 max-w-8xl mx-auto px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] pb-10">
           <div className="max-w-4xl mx-auto text-center">
             <p className="text-lg text-gray-500 dark:text-gray-400 mb-8 leading-relaxed">
               Fale com a gente e conheça como podemos ajudar seu cartório.

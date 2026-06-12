@@ -134,7 +134,7 @@ export function Features() {
       <div className="sticky top-0 h-screen w-full flex items-center overflow-hidden">
         <FeatureBackground />
 
-        <div className="relative z-10 px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] w-full h-full max-h-[90vh] flex items-center">
+        <div className="relative z-10 max-w-8xl mx-auto px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] w-full h-full max-h-[90vh] flex items-center">
           <div className="grid grid-cols-1 gap-10 items-center w-full">
 
             {/* Left — stays fixed */}

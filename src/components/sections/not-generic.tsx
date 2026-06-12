@@ -11,7 +11,7 @@ export function NotGeneric() {
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-background dark:from-brand-black via-background dark:via-[#0D1117] to-background dark:to-brand-black" />
       
-      <div className="relative z-10 px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px]">
+      <div className="relative z-10 max-w-8xl mx-auto px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px]">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
           
           {/* Image Side */}
