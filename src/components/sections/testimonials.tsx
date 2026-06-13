@@ -10,7 +10,9 @@ import {
 } from "motion/react"
 import { Badge } from "@/components/ui/badge"
 import { BlurFade } from "@/components/ui/blur-fade"
+import { Button } from "@/components/ui/button"
 import { ease } from "@/lib/utils"
+import { Quote } from "lucide-react"
 
 const testimonials = [
   {
@@ -89,72 +91,67 @@ export function Testimonials() {
       {/* Subtle glow */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-brand-green/5 dark:bg-brand-green/10 rounded-full blur-[140px] pointer-events-none" />
 
-      <div className="sticky top-0 min-h-screen flex items-center justify-center">
-        <div className="relative z-10 px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] w-full">
-          {/* Header */}
-          <div className="text-center max-w-4xl mx-auto mb-10 sm:mb-12 lg:mb-16">
-            <BlurFade inView>
-              <Badge variant="neon" className="mb-4">
-                O que dizem os tabeliães
-              </Badge>
-            </BlurFade>
-            <BlurFade delay={0.1} inView>
-              <h2 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl text-foreground dark:text-white mb-4">
-                Os cartórios que já transformaram sua operação financeira
-              </h2>
-            </BlurFade>
-          </div>
+      <div className="sticky top-0 min-h-screen flex flex-col justify-between">
+        <div className="relative z-10 py-24 max-w-8xl mx-auto px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] w-full">
+          <div className="mx-auto max-w-7xl space-y-10 text-center">
+            <div className="max-w-3xl mx-auto">
+              <BlurFade inView>
+                <Badge variant="neon" className="mb-4">
+                  Prova social
+                </Badge>
+              </BlurFade>
+              <BlurFade delay={0.1} inView>
+                <h2 className="font-bold text-3xl sm:text-4xl lg:text-4xl text-foreground dark:text-white mb-4 leading-tight">
+                  Os cartórios que já transformaram<br />
+sua operação financeira.
+                </h2>
+              </BlurFade>
+            </div>
 
-          {/* Quote area */}
-          <div className="max-w-3xl mx-auto text-center">
-            <span className="text-7xl font-display text-brand-green/15">
-              &ldquo;
-            </span>
+            <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+              {testimonials.map((item, index) => (
+                <motion.div
+                  key={item.name}
+                  initial={{ opacity: 0, y: 20, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ duration: 0.45, ease }}
+                  className={`glass rounded-[2rem] border border-white/10 p-8 md:p-10 shadow-[0_30px_80px_rgba(0,0,0,0.18)] transition-transform duration-500 ${
+                    index === activeIndex
+                      ? "scale-[1.02] ring-2 ring-brand-green/30 bg-white/5"
+                      : "opacity-70 hover:opacity-100"
+                  }`}
+                >
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="inline-flex items-center justify-center w-16 h-16 text-brand-green">
+                      <Quote className="w-7 h-7" />
+                    </div>
+                  </div>
 
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeIndex}
-                initial={{ opacity: 0, scale: 0.97 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.97 }}
-                transition={{ duration: 0.4, ease }}
-              >
-                <p className="text-lg sm:text-xl lg:text-2xl text-foreground dark:text-white leading-relaxed mb-8">
-                  {testimonials[activeIndex].quote}
-                </p>
-                <p className="text-sm sm:text-base font-semibold text-foreground dark:text-white">
-                  {testimonials[activeIndex].name}
-                </p>
-                <p className="text-xs sm:text-sm text-gray-500 mt-1">
-                  {testimonials[activeIndex].role}
-                </p>
-              </motion.div>
-            </AnimatePresence>
-
-            {/* Animated progress dots */}
-            <div className="flex justify-center gap-2 mt-10">
-              {testimonials.map((_, i) => (
-                <motion.button
-                  key={i}
-                  type="button"
-                  aria-label={`Ver depoimento ${i + 1}`}
-                  animate={{
-                    width: i === activeIndex ? 24 : 8,
-                    backgroundColor: i === activeIndex ? "var(--brand-neon)" : "var(--dot-inactive)",
-                  }}
-                  transition={{ duration: 0.3, ease }}
-                  className="h-2 rounded-full cursor-pointer transition-colors border-none outline-none"
-                  onClick={() => {
-                    if (sectionRef.current) {
-                      const sectionTop = sectionRef.current.offsetTop;
-                      const sectionHeight = sectionRef.current.offsetHeight;
-                      const scrollTarget = sectionTop + (i / (testimonials.length - 1)) * (sectionHeight - window.innerHeight);
-                      window.scrollTo({ top: scrollTarget, behavior: 'smooth' });
-                    }
-                  }}
-                />
+                  <p className="text-base sm:text-lg text-foreground dark:text-white leading-relaxed mb-8 text-left">
+                    {item.quote}
+                  </p>
+                  <div className="border-t border-white/10 pt-6">
+                    <p className="font-semibold text-foreground dark:text-white text-base text-left">
+                      {item.name}
+                    </p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 text-left">
+                      {item.role}
+                    </p>
+                  </div>
+                </motion.div>
               ))}
             </div>
+          </div>
+        </div>
+
+        <div className="relative z-10 max-w-8xl mx-auto px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] pb-10">
+          <div className="max-w-4xl mx-auto text-center">
+            <p className="text-lg text-gray-500 dark:text-gray-400 mb-8 leading-relaxed">
+              Fale com a gente e conheça como podemos ajudar seu cartório.
+            </p>
+            <Button size="lg" asChild>
+              <a href="/contato">Fale com a gente</a>
+            </Button>
           </div>
         </div>
       </div>

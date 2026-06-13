@@ -58,6 +58,10 @@
   --font-display: var(--font-inter);
   --font-body: var(--font-dm-sans);
 
+  /* Container máximo do conteúdo em telas muito grandes (ultrawide).
+     120rem = 1920px. Uso: `max-w-8xl`. O background continua full-width. */
+  --container-8xl: 120rem;
+
   --color-color-1: var(--color-1);
   --color-color-2: var(--color-2);
   --color-color-3: var(--color-3);
@@ -168,6 +172,26 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #3D9A64;
+}
+
+/* Footer grid — first column twice as large */
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+}
+
+@media (min-width: 768px) {
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 1024px) {
+  .footer-grid {
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 2rem;
+  }
 }
 
 /* Glassmorphism utility */

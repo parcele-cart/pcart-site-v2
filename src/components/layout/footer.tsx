@@ -1,27 +1,27 @@
 import Image from "next/image"
 import Link from "next/link"
-import { Facebook, Instagram, Linkedin, MessageCircle } from "lucide-react"
+import { Facebook, Instagram, Linkedin, MessageCircle, CheckCircle2 } from "lucide-react"
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
 
   const productLinks = [
-    { label: "Solução", href: "/#solucao", isExternal: false },
     { label: "Como Funciona", href: "/#como-funciona", isExternal: false },
-    { label: "FAQ", href: "/#faq", isExternal: false },
-    { label: "Sobre Nós", href: "/sobre-nos", isExternal: false },
-    { label: "Acessar Plataforma", href: "https://portal.parcelecart.com.br", isExternal: true },
+    { label: "Diferenciais", href: "/sobre-nos", isExternal: false },
+    { label: "Perguntas frequentes", href: "/#faq", isExternal: false },
+    { label: "Conteúdo/Blog", href: "/blog", isExternal: false },
+    { label: "Falar com o time", href: "/contato", isExternal: true },
   ]
 
   const supportLinks = [
-    { label: "Fale com um Especialista", href: "/contato", isExternal: false },
-    { label: "Suporte", href: "/suporte", isExternal: false },
-    { label: "Ouvidoria", href: "/ouvidoria", isExternal: false },
+    { label: "Whatsapp do time", href: "https://wa.me/5511999999999", isExternal: true },
+    { label: "E-mail comercial", href: "mailto:comercial@parcelecart.com.br", isExternal: false },
+    { label: "Suporte ao cliente", href: "/contato", isExternal: false },
   ]
 
   const institutionalLinks = [
     { label: "Termos de Credenciamento", href: "/termos-de-credenciamento", isExternal: false },
-    { label: "Política de Privacidade", href: "/politica-de-privacidade", isExternal: false },
+    { label: "Política de privacidade (LGPD)", href: "/politica-de-privacidade", isExternal: false },
     { label: "Segurança Cibernética", href: "/politica-de-seguranca-da-informacao-e-cibernetica", isExternal: false },
     { label: "Política PLD-CFT", href: "/politica-de-pld-cft", isExternal: false },
     { label: "Código de Ética", href: "/codigo-de-etica", isExternal: false },
@@ -30,7 +30,7 @@ export function Footer() {
   return (
     <footer className="bg-[#fcfcfc] dark:bg-[#050505] border-t border-foreground/5 dark:border-white/5">
       <div className="px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+        <div className="footer-grid">
 
           {/* Column 1: Brand */}
           <div className="space-y-8">
@@ -50,16 +50,19 @@ export function Footer() {
                 className="h-10 w-auto block dark:hidden opacity-90 hover:opacity-100 transition-opacity"
               />
             </Link>
-            <p className="text-[15px] leading-relaxed text-gray-500 dark:text-gray-400 max-w-xs">
-              Tecnologia de ponta em pagamentos eletrônicos para a rotina extrajudicial brasileira.
-              Segurança jurídica e eficiência operacional em cada transação.
+            <p className="text-[15px] leading-relaxed text-gray-500 dark:text-gray-400">
+              A infraestrutura de pagamentos feita para cartório.
             </p>
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="h-4 w-4 text-brand-green flex-shrink-0" />
+              <span className="text-[15px] text-gray-500 dark:text-gray-400">Operando desde 2022</span>
+            </div>
           </div>
 
-          {/* Column 2: Explore */}
+          {/* Column 2: Navegação */}
           <div>
             <h4 className="text-sm font-bold text-foreground dark:text-white mb-8 relative inline-block">
-              Explore
+              Navegação
               <span className="absolute -bottom-2 left-0 w-8 h-[2px] bg-brand-green" />
             </h4>
             <ul className="space-y-4">
@@ -78,10 +81,10 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Column 3: Canais */}
+          {/* Column 3: Contato */}
           <div>
             <h4 className="text-sm font-bold text-foreground dark:text-white mb-8 relative inline-block">
-              Atendimento
+              Contato
               <span className="absolute -bottom-2 left-0 w-8 h-[2px] bg-brand-green" />
             </h4>
             <ul className="space-y-4">
@@ -128,18 +131,16 @@ export function Footer() {
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8">
             <div className="space-y-4">
               <p className="text-xs text-gray-500 dark:text-gray-500 leading-relaxed max-w-2xl">
-                <span className="font-semibold text-foreground/70 dark:text-white/60">PCART SOLUÇÕES EM PAGAMENTO S.A.</span> | CNPJ: 46.037.774/0001-98 <br className="hidden sm:block" />
-                Av. São Gabriel, 201, Cj 105 - Jardim Paulista, São Paulo/SP - CEP 01435-001
+                <span className="font-semibold text-foreground/70 dark:text-white/60">PCART SOLUÇÕES EM PAGAMENTO S.A.</span> | CNPJ: 46.037.774/0001-98 
               </p>
               <p className="text-xs text-gray-400 dark:text-gray-600">
-                &copy; {currentYear} ParceleCart | Desenvolvida com muito empenho especialmente para cartórios!
+                &copy; {currentYear} ParceleCart · Em conformidade com a Lei 14.382 e o Provimento 127 do CNJ · PCI DSS Certified
               </p>
             </div>
 
             {/* Social Media Links */}
             <div className="flex items-center gap-3">
-              {[
-                { icon: <Facebook className="h-5 w-5" />, href: "#", label: "Facebook" },
+              {[ 
                 { icon: <Instagram className="h-5 w-5" />, href: "#", label: "Instagram" },
                 { icon: <Linkedin className="h-5 w-5" />, href: "#", label: "LinkedIn" },
                 { icon: <MessageCircle className="h-5 w-5" />, href: "https://api.whatsapp.com/send/?phone=5511914379025", label: "WhatsApp" },

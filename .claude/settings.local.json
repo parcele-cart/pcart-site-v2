@@ -15,7 +15,18 @@
       "Bash(cmd:*)",
       "mcp___magicuidesign_mcp__getBackgrounds",
       "mcp___magicuidesign_mcp__getTextAnimations",
-      "mcp___magicuidesign_mcp__getSpecialEffects"
+      "mcp___magicuidesign_mcp__getSpecialEffects",
+      "Bash(npm audit *)",
+      "Read(//private/tmp/**)",
+      "Bash(curl -s https://cdn.simpleicons.org/openai -o openai.svg)",
+      "Bash(curl -s https://cdn.simpleicons.org/googlegemini -o gemini.svg)",
+      "Bash(curl -s https://cdn.simpleicons.org/claude -o claude.svg)",
+      "Bash(curl -s https://cdn.simpleicons.org/perplexity -o perplexity.svg)",
+      "Bash(curl -sL -w \"HTTP %{http_code}\\\\n\" https://cdn.simpleicons.org/openai -o /tmp/openai.svg)",
+      "Bash(curl -sL -w \"HTTP %{http_code}\\\\n\" https://unpkg.com/simple-icons@latest/icons/openai.svg -o /tmp/openai2.svg)",
+      "Read(//tmp/**)",
+      "Bash(git add *)",
+      "Bash(git commit -m 'docs: spec do bloco '\\\\''Pergunte ao seu LLM'\\\\'' na seção FAQ *)"
     ]
   },
   "enabledMcpjsonServers": [

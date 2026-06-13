@@ -40,7 +40,7 @@ export function InstitutionalHeader({
       <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-brand-green/5 rounded-full blur-[120px] pointer-events-none -translate-x-1/2 -translate-y-1/2" />
       <div className="absolute bottom-0 right-0 w-[300px] h-[300px] bg-brand-blue/5 rounded-full blur-[100px] pointer-events-none translate-x-1/4 translate-y-1/4" />
 
-      <div className={`relative z-10 px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] ${centered ? "text-center" : ""}`}>
+      <div className={`relative z-10 max-w-8xl mx-auto px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] ${centered ? "text-center" : ""}`}>
         <div className={`max-w-4xl ${centered ? "mx-auto" : ""}`}>
           <BlurFade delay={0.1} inView>
             <Badge variant="neon" className="mb-4 text-sm">
