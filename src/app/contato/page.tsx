@@ -3,6 +3,7 @@ import { BlurFade } from "@/components/ui/blur-fade";
 import { ContactForm } from "@/components/forms/contact-form";
 import { CalendarDays, MessageCircle, Phone, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { salesPhone } from "@/lib/phone";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -25,7 +26,7 @@ const contactChannels = [
     description: "Atendimento imediato e simplificado via chat.",
     icon: MessageCircle,
     action: "Iniciar chat",
-    link: "https://wa.me/5511999999999",
+    link: salesPhone.whatsapp,
   },
   {
     number: "03",
@@ -33,7 +34,7 @@ const contactChannels = [
     description: "Suporte especializado por voz em horário comercial.",
     icon: Phone,
     action: "Ligar agora",
-    link: "tel:+5511999999999",
+    link: salesPhone.tel,
   },
 ];
 

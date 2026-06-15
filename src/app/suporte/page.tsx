@@ -3,6 +3,8 @@ import { BlurFade } from "@/components/ui/blur-fade";
 import { ContactForm } from "@/components/forms/contact-form";
 import { CalendarDays, MessageCircle, Phone, ArrowRight, InfoIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { supportPhone } from "@/lib/phone";
+import { supportEmail } from "@/lib/email";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -14,10 +16,10 @@ const listChannels = [
   {
     number: "01",
     title: "Suporte e Contato",
-    description: "Atendimento suporte@parcelecart.com.br ou (11) 96398-2811.",
+    description: `Atendimento ${supportEmail.address} ou ${supportPhone.display}.`,
     icon: InfoIcon,
     action: "Entrar em contato",
-    link: "mailto:suporte@parcelecart.com.br",
+    link: supportEmail.mailto,
   },
   {
     number: "02",
@@ -25,7 +27,7 @@ const listChannels = [
     description: "Atendimento imediato e simplificado via chat.",
     icon: MessageCircle,
     action: "Iniciar chat",
-    link: "https://wa.me/5511963982811",
+    link: supportPhone.whatsapp,
   },
   {
     number: "03",
@@ -33,7 +35,7 @@ const listChannels = [
     description: "Suporte especializado por voz em horário comercial.",
     icon: Phone,
     action: "Ligar agora",
-    link: "tel:+5511963982811",
+    link: supportPhone.tel,
   },
 ];
 

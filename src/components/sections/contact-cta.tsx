@@ -3,6 +3,7 @@
 import { ArrowUpRight, Headset, ShieldCheck, Wrench } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { BlurFade } from "@/components/ui/blur-fade"
+import { salesPhone } from "@/lib/phone"
 
 const highlights = [
   {
@@ -66,7 +67,7 @@ export function ContactCTA() {
               <div className="pt-2 flex flex-col items-start gap-2">
                 <Button asChild size="lg" variant="outline" className="inline-flex">
                   <a
-                    href="https://wa.me/5511999999999"
+                    href={salesPhone.whatsapp}
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex items-center gap-2"

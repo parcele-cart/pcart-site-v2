@@ -26,7 +26,9 @@
       "Bash(curl -sL -w \"HTTP %{http_code}\\\\n\" https://unpkg.com/simple-icons@latest/icons/openai.svg -o /tmp/openai2.svg)",
       "Read(//tmp/**)",
       "Bash(git add *)",
-      "Bash(git commit -m 'docs: spec do bloco '\\\\''Pergunte ao seu LLM'\\\\'' na seção FAQ *)"
+      "Bash(git commit -m 'docs: spec do bloco '\\\\''Pergunte ao seu LLM'\\\\'' na seção FAQ *)",
+      "Bash(grep -A4 -E \"app/contato/page.tsx$|app/suporte/page.tsx$|layout/footer.tsx$\")",
+      "Bash(node *)"
     ]
   },
   "enabledMcpjsonServers": [

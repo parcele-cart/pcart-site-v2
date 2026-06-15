@@ -1,6 +1,8 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Facebook, Instagram, Linkedin, MessageCircle, CheckCircle2 } from "lucide-react"
+import { salesPhone } from "@/lib/phone"
+import { salesEmail } from "@/lib/email"
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
@@ -14,8 +16,8 @@ export function Footer() {
   ]
 
   const supportLinks = [
-    { label: "Whatsapp do time", href: "https://wa.me/5511999999999", isExternal: true },
-    { label: "E-mail comercial", href: "mailto:comercial@parcelecart.com.br", isExternal: false },
+    { label: "Whatsapp do time", href: salesPhone.whatsapp, isExternal: true },
+    { label: "E-mail comercial", href: salesEmail.mailto, isExternal: false },
     { label: "Suporte ao cliente", href: "/contato", isExternal: false },
   ]
 
@@ -143,7 +145,7 @@ export function Footer() {
               {[ 
                 { icon: <Instagram className="h-5 w-5" />, href: "#", label: "Instagram" },
                 { icon: <Linkedin className="h-5 w-5" />, href: "#", label: "LinkedIn" },
-                { icon: <MessageCircle className="h-5 w-5" />, href: "https://api.whatsapp.com/send/?phone=5511914379025", label: "WhatsApp" },
+                { icon: <MessageCircle className="h-5 w-5" />, href: salesPhone.whatsapp, label: "WhatsApp" },
               ].map((social) => (
                 <a
                   key={social.label}
