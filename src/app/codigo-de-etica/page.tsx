@@ -1,4 +1,5 @@
 import { InstitutionalHeader } from "@/components/sections/institutional-header";
+import { ombudsmanEmail } from "@/lib/email";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -88,7 +89,7 @@ export default function CodeOfEthicsPage() {
             <div className="space-y-4">
               <p><strong>Art. 17.</strong> O Comitê de Integridade é o órgão competente para avaliar infrações e elaborar relatórios consultivos ao Conselho de Administração.</p>
               <p>§1º Um representante de gestão de pessoas integrará o comitê para disseminação do conteúdo e treinamentos.</p>
-              <p><strong>Art. 18.</strong> Notificações sobre infrações devem ser enviadas para: <strong className="text-foreground dark:text-white">OUVIDORIA@PARCELECART.COM.BR</strong>.</p>
+              <p><strong>Art. 18.</strong> Notificações sobre infrações devem ser enviadas para: <strong className="text-foreground dark:text-white">{ombudsmanEmail.upper}</strong>.</p>
               <p>§4º O processo mantém queixas e denúncias de forma anônima e confidencial.</p>
               <p>§6º Não se vislumbra qualquer possibilidade de retaliação ou penalidade a quem realizar denúncia de boa-fé.</p>
             </div>
