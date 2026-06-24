@@ -1,17 +1,18 @@
 "use client"
 
-import { motion } from "motion/react"
-import { Badge } from "@/components/ui/badge"
+import { useRef } from "react"
+import { motion, useScroll, useSpring, useTransform, type MotionValue } from "motion/react"
 import { BlurFade } from "@/components/ui/blur-fade"
-import { ease } from "@/lib/utils"
+import { cn } from "@/lib/utils"
 import Image from "next/image"
+import { Check, X } from "lucide-react"
 
 const problems = [
   {
     number: "01",
     title: "Conciliação manual, ITBI e ITCMD na conta da serventia, e ato que não se conclui.",
     description:
-      "Fim de mês vira caça ao comprovante: dezenas de Pix de certidão com o mesmo valor, conferidos um a um. Cada cartão é uma conta de cabeça para chegar ao repasse. E o orçamento de escritura fica parado — você levanta as certidões, faz o trabalho, envia o valor e só recebe de volta as duas marcas azuis no WhatsApp, porque o cliente não tem o valor à vista.",
+      "Dezenas de Pix de recebidos sem identificação, com o mesmo valor, conferidos um a um. O orçamento de escritura fica parado, você examina o caso, calcula o valor, envia ao cliente e fica sem resposta, porque o cliente não tem o valor para pagar à vista.",
   },
   {
     number: "02",
@@ -39,123 +40,248 @@ const problems = [
   },
 ]
 
+// Visual do card. Cards 01 e 02 são a dor ("Sem ParceleCart" — X cinza/
+// desabilitado); 03, 04 e 05 são a solução ("Com ParceleCart" — check verde).
+// `className` é usado para forçar `h-full` no deck animado.
+function ProblemCard({
+  problem,
+  index,
+  className,
+}: {
+  problem: (typeof problems)[number]
+  index: number
+  className?: string
+}) {
+  const isNegative = index < 2
+  return (
+    <div
+      className={cn(
+        "relative mx-auto flex w-full flex-col overflow-hidden rounded-3xl border bg-white p-6 shadow-[0_40px_90px_-40px_rgba(0,0,0,0.75)] dark:bg-[#111A2E] lg:p-7",
+        isNegative ? "border-gray-400/20" : "border-brand-green/20",
+        className
+      )}
+    >
+      {/* accents */}
+      <div
+        className={cn(
+          "pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full blur-3xl",
+          isNegative ? "bg-gray-400/10" : "bg-brand-green/10"
+        )}
+      />
+      <div
+        className={cn(
+          "pointer-events-none absolute left-0 top-0 h-full w-1 bg-gradient-to-b",
+          isNegative ? "from-gray-400 to-gray-400/0" : "from-brand-green to-brand-green/0"
+        )}
+      />
+
+      <div className="flex items-center gap-2.5">
+        <span
+          className={cn(
+            "flex h-9 w-9 shrink-0 items-center justify-center rounded-full",
+            isNegative ? "bg-gray-400/15 text-gray-400" : "bg-brand-green/15 text-brand-green"
+          )}
+        >
+          {isNegative ? (
+            <X className="h-5 w-5" strokeWidth={3} />
+          ) : (
+            <Check className="h-5 w-5" strokeWidth={3} />
+          )}
+        </span>
+        <span
+          className={cn(
+            "font-display text-sm font-bold uppercase tracking-wide lg:text-base",
+            isNegative ? "text-gray-400" : "text-brand-green"
+          )}
+        >
+          {isNegative ? "Sem ParceleCart" : "Com ParceleCart"}
+        </span>
+      </div>
+      <h3 className="mt-3 mb-2 font-display text-base font-semibold leading-snug text-foreground dark:text-white lg:text-lg">
+        {problem.title}
+      </h3>
+      <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
+        {problem.description}
+      </p>
+    </div>
+  )
+}
+
+function StackCard({
+  problem,
+  index,
+  total,
+  progress,
+}: {
+  problem: (typeof problems)[number]
+  index: number
+  total: number
+  progress: MotionValue<number>
+}) {
+  // Scroll-driven deck. Os cards ficam empilhados (absolute) no mesmo ponto e
+  // TODOS sobem de baixo para cima, um a um, conforme o scroll. Cada card cobre
+  // o anterior — as soluções (03–05) vêm por último e ficam por cima, os problemas
+  // (01–02) sobem primeiro e ficam embaixo. Os disparos ocupam [0, 0.9] do scroll
+  // (uniformes); o trecho final [0.9, 1] segura a pilha montada antes de liberar
+  // para a próxima seção.
+  const launchSpan = 0.9
+  const seg = launchSpan / total
+  const enterStart = index * seg
+  const enterEnd = (index + 1) * seg
+  // Sobe de fora da tela (110%) até cobrir (0%), com leve scale de entrada.
+  // O card entra translúcido e vai ficando sólido enquanto sobe e cobre o
+  // anterior — fica 100% opaco um pouco antes de assentar.
+  const y = useTransform(progress, [enterStart, enterEnd], ["110%", "0%"])
+  const scale = useTransform(progress, [enterStart, enterEnd], [0.98, 1])
+  const opacity = useTransform(
+    progress,
+    [enterStart, enterStart + seg * 0.85],
+    [0, 1]
+  )
+  return (
+    <motion.div
+      style={{ y, scale, opacity, zIndex: index }}
+      className="absolute inset-0"
+    >
+      <ProblemCard problem={problem} index={index} className="h-full" />
+    </motion.div>
+  )
+}
+
 export function Problems() {
+  const cardsRef = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({
+    target: cardsRef,
+    offset: ["start start", "end end"],
+  })
+  // Suaviza o scroll bruto (passos de roda/trackpad) num movimento contínuo e liso.
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 90,
+    damping: 30,
+    restDelta: 0.0005,
+  })
+
   return (
     <section className="relative">
       {/* Subtle gradient background */}
       <div className="absolute inset-0 bg-gradient-to-b from-background dark:from-brand-black via-background dark:via-[#0F1419] to-background dark:to-brand-black" />
 
-      {/* Dot pattern — desktop */}
+      {/* Dot pattern */}
       <div
-        className="absolute inset-0 pointer-events-none hidden lg:block opacity-30"
+        className="absolute inset-0 pointer-events-none opacity-20 lg:opacity-30"
         style={{
           backgroundImage: `radial-gradient(circle, var(--brand-green) 1px, transparent 1px)`,
-          backgroundSize: '20px 20px',
-          maskImage: 'radial-gradient(1000px circle at center, white, transparent)',
-          WebkitMaskImage: 'radial-gradient(1000px circle at center, white, transparent)',
+          backgroundSize: "20px 20px",
+          maskImage: "radial-gradient(1100px circle at 50% 30%, white, transparent)",
+          WebkitMaskImage: "radial-gradient(1100px circle at 50% 30%, white, transparent)",
         }}
       />
 
-      {/* Dot pattern — mobile */}
-      <div
-        className="absolute inset-0 pointer-events-none lg:hidden opacity-20"
-        style={{
-          backgroundImage: `radial-gradient(circle, var(--brand-green) 1px, transparent 1px)`,
-          backgroundSize: '20px 20px',
-          maskImage: 'radial-gradient(100% 100% at center, white, transparent)',
-          WebkitMaskImage: 'radial-gradient(100% 100% at center, white, transparent)',
-        }}
-      />
-
-      {/* Desktop layout (lg+): sticky title + scrolling cards */}
-      <div className="hidden lg:block">
-        <div className="relative z-10 max-w-8xl mx-auto px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] w-full">
-          <div className="grid grid-cols-2 gap-12 items-start">
-            {/* LEFT column: sticky heading — fills viewport height, content centred */}
-            <div className="sticky top-24 h-[calc(100vh-6rem)] flex items-center self-start">
-              <div className="w-full">
-                <Badge variant="neon" className="mb-6">
-                  A virada
-                </Badge>
-                <h2 className="font-display font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl text-foreground dark:text-white leading-[1.05] tracking-tighter mb-4">
-                  Da conciliação manual ao<br /> fim de mês{" "}
-                  <span className="text-brand-green">sem planilha</span>.
-                </h2>
-                <BlurFade inView delay={0.1}>
-                  <div className="relative group">
-                    <div className="absolute -inset-4 bg-brand-green/10 blur-3xl rounded-full opacity-50" />
-                    <div className="relative py-12">
-                      <Image
-                        src="/images/hero-dashboards.png"
-                        alt="Recebíveis Cartórios"
-                        width={600}
-                        height={400}
-                        className="w-full h-auto object-cover transform transition-transform duration-700 group-hover:scale-105"
-                      />
-                    </div>
-                  </div>
-                </BlurFade>
-              </div>
+      {/* Desktop/tablet: sticky title + image on the left, stacking cards on the right */}
+      <div className="relative z-10 mx-auto hidden max-w-8xl px-5 sm:px-8 lg:block lg:px-16 xl:px-32 2xl:px-[150px]">
+        <div className="grid grid-cols-[1.15fr_0.85fr] gap-12">
+          {/* LEFT: pinned heading + image */}
+          <div>
+            <div className="sticky top-0 flex h-screen flex-col items-start justify-start pt-[16vh]">
+              <h2 className="font-display text-3xl font-bold leading-[1.05] tracking-tighter text-foreground dark:text-white sm:text-4xl">
+                Da conciliação manual ao<br /> fim de mês{" "}
+                <span className="text-brand-green">sem planilha</span>.
+              </h2>
+              <BlurFade inView delay={0.1}>
+                <div className="group relative mt-4 w-[616px] max-w-full">
+                  <div className="absolute -inset-4 rounded-full bg-brand-green/10 opacity-50 blur-3xl" />
+                  <Image
+                    src="/images/hero-dashboards.png"
+                    alt="Recebíveis Cartórios"
+                    width={616}
+                    height={410}
+                    className="relative h-auto w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                </div>
+              </BlurFade>
             </div>
+          </div>
 
-            {/* RIGHT column: naturally scrolling problem cards */}
-            <div className="flex flex-col gap-6 py-32">
-              {problems.map((problem, i) => (
-                <motion.div
-                  key={problem.number}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.4 }}
-                  transition={{ duration: 0.5, ease, delay: i * 0.05 }}
-                  className="pl-6 py-4 relative"
-                >
-                  <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-brand-green" />
-                  <span className="text-3xl font-bold text-brand-green glow-green-text opacity-70 font-display">
-                    {problem.number}
-                  </span>
-                  <h3 className="text-base sm:text-lg font-semibold text-foreground dark:text-white mt-3 mb-3">
-                    {problem.title}
-                  </h3>
-                  <p className="text-base text-gray-600 dark:text-gray-400">{problem.description}</p>
-                </motion.div>
-              ))}
+          {/* RIGHT: scroll track that pins a card deck. Each card rises and
+              covers the previous one as you scroll. */}
+          <div ref={cardsRef} className="relative" style={{ height: `${problems.length * 100}vh` }}>
+            <div className="sticky top-0 flex h-screen items-start justify-center pt-[16vh]">
+              <div className="relative w-full min-h-[320px]">
+                {/* Régua invisível: o primeiro card (o mais alto) em fluxo normal
+                    define a altura do bloco; todos os cards animados são
+                    absolute inset-0 + h-full, então ficam com essa mesma altura. */}
+                <div className="invisible pointer-events-none" aria-hidden>
+                  <ProblemCard problem={problems[0]} index={0} />
+                </div>
+                {problems.map((problem, i) => (
+                  <StackCard
+                    key={problem.number}
+                    problem={problem}
+                    index={i}
+                    total={problems.length}
+                    progress={smoothProgress}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Mobile layout (below lg): simple stacked with BlurFade */}
-      <div className="lg:hidden">
-        <div className="relative z-10 px-5 sm:px-8">
-          {/* Header */}
-          <div className="max-w-5xl mb-10 sm:mb-12">
-            <BlurFade inView>
-              <Badge variant="neon" className="mb-6">
-                A virada
-              </Badge>
-              <h2 className="font-display font-bold text-xl sm:text-2xl md:text-3xl text-foreground dark:text-white leading-[1.05] tracking-tighter mb-4">
-                Da conciliação manual ao<br /> fim de mês{" "}
-                <span className="text-brand-green">sem planilha</span>.
-              </h2>
-            </BlurFade>
-          </div>
-
-          {/* Stacked problems */}
-          <div className="flex flex-col gap-6">
-            {problems.map((problem, i) => (
-              <BlurFade key={problem.number} delay={i * 0.1} inView>
-                <div className="border-l-2 border-brand-green/40 pl-6 py-4">
-                  <span className="text-3xl font-bold text-brand-green glow-green-text opacity-70 font-display">
-                    {problem.number}
+      {/* Mobile: simple stacked list */}
+      <div className="relative z-10 px-5 pb-20 pt-24 sm:px-8 lg:hidden">
+        <div className="mb-10">
+          <BlurFade inView>
+            <h2 className="font-display text-3xl font-bold leading-[1.05] tracking-tighter text-foreground dark:text-white sm:text-4xl">
+              Da conciliação manual ao<br /> fim de mês{" "}
+              <span className="text-brand-green">sem planilha</span>.
+            </h2>
+          </BlurFade>
+        </div>
+        <div className="flex flex-col gap-5">
+          {problems.map((problem, i) => (
+            <BlurFade key={problem.number} delay={i * 0.08} inView>
+              <div
+                className={cn(
+                  "relative overflow-hidden rounded-2xl border bg-white p-6 shadow-lg dark:bg-[#111A2E]",
+                  i < 2 ? "border-gray-400/15" : "border-brand-green/15"
+                )}
+              >
+                <div
+                  className={cn(
+                    "absolute left-0 top-0 h-full w-0.5",
+                    i < 2 ? "bg-gray-400" : "bg-brand-green"
+                  )}
+                />
+                <div className="flex items-center gap-2.5">
+                  <span
+                    className={cn(
+                      "flex h-8 w-8 shrink-0 items-center justify-center rounded-full",
+                      i < 2 ? "bg-gray-400/15 text-gray-400" : "bg-brand-green/15 text-brand-green"
+                    )}
+                  >
+                    {i < 2 ? (
+                      <X className="h-4 w-4" strokeWidth={3} />
+                    ) : (
+                      <Check className="h-4 w-4" strokeWidth={3} />
+                    )}
                   </span>
-                  <h3 className="text-base sm:text-lg font-semibold text-foreground dark:text-white mt-3 mb-3">
-                    {problem.title}
-                  </h3>
-                  <p className="text-base text-gray-600 dark:text-gray-400">{problem.description}</p>
+                  <span
+                    className={cn(
+                      "font-display text-sm font-bold uppercase tracking-wide",
+                      i < 2 ? "text-gray-400" : "text-brand-green"
+                    )}
+                  >
+                    {i < 2 ? "Sem ParceleCart" : "Com ParceleCart"}
+                  </span>
                 </div>
-              </BlurFade>
-            ))}
-          </div>
+                <h3 className="mt-3 mb-3 text-lg font-semibold text-foreground dark:text-white">
+                  {problem.title}
+                </h3>
+                <p className="text-base text-gray-600 dark:text-gray-400">{problem.description}</p>
+              </div>
+            </BlurFade>
+          ))}
         </div>
       </div>
     </section>

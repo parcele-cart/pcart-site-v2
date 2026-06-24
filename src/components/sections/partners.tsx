@@ -1,6 +1,5 @@
 "use client"
 
-import { Badge } from "@/components/ui/badge"
 import { BlurFade } from "@/components/ui/blur-fade"
 import { AnimatedGridPattern } from "@/components/ui/animated-grid-pattern"
 import { cn } from "@/lib/utils"
@@ -86,21 +85,15 @@ export function Partners() {
       <div className="relative z-10">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12 lg:mb-16 px-5 sm:px-8">
-          <BlurFade inView>
-            <Badge variant="neon" className="mb-4">
-              Ecossistema
-            </Badge>
-          </BlurFade>
-
           <BlurFade delay={0.1} inView>
-            <h2 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl text-foreground dark:text-white mb-4">
-              Cartórios e parceiros que confiam na ParceleCart
+            <h2 className="font-display font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl text-foreground dark:text-white mb-4">
+              Mais de 200 <span className="text-brand-green">serventias confiam</span> na ParceleCart
             </h2>
           </BlurFade>
 
           <BlurFade delay={0.2} inView>
             <p className="text-xs sm:text-sm lg:text-base text-gray-600 dark:text-gray-400 mb-8">
-              Presença consolidada junto a serventias extrajudiciais e entidades de classe por meio do nosso ecossistema de pagamentos.
+              Presença consolidada em todas as regiões do país, operando em mais de 20 estados.
             </p>
           </BlurFade>
 

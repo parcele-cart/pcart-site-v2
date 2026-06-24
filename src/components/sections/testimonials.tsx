@@ -8,7 +8,6 @@ import {
   useMotionValueEvent,
   AnimatePresence,
 } from "motion/react"
-import { Badge } from "@/components/ui/badge"
 import { BlurFade } from "@/components/ui/blur-fade"
 import { Button } from "@/components/ui/button"
 import { ease } from "@/lib/utils"
@@ -91,19 +90,14 @@ export function Testimonials() {
       {/* Subtle glow */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-brand-green/5 dark:bg-brand-green/10 rounded-full blur-[140px] pointer-events-none" />
 
-      <div className="sticky top-0 min-h-screen flex flex-col justify-between">
-        <div className="relative z-10 py-24 max-w-8xl mx-auto px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] w-full">
-          <div className="mx-auto max-w-7xl space-y-10 text-center">
+      <div className="sticky top-0 min-h-screen flex flex-col justify-center">
+        <div className="relative z-10 py-8 max-w-8xl mx-auto px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] w-full">
+          <div className="mx-auto max-w-7xl space-y-6 text-center">
             <div className="max-w-3xl mx-auto">
-              <BlurFade inView>
-                <Badge variant="neon" className="mb-4">
-                  Prova social
-                </Badge>
-              </BlurFade>
               <BlurFade delay={0.1} inView>
                 <h2 className="font-bold text-3xl sm:text-4xl lg:text-4xl text-foreground dark:text-white mb-4 leading-tight">
-                  Os cartórios que já transformaram<br />
-sua operação financeira.
+                  A palavra de quem acredita<br />
+em nosso trabalho:
                 </h2>
               </BlurFade>
             </div>
@@ -115,26 +109,26 @@ sua operação financeira.
                   initial={{ opacity: 0, y: 20, scale: 0.98 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   transition={{ duration: 0.45, ease }}
-                  className={`glass rounded-[2rem] border border-white/10 p-8 md:p-10 shadow-[0_30px_80px_rgba(0,0,0,0.18)] transition-transform duration-500 ${
+                  className={`glass rounded-[2rem] border border-white/10 p-6 md:p-7 shadow-[0_30px_80px_rgba(0,0,0,0.18)] transition-transform duration-500 ${
                     index === activeIndex
                       ? "scale-[1.02] ring-2 ring-brand-green/30 bg-white/5"
                       : "opacity-70 hover:opacity-100"
                   }`}
                 >
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="inline-flex items-center justify-center w-16 h-16 text-brand-green">
-                      <Quote className="w-7 h-7" />
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="inline-flex items-center justify-center w-12 h-12 text-brand-green">
+                      <Quote className="w-6 h-6" />
                     </div>
                   </div>
 
-                  <p className="text-base sm:text-lg text-foreground dark:text-white leading-relaxed mb-8 text-left">
+                  <p className="text-sm sm:text-[15px] text-foreground dark:text-white leading-relaxed mb-4 text-left">
                     {item.quote}
                   </p>
-                  <div className="border-t border-white/10 pt-6">
-                    <p className="font-semibold text-foreground dark:text-white text-base text-left">
+                  <div className="border-t border-white/10 pt-3">
+                    <p className="font-semibold text-foreground dark:text-white text-sm text-left">
                       {item.name}
                     </p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 text-left">
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 text-left">
                       {item.role}
                     </p>
                   </div>
@@ -144,9 +138,9 @@ sua operação financeira.
           </div>
         </div>
 
-        <div className="relative z-10 max-w-8xl mx-auto px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] pb-10">
+        <div className="relative z-10 max-w-8xl mx-auto px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] pt-4">
           <div className="max-w-4xl mx-auto text-center">
-            <p className="text-lg text-gray-500 dark:text-gray-400 mb-8 leading-relaxed">
+            <p className="text-lg text-gray-500 dark:text-gray-400 mb-6 leading-relaxed">
               Fale com a gente e conheça como podemos ajudar seu cartório.
             </p>
             <Button size="lg" asChild>
