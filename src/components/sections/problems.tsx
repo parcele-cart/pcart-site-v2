@@ -182,8 +182,8 @@ export function Problems() {
         <div className="grid grid-cols-[1.15fr_0.85fr] gap-12">
           {/* LEFT: pinned heading + image */}
           <div>
-            <div className="sticky top-0 flex h-screen flex-col items-start justify-start pt-[16vh]">
-              <h2 className="font-display text-3xl font-bold leading-[1.05] tracking-tighter text-foreground dark:text-white sm:text-4xl">
+            <div className="sticky top-0 flex h-screen flex-col items-center justify-center">
+              <h2 className="font-display text-3xl font-bold leading-[1.05] tracking-tighter text-foreground dark:text-white sm:text-4xl text-center">
                 Da conciliação manual ao<br /> fim de mês{" "}
                 <span className="text-brand-green">sem planilha</span>.
               </h2>
@@ -205,7 +205,7 @@ export function Problems() {
           {/* RIGHT: scroll track that pins a card deck. Each card rises and
               covers the previous one as you scroll. */}
           <div ref={cardsRef} className="relative" style={{ height: `${problems.length * 100}vh` }}>
-            <div className="sticky top-0 flex h-screen items-start justify-center pt-[16vh]">
+            <div className="sticky top-0 flex h-screen items-center justify-center">
               <div className="relative w-full min-h-[320px]">
                 {/* Régua invisível: o primeiro card (o mais alto) em fluxo normal
                     define a altura do bloco; todos os cards animados são
@@ -236,6 +236,18 @@ export function Problems() {
               Da conciliação manual ao<br /> fim de mês{" "}
               <span className="text-brand-green">sem planilha</span>.
             </h2>
+          </BlurFade>
+          <BlurFade inView delay={0.1}>
+            <div className="relative mx-auto mt-8 w-full max-w-md">
+              <div className="absolute -inset-4 rounded-full bg-brand-green/10 opacity-50 blur-3xl" />
+              <Image
+                src="/images/hero-dashboards.png"
+                alt="Recebíveis Cartórios"
+                width={616}
+                height={410}
+                className="relative h-auto w-full object-cover"
+              />
+            </div>
           </BlurFade>
         </div>
         <div className="flex flex-col gap-5">
