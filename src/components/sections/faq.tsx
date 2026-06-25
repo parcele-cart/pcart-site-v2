@@ -224,7 +224,7 @@ export function FAQ() {
                 </p>
               </div>
               {/* Direita: grid 2x2 dos LLMs */}
-              <div className="grid grid-cols-2 gap-3 md:gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
                 {llmProviders.map(({ name, url, Icon }) => (
                   <Button
                     key={name}

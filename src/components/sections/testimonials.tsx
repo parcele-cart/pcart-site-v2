@@ -65,7 +65,7 @@ export function Testimonials() {
 
   if (!mounted) {
     return (
-      <section ref={sectionRef} className="min-h-[400vh] relative">
+      <section ref={sectionRef} className="min-h-[400vh] relative overflow-x-clip">
         <div className="sticky top-0 min-h-screen flex items-center justify-center">
           <div className="animate-pulse bg-foreground/5 w-24 h-8 rounded-full" />
         </div>
@@ -74,7 +74,7 @@ export function Testimonials() {
   }
 
   return (
-    <section ref={sectionRef} className="min-h-[400vh] relative">
+    <section ref={sectionRef} className="min-h-[400vh] relative overflow-x-clip">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-background dark:from-brand-black via-background dark:via-[#0F1419] to-background dark:to-brand-black" />
       
