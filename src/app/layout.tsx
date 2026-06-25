@@ -45,7 +45,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${dmSans.variable} antialiased selection:bg-brand-blue-light/30 selection:text-foreground dark:text-white cursor-none`}
+        className={`${inter.variable} ${dmSans.variable} antialiased selection:bg-brand-blue-light/30 selection:text-foreground dark:text-white`}
         suppressHydrationWarning
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>

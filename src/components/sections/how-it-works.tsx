@@ -1,33 +1,32 @@
 "use client"
 
-import { Badge } from "@/components/ui/badge"
 import { BlurFade } from "@/components/ui/blur-fade"
 import { Button } from "@/components/ui/button"
 import { cn, ease } from "@/lib/utils"
 import Image from "next/image"
 import { motion, useScroll, useSpring, useMotionValueEvent } from "motion/react"
 import { Settings, Rocket, Headset } from "lucide-react"
-import { useRef, useState, useCallback } from "react"
+import { useRef, useState, useEffect } from "react"
 
 const steps = [
   {
     number: "01",
     icon: Headset,
-    title: "Passo 01 — Converse com o time",
+    title: "Converse com o time",
     description:
       "A gente entende a sua atribuição, seu volume de atos e qual sistema de gestão você usa. Conversa direta com quem conhece o setor — sem formulário de varejo, sem documento que serventia não tem.",
   },
   {
     number: "02",
     icon: Settings,
-    title: "Passo 02 — Receba tudo pronto",
+    title: "Receba tudo pronto",
     description:
       "Repasse ou absorção de taxas, domicílios bancários por atribuição e integração com o seu sistema de gestão. Tudo ajustado para a sua serventia antes da primeira transação.",
   },
   {
     number: "03",
     icon: Rocket,
-    title: "Passo 03 — Conciliação automática",
+    title: "Conciliação automática",
     description:
       "Maquininha, link de pagamento ou API. Pix e cartão com confirmação imediata, liquidados no domicílio de cada atribuição, ITBI e ITCMD pelo trilho correto, sem passar pela sua conta. Conciliação rodando integrada ao seu sistema, sem planilhas.",
   },
@@ -38,22 +37,22 @@ function StepCard({
   index,
   total,
   activeIndex,
+  isMobile,
 }: {
   step: (typeof steps)[0]
   index: number
   total: number
   activeIndex: number
+  isMobile: boolean
 }) {
-  const [isHovered, setIsHovered] = useState(false)
-  const isActive = activeIndex === index || isHovered
-  const isPast = activeIndex > index && !isHovered
+  // Highlight is driven only by scroll position — no hover state, so exactly
+  // one card is highlighted at a time and it changes as the user scrolls.
+  // On mobile there is no scroll-jacking, so every card renders fully active.
+  const isActive = isMobile || activeIndex === index
+  const isPast = !isMobile && activeIndex > index
 
   return (
-    <div
-      className="relative group"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
+    <div className="relative">
       {/* Card Content */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -61,9 +60,12 @@ function StepCard({
         viewport={{ once: true }}
         transition={{ delay: index * 0.1, duration: 0.5, ease }}
         className={cn(
-          "glass rounded-2xl p-6 lg:p-8 text-center h-full relative z-10 transition-all duration-700 overflow-hidden border cursor-default",
+          "glass rounded-2xl p-5 lg:p-6 text-center h-full relative z-10 transition-all duration-700 overflow-hidden border cursor-default",
           isActive
-            ? "ring-2 ring-brand-green/50 border-brand-green/30 bg-gradient-to-br from-brand-green/20 via-brand-green/5 to-transparent shadow-[0_0_50px_-12px_rgba(94,242,117,0.4)] scale-[1.05]"
+            ? cn(
+                "ring-2 ring-brand-green/50 border-brand-green/30 bg-gradient-to-br from-brand-green/20 via-brand-green/5 to-transparent shadow-[0_0_50px_-12px_rgba(94,242,117,0.4)]",
+                !isMobile && "scale-[1.05]"
+              )
             : isPast
               ? "opacity-60 grayscale-[0.5] border-transparent"
               : "opacity-40 border-transparent"
@@ -78,7 +80,7 @@ function StepCard({
         )}
 
         {/* Number + Icon */}
-        <div className="relative inline-flex items-center justify-center w-16 h-16 lg:w-20 lg:h-20 rounded-full mb-6 z-10 transition-all duration-500">
+        <div className="relative inline-flex items-center justify-center w-14 h-14 lg:w-16 lg:h-16 rounded-full mb-4 z-10 transition-all duration-500">
           <motion.div
             animate={{
               backgroundColor: isActive
@@ -93,7 +95,7 @@ function StepCard({
           />
           <step.icon
             className={cn(
-              "w-7 h-7 lg:w-8 lg:h-8 transition-colors duration-500 z-20",
+              "w-6 h-6 lg:w-7 lg:h-7 transition-colors duration-500 z-20",
               isActive ? "text-[#0E182A]" : "text-brand-green"
             )}
           />
@@ -142,8 +144,17 @@ function StepCard({
 export function HowItWorks() {
   const sectionRef = useRef<HTMLDivElement>(null)
   const [activeIndex, setActiveIndex] = useState(-1)
-  // Prevent multiple auto-scrolls
-  const hasAdvanced = useRef(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  // On mobile we drop the scroll-jacking (tall sticky section) — it feels janky
+  // on touch. Instead every card renders fully visible in a normal stacked flow.
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 1023px)")
+    const update = () => setIsMobile(mq.matches)
+    update()
+    mq.addEventListener("change", update)
+    return () => mq.removeEventListener("change", update)
+  }, [])
 
   // The section is tall (300vh) so we have room to scroll through all 3 cards
   const { scrollYProgress } = useScroll({
@@ -159,39 +170,18 @@ export function HowItWorks() {
     restDelta: 0.001,
   })
 
-  // Advance to the next section after the 3rd card is shown
-  const advanceToNextSection = useCallback(() => {
-    if (hasAdvanced.current) return
-    hasAdvanced.current = true
-
-    // Find the next sibling section in the DOM
-    const section = sectionRef.current
-    if (!section) return
-
-    const nextSection = section.nextElementSibling as HTMLElement | null
-    if (nextSection) {
-      nextSection.scrollIntoView({ behavior: "smooth" })
-    } else {
-      // Fallback: scroll past this section
-      window.scrollBy({ top: window.innerHeight, behavior: "smooth" })
-    }
-  }, [])
-
   useMotionValueEvent(smoothProgress, "change", (latest) => {
-    // Card thresholds spread evenly across the scroll range
+    // Card thresholds spread evenly across the scroll range.
+    // No programmatic auto-scroll here — the user scrolls naturally into the
+    // next section, so nothing gets skipped.
     if (latest < 0.12) {
       setActiveIndex(-1)
-      hasAdvanced.current = false // reset if scrolled back up
     } else if (latest < 0.38) {
       setActiveIndex(0)
     } else if (latest < 0.65) {
       setActiveIndex(1)
-    } else if (latest < 0.92) {
-      setActiveIndex(2)
     } else {
-      // Past the last card — advance to next section
       setActiveIndex(2)
-      advanceToNextSection()
     }
   })
 
@@ -200,11 +190,10 @@ export function HowItWorks() {
     <section
       ref={sectionRef}
       id="como-funciona"
-      className="relative"
-      style={{ minHeight: "300vh" }}
+      className="relative lg:min-h-[300vh]"
     >
       {/* Sticky wrapper — stays visible while the tall section scrolls */}
-      <div className="sticky top-0 min-h-screen flex flex-col justify-between overflow-visible">
+      <div className="sticky top-0 min-h-screen flex flex-col justify-center overflow-visible">
         {/* Background elements */}
         <div className="absolute inset-0 bg-gradient-to-b from-background dark:from-brand-black via-background dark:via-[#0D1117] to-background dark:to-brand-black" />
         <div
@@ -215,24 +204,19 @@ export function HowItWorks() {
           }}
         />
 
-        <div className="relative z-10 max-w-8xl mx-auto px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] py-16 sm:py-24 lg:py-32">
+        <div className="relative z-10 max-w-8xl mx-auto px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] py-8">
           {/* Header — fixed inside the sticky container */}
-          <div className="text-center max-w-4xl mx-auto mb-16 lg:mb-20">
-            <BlurFade inView>
-              <Badge variant="neon" className="mb-4">
-                Como funciona
-              </Badge>
-            </BlurFade>
+          <div className="text-center max-w-4xl mx-auto mb-8 lg:mb-10">
             <BlurFade delay={0.1} inView>
-              <h2 className="font-bold text-3xl sm:text-4xl md:text-5xl lg:text-5xl text-foreground dark:text-white mb-6 tracking-tight">
-                Mude a rotina financeira<br/> do {" "}
+              <h2 className="font-bold text-3xl sm:text-4xl lg:text-4xl text-foreground dark:text-white mb-6 tracking-tight">
+                Otimize a rotina financeira<br/> do {" "}
                 <span className="text-brand-green">seu cartório</span> agora
               </h2>
             </BlurFade>
           </div>
 
           {/* Steps Grid */}
-          <div className="relative grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+          <div className="relative grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
             {steps.map((step, i) => (
               <StepCard
                 key={step.number}
@@ -240,13 +224,13 @@ export function HowItWorks() {
                 index={i}
                 total={steps.length}
                 activeIndex={activeIndex}
+                isMobile={isMobile}
               />
             ))}
           </div>
         </div>
 
-        <div className="relative z-10 max-w-8xl mx-auto px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] pb-16 sm:pb-24 lg:pb-32 flex flex-col items-center gap-8">
- 
+        <div className="relative z-10 max-w-8xl mx-auto px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] pt-6 flex flex-col items-center">
           <Button size="lg" asChild>
             <a href="/contato">Fale com o time</a>
           </Button>

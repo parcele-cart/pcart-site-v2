@@ -1,7 +1,6 @@
 "use client"
 
 import React from "react"
-import { ShieldCheck } from "lucide-react"
 
 const partners = [
   "Siscart",
@@ -10,7 +9,6 @@ const partners = [
   "Inova",
   "VizWise",
   "Minerva",
-  "e outros",
 ]
 
 export function TrustBar() {
@@ -23,52 +21,58 @@ export function TrustBar() {
 
         <p className="text-sm text-gray-500 mb-6">Serventias em todo o Brasil já operam com a ParceleCart.</p>
 
-        <div className="mb-6">
-          <div className="marquee">
-            <div className="marquee-track p-10">
-              {[...partners, ...partners].map((p, i) => (
-                <span
-                  key={`${p}-${i}`}
-                  className="partner text-lg font-semibold mx-8"
-                >
-                  {p}
-                </span>
-              ))}
-            </div>
+        <div className="marquee mb-6">
+          <div className="marquee-track">
+            {[...partners, ...partners].map((p, i) => (
+              <span
+                key={`${p}-${i}`}
+                className="partner text-lg font-semibold"
+              >
+                {p}
+              </span>
+            ))}
           </div>
         </div>
 
-        <div className="flex justify-center items-center gap-3">
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-green-600 bg-green-900/5 text-green-400 text-sm">
-            <ShieldCheck className="h-4 w-4" aria-hidden />
-            PCI DSS
-          </span>
-
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gray-600 bg-transparent text-sm text-gray-300">
-            ⚖️ Provimento 127/2022 (CNJ)
+        <div className="flex justify-center items-center">
+          <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-brand-green/40 bg-brand-green/5 text-white text-sm font-medium">
+            Não encontrou seu sistema? Solicite a integração, é fácil e rápida!
           </span>
         </div>
       </div>
       <style jsx>{`
-        .marquee { overflow: hidden; }
-        .marquee-track { display: inline-flex; align-items: center; white-space: nowrap; gap: 2rem; animation: marquee 22s linear infinite; }
-        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        .marquee:hover .marquee-track { animation-play-state: paused; }
+        .marquee {
+          overflow: hidden;
+        }
+        /* Each item owns its trailing gap (margin-right), so a doubled track
+           loops perfectly at translateX(-50%) — no half-gap jump, no reset. */
+        .marquee-track {
+          display: flex;
+          width: max-content;
+          align-items: center;
+          animation: marquee 30s linear infinite;
+        }
+        @keyframes marquee {
+          from { transform: translateX(0); }
+          to { transform: translateX(-50%); }
+        }
 
         .partner {
           display: inline-block;
-          color: rgba(148,163,184,0.9);
+          margin-right: 4rem;
+          color: rgba(148, 163, 184, 0.9);
           opacity: 0.95;
           padding: 0.25rem 0.75rem;
           border-radius: 9999px;
           border: 1px solid transparent;
-          transition: color .15s ease, transform .15s ease, opacity .15s ease, background-color .15s ease, border-color .15s ease;
+          white-space: nowrap;
+          transition: color 0.15s ease, transform 0.15s ease, opacity 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
           font-size: 1.125rem; /* match text-lg */
         }
 
         .partner:hover {
           color: var(--brand-green);
-          background: rgba(94,242,117,0.07);
+          background: rgba(94, 242, 117, 0.07);
           transform: scale(1.03);
           opacity: 1;
         }

@@ -53,13 +53,13 @@ export default function Home() {
       <TrustBar />
       <Problems />
       <div className="content-auto">
+        <Metrics />
+      </div>
+      <div className="content-auto">
         <HowItWorks />
       </div>
         <div className="content-auto">
         <Partners />
-      </div>
-            <div className="content-auto">
-        <Metrics />
       </div>
       <Testimonials />
        

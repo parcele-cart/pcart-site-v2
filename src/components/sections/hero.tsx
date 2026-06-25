@@ -5,10 +5,10 @@ import { motion } from "motion/react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { BlurFade } from "@/components/ui/blur-fade"
-import { TextAnimate } from "@/components/ui/text-animate"
 import { MagicCard } from "@/components/ui/magic-card"
 import { CreditCard, QrCode, Link2, ShieldCheck } from "lucide-react"
 import { useTheme } from "next-themes"
+import { useState, useEffect } from "react"
 
 const floatingCards = [
   { icon: QrCode, title: "Pix QR Code grátis", subtitle: "confirmação na hora, sem caçar comprovante" },
@@ -16,6 +16,51 @@ const floatingCards = [
   { icon: Link2, title: "Link de pagamento", subtitle: "cobre no WhatsApp, confirmação imediata" },
   { icon: ShieldCheck, title: "PCI DSS", subtitle: "segurança certificada" },
 ]
+
+const ROLES = ["cartório", "tabelião", "registrador", "escrevente"]
+
+function Typewriter() {
+  const [index, setIndex] = useState(0) // which role
+  const [sub, setSub] = useState(0) // chars currently shown
+  const [deleting, setDeleting] = useState(false)
+
+  useEffect(() => {
+    const current = ROLES[index]
+
+    // Fully typed → pause, then start deleting
+    if (!deleting && sub === current.length) {
+      const t = setTimeout(() => setDeleting(true), 1600)
+      return () => clearTimeout(t)
+    }
+
+    // Fully deleted → advance to the next role
+    if (deleting && sub === 0) {
+      setDeleting(false)
+      setIndex((i) => (i + 1) % ROLES.length)
+      return
+    }
+
+    const t = setTimeout(
+      () => setSub((s) => s + (deleting ? -1 : 1)),
+      deleting ? 55 : 100,
+    )
+    return () => clearTimeout(t)
+  }, [sub, deleting, index])
+
+  return (
+    <span className="whitespace-nowrap text-brand-green glow-green-text">
+      {ROLES[index].slice(0, sub)}
+      <motion.span
+        aria-hidden
+        className="ml-0.5 font-light text-brand-green"
+        animate={{ opacity: [1, 0] }}
+        transition={{ duration: 0.6, repeat: Infinity, repeatType: "reverse" }}
+      >
+        |
+      </motion.span>
+    </span>
+  )
+}
 
 export function Hero() {
   const partners = ["Siscart", "4 Hands", "CSI", "Inova", "VizWise"]
@@ -54,6 +99,10 @@ export function Hero() {
         }}
       />
 
+      {/* Soft fade at the bottom so the hero dissolves into the trust bar
+          instead of ending in a solid edge */}
+      <div className="absolute inset-x-0 bottom-0 h-40 sm:h-56 bg-gradient-to-b from-transparent to-background dark:to-brand-black pointer-events-none z-[2]" />
+
       <div className="relative z-10 max-w-8xl mx-auto px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] py-16 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-10 lg:gap-4 items-center">
 
@@ -67,15 +116,12 @@ export function Hero() {
                 </Badge>
               </BlurFade>
 
-              <TextAnimate
-                as="h1"
-                by="word"
-                animation="blurInUp"
-                duration={0.4}
-                className="font-display text-2xl sm:text-3xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl leading-[1.1] text-foreground dark:text-white mb-6"
-              >
-                A infraestrutura de pagamentos feita para cartório.
-              </TextAnimate>
+              <BlurFade delay={0.1} inView>
+                <h1 className="font-display text-2xl sm:text-3xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl leading-[1.1] text-foreground dark:text-white mb-6">
+                  A infraestrutura de pagamentos feita{" "}
+                  <span className="whitespace-nowrap">para o <Typewriter /></span>
+                </h1>
+              </BlurFade>
 
               <BlurFade delay={0.3} inView>
                 <p className="text-xs sm:text-sm lg:text-base text-gray-600 dark:text-gray-400 max-w-xl mb-4 lg:mb-8">
@@ -121,9 +167,9 @@ export function Hero() {
           {/* ── Right: POS image + feature cards ── */}
           <motion.div
             className="relative flex flex-col items-center justify-center order-2 lg:order-2 w-full"
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
           >
             {/* Glow behind the device */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -137,18 +183,8 @@ export function Hero() {
             {/* 2-column layout: [image | cards column] */}
             <div className="relative z-10 flex justify-center sm:grid sm:grid-cols-[1fr_auto] items-center gap-1 w-full">
 
-              {/* POS image with floating animation */}
-              <motion.div
-                className="flex items-center justify-center"
-                whileInView={{ y: [0, -8, 0] }}
-                viewport={{ once: false, amount: 0.1 }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  repeatType: "loop",
-                  ease: "easeInOut",
-                }}
-              >
+              {/* POS image — static, fades in with the column */}
+              <div className="flex items-center justify-center">
                 <Image
                   src="/images/smartpos hero.png"
                   alt="SmartPOS ParceleCart"
@@ -159,34 +195,19 @@ export function Hero() {
                   placeholder="blur"
                   blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAL0lEQVR4nGNgYGD4z8DAwMDAxMDAwMDAwPD/PwMDA8N/BgYGBob/DAwMDP8ZGBgYABuOBgVnK+XrAAAAAElFTkSuQmCC"
                 />
-              </motion.div>
+              </div>
 
               {/* Right column: all 4 cards stacked */}
-              <div className="hidden sm:flex flex-col gap-3 z-20 -ml-24 md:-ml-32">
+              <div className="hidden sm:flex flex-col gap-3 z-20 -ml-12 md:-ml-12">
                 {floatingCards.map((card, i) => (
                   <motion.div
                     key={card.title}
-                    initial={{ opacity: 0, x: 16 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{
-                      opacity: { duration: 0.4, delay: 0.7 + i * 0.12 },
-                      x: { duration: 0.4, delay: 0.7 + i * 0.12 },
-                    }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.5, delay: 0.5 + i * 0.12, ease: "easeOut" }}
                     whileHover={{ scale: 1.05 }}
                   >
-                    <motion.div
-                      whileInView={{ y: [0, -4, 0] }}
-                      viewport={{ once: false, amount: 0.1 }}
-                      transition={{
-                        y: {
-                          duration: 3 + i * 0.4,
-                          repeat: Infinity,
-                          repeatType: "loop",
-                          ease: "easeInOut",
-                          delay: 1.0 + i * 0.25,
-                        },
-                      }}
-                    >
+                    <div>
                       <MagicCard
                         className="rounded-xl"
                         gradientFrom="#5EF275"
@@ -202,7 +223,7 @@ export function Hero() {
                           </div>
                         </div>
                       </MagicCard>
-                    </motion.div>
+                    </div>
                   </motion.div>
                 ))}
               </div>
@@ -214,9 +235,9 @@ export function Hero() {
               {floatingCards.map((card, i) => (
                 <motion.div
                   key={card.title}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.6 + i * 0.1, ease: [0.25, 0.1, 0.25, 1] }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.4, delay: 0.5 + i * 0.1, ease: "easeOut" }}
                   className="glass rounded-xl px-3 py-4 flex flex-col items-center justify-center gap-2 text-center"
                 >
                   <card.icon className="h-5 w-5 text-brand-green mb-1" />

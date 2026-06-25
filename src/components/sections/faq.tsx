@@ -1,6 +1,5 @@
 "use client"
 
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { BlurFade } from "@/components/ui/blur-fade"
 import {
@@ -154,13 +153,9 @@ export function FAQ() {
           {/* Left Column: Sticky Header */}
           <div className="lg:col-span-5 h-full">
             <div className="lg:sticky lg:top-32 space-y-6 md:space-y-8">
-              <Badge variant="neon" className="px-4 py-1">
-                FAQ
-              </Badge>
-
               <div className="space-y-4 md:space-y-6">
                 <h2 className="font-bold text-4xl sm:text-4xl lg:text-4xl text-foreground dark:text-white leading-[1.1] tracking-tight">
-                  Perguntas que todos <span className="text-brand-green italic">os cartórios</span> fazem.
+                  Perguntas comuns entre <span className="text-brand-green italic">cartórios</span>
                 </h2>
 
                 <p className="text-lg text-gray-600 dark:text-gray-400 max-w-md leading-relaxed">
@@ -222,7 +217,7 @@ export function FAQ() {
               {/* Esquerda: título + descrição */}
               <div className="space-y-3 md:space-y-4 text-center lg:text-left">
                 <h3 className="font-bold text-2xl sm:text-3xl text-foreground dark:text-white tracking-tight">
-                  Ainda na <span className="text-brand-green italic">dúvida</span>?
+                  Ainda tem <span className="text-brand-green italic">dúvidas</span>?
                 </h3>
                 <p className="text-lg text-gray-600 dark:text-gray-400 max-w-xl mx-auto lg:mx-0 leading-relaxed">
                   Veja o que o seu LLM favorito tem a dizer sobre a gente e tome uma decisão informada.

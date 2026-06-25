@@ -108,7 +108,7 @@ export function Navbar() {
           </Link>
 
           {/* Desktop Links */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden lg:flex items-center gap-8">
             {navLinks.map((link) => {
               const isActive = link.href.includes("#") && activeSection === link.href.split("#")[1]
               return (
@@ -127,7 +127,7 @@ export function Navbar() {
           </div>
 
           {/* CTA and Theme Toggle */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden lg:flex items-center gap-4">
             <ThemeToggle />
             <RainbowButton asChild>
               <a href="https://portal.parcelecart.com.br">Acessar Plataforma</a>
@@ -135,10 +135,10 @@ export function Navbar() {
           </div>
 
           {/* Mobile Menu Toggle and Theme Toggle */}
-          <div className="flex items-center gap-3 md:hidden">
+          <div className="flex items-center gap-3 lg:hidden">
             <ThemeToggle />
             <button
-              className="text-foreground cursor-none"
+              className="relative z-50 -mr-1 p-1 text-foreground"
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label="Menu"
             >
@@ -151,7 +151,7 @@ export function Navbar() {
       {/* Mobile Menu */}
       <div
         className={cn(
-          "md:hidden overflow-hidden transition-all duration-300 ease-in-out",
+          "lg:hidden overflow-hidden transition-all duration-300 ease-in-out",
           mobileOpen ? "max-h-80 border-b border-foreground/5 dark:border-white/5 opacity-100 visible" : "max-h-0 opacity-0 invisible"
         )}
       >
