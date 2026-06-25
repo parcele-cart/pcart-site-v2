@@ -32,11 +32,20 @@ export function Pointer({
   const y = useMotionValue(0)
   const [isActive, setIsActive] = useState<boolean>(false)
   const [isHoveringClickable, setIsHoveringClickable] = useState<boolean>(false)
+  const [isTouchDevice, setIsTouchDevice] = useState<boolean>(false)
   const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (typeof window !== "undefined" && containerRef.current) {
-      if (window.matchMedia("(pointer: coarse)").matches) return
+      // Skip the custom cursor on touch / coarse-pointer devices (phones, tablets).
+      const isTouch =
+        window.matchMedia("(pointer: coarse)").matches ||
+        window.matchMedia("(hover: none)").matches ||
+        navigator.maxTouchPoints > 0
+      if (isTouch) {
+        setIsTouchDevice(true)
+        return
+      }
 
       // Get the parent element directly from the ref
       const parentElement = containerRef.current.parentElement
@@ -94,7 +103,7 @@ export function Pointer({
     <>
       <div ref={containerRef} />
       <AnimatePresence>
-        {isActive && (
+        {isActive && !isTouchDevice && (
           <motion.div
             className="pointer-events-none fixed top-0 left-0 z-[99999]"
             style={{

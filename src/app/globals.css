@@ -239,6 +239,14 @@ body.pointer-active * {
   cursor: none;
 }
 
+/* Never hide the cursor on touch / coarse-pointer devices (phones, tablets) */
+@media (pointer: coarse), (hover: none) {
+  body.pointer-active,
+  body.pointer-active * {
+    cursor: auto;
+  }
+}
+
 /* Performance */
 .content-auto {
   content-visibility: auto;
