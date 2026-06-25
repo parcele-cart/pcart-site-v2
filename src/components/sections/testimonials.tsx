@@ -151,7 +151,7 @@ em nosso trabalho:
         <div className="relative z-10 max-w-8xl mx-auto px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] pt-4">
           <div className="max-w-4xl mx-auto text-center">
             <p className="text-lg text-gray-500 dark:text-gray-400 mb-6 leading-relaxed">
-              Fale com a gente e conheça como podemos ajudar seu cartório.
+              Converse com nossa equipe e entenda como vamos ajudar seu cartório
             </p>
             <Button size="lg" asChild>
               <a href="/contato">Fale com a gente</a>
@@ -188,7 +188,7 @@ em nosso trabalho:
 
         <div className="mx-auto max-w-md text-center mt-12">
           <p className="text-base text-gray-500 dark:text-gray-400 mb-6 leading-relaxed">
-            Fale com a gente e conheça como podemos ajudar seu cartório.
+            Converse com nossa equipe e entenda como vamos ajudar seu cartório
           </p>
           <Button size="lg" asChild>
             <a href="/contato">Fale com a gente</a>

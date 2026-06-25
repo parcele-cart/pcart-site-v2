@@ -94,6 +94,7 @@ export function Navbar() {
               alt="ParceleCart"
               width={160}
               height={36}
+              sizes="160px"
               className="h-10 w-auto hidden dark:block"
               priority
             />
@@ -102,6 +103,7 @@ export function Navbar() {
               alt="ParceleCart"
               width={160}
               height={36}
+              sizes="160px"
               className="h-10 w-auto block dark:hidden"
               priority
             />

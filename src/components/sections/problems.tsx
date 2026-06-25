@@ -79,7 +79,7 @@ function ProblemCard({
         <span
           className={cn(
             "flex h-9 w-9 shrink-0 items-center justify-center rounded-full",
-            isNegative ? "bg-gray-400/15 text-gray-400" : "bg-brand-green/15 text-brand-green"
+            isNegative ? "bg-red-500/10 text-red-500 dark:bg-red-500/15 dark:text-red-400" : "bg-brand-green/15 text-brand-green"
           )}
         >
           {isNegative ? (
@@ -118,16 +118,27 @@ function StackCard({
   total: number
   progress: MotionValue<number>
 }) {
-  // Scroll-driven deck. Os cards ficam empilhados (absolute) no mesmo ponto e
-  // TODOS sobem de baixo para cima, um a um, conforme o scroll. Cada card cobre
-  // o anterior — as soluções (03–05) vêm por último e ficam por cima, os problemas
-  // (01–02) sobem primeiro e ficam embaixo. Os disparos ocupam [0, 0.9] do scroll
-  // (uniformes); o trecho final [0.9, 1] segura a pilha montada antes de liberar
-  // para a próxima seção.
+  // If it's the first card, make it fully visible immediately on arrival
+  if (index === 0) {
+    return (
+      <motion.div
+        style={{ y: "0%", scale: 1, opacity: 1, zIndex: 0 }}
+        className="absolute inset-0"
+      >
+        <ProblemCard problem={problem} index={index} className="h-full" />
+      </motion.div>
+    )
+  }
+
+  // Scroll-driven deck for remaining cards.
+  // The first card (index 0) is already showing. The remaining cards (1 to total-1)
+  // slide in one by one. The transitions occupy [0, 0.9] of the scroll progress;
+  // the final [0.9, 1.0] section holds the fully assembled deck.
   const launchSpan = 0.9
-  const seg = launchSpan / total
-  const enterStart = index * seg
-  const enterEnd = (index + 1) * seg
+  const seg = launchSpan / (total - 1)
+  const enterStart = (index - 1) * seg
+  const enterEnd = index * seg
+
   // Sobe de fora da tela (110%) até cobrir (0%), com leve scale de entrada.
   // O card entra translúcido e vai ficando sólido enquanto sobe e cobre o
   // anterior — fica 100% opaco um pouco antes de assentar.
@@ -162,7 +173,7 @@ export function Problems() {
   })
 
   return (
-    <section className="relative">
+    <section ref={cardsRef} className="relative lg:min-h-[500vh]">
       {/* Subtle gradient background */}
       <div className="absolute inset-0 bg-gradient-to-b from-background dark:from-brand-black via-background dark:via-[#0F1419] to-background dark:to-brand-black" />
 
@@ -177,52 +188,54 @@ export function Problems() {
         }}
       />
 
-      {/* Desktop/tablet: sticky title + image on the left, stacking cards on the right */}
-      <div className="relative z-10 mx-auto hidden max-w-8xl px-5 sm:px-8 lg:block lg:px-16 xl:px-32 2xl:px-[150px]">
-        <div className="grid grid-cols-[1.15fr_0.85fr] gap-12">
-          {/* LEFT: pinned heading + image */}
-          <div>
-            <div className="sticky top-0 flex h-screen flex-col items-center justify-center">
-              <h2 className="font-display text-3xl font-bold leading-[1.05] tracking-tighter text-foreground dark:text-white sm:text-4xl text-center">
-                Da conciliação manual ao<br /> fim de mês{" "}
+      {/* Desktop/tablet: sticky wrapper */}
+      <div className="sticky top-20 min-h-[calc(100vh-5rem)] flex flex-col justify-center overflow-visible hidden lg:flex">
+        <div className="relative z-10 mx-auto w-full max-w-8xl px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px]">
+          {/* Header centered above */}
+          <div className="text-center mb-3 lg:mb-4">
+            <BlurFade inView>
+              <h2 className="font-display text-3xl font-bold leading-[1.05] tracking-tighter text-foreground dark:text-white sm:text-4xl lg:text-5xl">
+                Da conciliação manual ao<br className="hidden sm:inline" /> fim de mês{" "}
                 <span className="text-brand-green">sem planilha</span>.
               </h2>
+            </BlurFade>
+          </div>
+
+          <div className="grid grid-cols-[1.15fr_0.85fr] gap-12 items-center">
+            {/* LEFT: computer image */}
+            <div className="flex justify-center">
               <BlurFade inView delay={0.1}>
-                <div className="group relative mt-4 w-[616px] max-w-full">
+                <div className="group relative w-full max-w-[760px]">
                   <div className="absolute -inset-4 rounded-full bg-brand-green/10 opacity-50 blur-3xl" />
                   <Image
-                    src="/images/hero-dashboards.png"
+                    src="/images/iMac-24-inch-v2.png"
                     alt="Recebíveis Cartórios"
-                    width={616}
-                    height={410}
+                    width={1500}
+                    height={1125}
+                    sizes="(min-width: 1024px) 616px, (min-width: 640px) 448px, 100vw"
                     className="relative h-auto w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
               </BlurFade>
             </div>
-          </div>
 
-          {/* RIGHT: scroll track that pins a card deck. Each card rises and
-              covers the previous one as you scroll. */}
-          <div ref={cardsRef} className="relative" style={{ height: `${problems.length * 100}vh` }}>
-            <div className="sticky top-0 flex h-screen items-center justify-center">
-              <div className="relative w-full min-h-[320px]">
-                {/* Régua invisível: o primeiro card (o mais alto) em fluxo normal
-                    define a altura do bloco; todos os cards animados são
-                    absolute inset-0 + h-full, então ficam com essa mesma altura. */}
-                <div className="invisible pointer-events-none" aria-hidden>
-                  <ProblemCard problem={problems[0]} index={0} />
-                </div>
-                {problems.map((problem, i) => (
-                  <StackCard
-                    key={problem.number}
-                    problem={problem}
-                    index={i}
-                    total={problems.length}
-                    progress={smoothProgress}
-                  />
-                ))}
+            {/* RIGHT: stacking cards container */}
+            <div className="relative w-full min-h-[320px]">
+              {/* Régua invisível: o primeiro card (o mais alto) em fluxo normal
+                  define a altura do bloco; todos os cards animados são
+                  absolute inset-0 + h-full, então ficam com essa mesma altura. */}
+              <div className="invisible pointer-events-none" aria-hidden>
+                <ProblemCard problem={problems[0]} index={0} />
               </div>
+              {problems.map((problem, i) => (
+                <StackCard
+                  key={problem.number}
+                  problem={problem}
+                  index={i}
+                  total={problems.length}
+                  progress={smoothProgress}
+                />
+              ))}
             </div>
           </div>
         </div>
@@ -230,9 +243,9 @@ export function Problems() {
 
       {/* Mobile: simple stacked list */}
       <div className="relative z-10 px-5 pb-20 pt-24 sm:px-8 lg:hidden">
-        <div className="mb-10">
+        <div className="mb-10 text-center">
           <BlurFade inView>
-            <h2 className="font-display text-3xl font-bold leading-[1.05] tracking-tighter text-foreground dark:text-white sm:text-4xl">
+            <h2 className="font-display text-3xl font-bold leading-[1.05] tracking-tighter text-foreground dark:text-white sm:text-4xl text-center">
               Da conciliação manual ao<br /> fim de mês{" "}
               <span className="text-brand-green">sem planilha</span>.
             </h2>
@@ -241,10 +254,11 @@ export function Problems() {
             <div className="relative mx-auto mt-8 w-full max-w-md">
               <div className="absolute -inset-4 rounded-full bg-brand-green/10 opacity-50 blur-3xl" />
               <Image
-                src="/images/hero-dashboards.png"
+                src="/images/iMac-24-inch-v2.png"
                 alt="Recebíveis Cartórios"
-                width={616}
-                height={410}
+                width={1500}
+                height={1125}
+                sizes="(min-width: 640px) 448px, 100vw"
                 className="relative h-auto w-full object-cover"
               />
             </div>
@@ -275,7 +289,7 @@ export function Problems() {
                   <span
                     className={cn(
                       "flex h-8 w-8 shrink-0 items-center justify-center rounded-full",
-                      i < 2 ? "bg-gray-400/15 text-gray-400" : "bg-brand-green/15 text-brand-green"
+                      i < 2 ? "bg-red-500/10 text-red-500 dark:bg-red-500/15 dark:text-red-400" : "bg-brand-green/15 text-brand-green"
                     )}
                   >
                     {i < 2 ? (

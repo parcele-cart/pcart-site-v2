@@ -65,7 +65,7 @@ export function Metrics() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
 
           {/* Left Column: Header + Cards (2 por linha, sem scroll) */}
-          <div className="lg:col-span-7 flex flex-col">
+          <div className="lg:col-span-6 flex flex-col">
             {/* Header - stays fixed */}
             <div className="flex flex-col items-start text-left max-w-3xl pb-4">
               <motion.div
@@ -75,7 +75,7 @@ export function Metrics() {
                 transition={{ duration: 0.8, ease }}
               >
                 <h2 className="text-3xl sm:text-4xl lg:text-4xl font-display font-bold text-foreground dark:text-white mb-4 leading-tight">
-                  Por que dizemos <span className="text-brand-green">"feito para cartório"</span>
+                  Por que dizemos <span className="text-brand-green">"feita para cartório"</span>
                 </h2>
                 <p className="text-base lg:text-lg text-gray-500 dark:text-gray-400">
                   Não é gateway adaptado. É infraestrutura desenhada do zero para a rotina do cartório.
@@ -119,7 +119,7 @@ export function Metrics() {
 
           {/* Right Column: Sticky Dashboard Image */}
           <motion.div
-            className="lg:col-span-5 relative flex justify-center w-full items-center"
+            className="lg:col-span-6 relative flex justify-center w-full items-center"
             initial={{ opacity: 0, scale: 0.9, x: 20 }}
             whileInView={{ opacity: 1, scale: 1, x: 0 }}
             viewport={{ once: true }}
@@ -132,12 +132,13 @@ export function Metrics() {
               <div className="absolute w-[80%] aspect-square border border-brand-green/30 dark:border-brand-green/10 rounded-full animate-[ping_4s_1.5s_infinite]" />
             </div>
 
-            <div className="relative z-10 w-[70%] mx-auto">
+            <div className="relative z-10 w-full mx-auto">
               <Image
-                src="/images/hero-metrics.png"
+                src="/images/hero-metrics-v2.png"
                 alt="Dashboard ParceleCart"
                 width={800}
-                height={800}
+                height={600}
+                sizes="(min-width: 1024px) 640px, 100vw"
                 className="w-full h-auto object-contain mx-auto drop-shadow-[0_20px_50px_rgba(0,0,0,0.1)] dark:drop-shadow-[0_20px_50px_rgba(94,242,117,0.15)]"
                 priority
               />
