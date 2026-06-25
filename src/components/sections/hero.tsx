@@ -190,6 +190,7 @@ export function Hero() {
                   alt="SmartPOS ParceleCart"
                   width={1200}
                   height={1200}
+                  sizes="(min-width: 1024px) 580px, (min-width: 640px) 460px, 380px"
                   className="h-[380px] sm:h-[460px] lg:h-[580px] w-auto object-contain drop-shadow-none sm:drop-shadow-[0_0_80px_rgba(94,242,117,0.2)]"
                   priority
                   placeholder="blur"
