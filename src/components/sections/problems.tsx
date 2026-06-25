@@ -252,7 +252,13 @@ export function Problems() {
         </div>
         <div className="flex flex-col gap-5">
           {problems.map((problem, i) => (
-            <BlurFade key={problem.number} delay={i * 0.08} inView>
+            <motion.div
+              key={problem.number}
+              initial={{ opacity: 0, y: 56, scale: 0.98 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-15% 0px" }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+            >
               <div
                 className={cn(
                   "relative overflow-hidden rounded-2xl border bg-white p-6 shadow-lg dark:bg-[#111A2E]",
@@ -292,7 +298,7 @@ export function Problems() {
                 </h3>
                 <p className="text-base text-gray-600 dark:text-gray-400">{problem.description}</p>
               </div>
-            </BlurFade>
+            </motion.div>
           ))}
         </div>
       </div>
