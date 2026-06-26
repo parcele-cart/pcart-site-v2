@@ -17,7 +17,7 @@ const floatingCards = [
   { icon: ShieldCheck, title: "PCI DSS", subtitle: "segurança certificada" },
 ]
 
-const ROLES = ["cartório", "tabelião", "registrador", "escrevente"]
+const ROLES = ["cartório", "tabelião", "registrador", "escrevente", "usuário", "extrajudicial"]
 
 function Typewriter() {
   const [index, setIndex] = useState(0) // which role
@@ -47,17 +47,27 @@ function Typewriter() {
     return () => clearTimeout(t)
   }, [sub, deleting, index])
 
+  const longestRole = ROLES.reduce((a, b) => (a.length > b.length ? a : b), "")
+
   return (
-    <span className="whitespace-nowrap text-brand-green glow-green-text">
-      {ROLES[index].slice(0, sub)}
-      <motion.span
-        aria-hidden
-        className="ml-0.5 font-light text-brand-green"
-        animate={{ opacity: [1, 0] }}
-        transition={{ duration: 0.6, repeat: Infinity, repeatType: "reverse" }}
-      >
-        |
-      </motion.span>
+    <span className="inline-grid grid-cols-1 grid-rows-1 text-brand-green glow-green-text align-baseline">
+      {/* Invisible placeholder of the longest word to reserve the width (only on desktop to prevent shifting; disabled on mobile to allow correct centering) */}
+      <span className="col-start-1 row-start-1 opacity-0 select-none pointer-events-none hidden lg:inline" aria-hidden="true">
+        {longestRole}
+        <span className="ml-0.5 font-light">|</span>
+      </span>
+      {/* The actual typed text overlayed on the exact same grid area */}
+      <span className="col-start-1 row-start-1 whitespace-nowrap">
+        {ROLES[index].slice(0, sub)}
+        <motion.span
+          aria-hidden
+          className="ml-0.5 font-light text-brand-green"
+          animate={{ opacity: [1, 0] }}
+          transition={{ duration: 0.6, repeat: Infinity, repeatType: "reverse" }}
+        >
+          |
+        </motion.span>
+      </span>
     </span>
   )
 }
@@ -109,29 +119,30 @@ export function Hero() {
           {/* ── Left: copy ── */}
           <div className="contents lg:flex lg:flex-col lg:items-start lg:order-1">
 
-            <div className="flex flex-col items-start order-1 lg:order-none mt-4 lg:mt-0 w-full">
-              <BlurFade delay={0} inView>
+            <div className="flex flex-col items-center lg:items-start order-1 lg:order-none mt-4 lg:mt-0 w-full">
+              <BlurFade delay={0} inView className="flex flex-col items-center lg:items-start w-full">
                 <Badge variant="neon" className="mb-6">
                   Exclusivo para o setor extrajudicial
                 </Badge>
               </BlurFade>
 
-              <BlurFade delay={0.1} inView>
-                <h1 className="font-display text-2xl sm:text-3xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl leading-[1.1] text-foreground dark:text-white mb-6">
+              <BlurFade delay={0.1} inView className="w-full">
+                <h1 className="font-display text-2xl sm:text-3xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl leading-[1.1] text-foreground dark:text-white mb-6 text-center lg:text-left">
                   A infraestrutura de pagamentos feita{" "}
+                  <br className="lg:hidden" />
                   <span className="whitespace-nowrap">para o <Typewriter /></span>
                 </h1>
               </BlurFade>
 
-              <BlurFade delay={0.3} inView>
-                <p className="text-xs sm:text-sm lg:text-base text-gray-600 dark:text-gray-400 max-w-xl mb-4 lg:mb-8">
+              <BlurFade delay={0.3} inView className="w-full flex flex-col items-center lg:items-start">
+                <p className="text-xs sm:text-sm lg:text-base text-gray-600 dark:text-gray-400 max-w-xl mb-4 lg:mb-8 text-center lg:text-left">
                   Pix, cartão e parcelamento integrados ao seu sistema de gestão. Repasse de taxas automático conforme o Provimento 127 — e ITBI e ITCMD nunca passam pela conta da serventia.
                 </p>
               </BlurFade>
             </div>
 
-            <div className="flex flex-col items-center sm:items-start order-3 lg:order-none w-full">
-              <BlurFade delay={0.4} inView>
+            <div className="flex flex-col items-center lg:items-start order-3 lg:order-none w-full">
+              <BlurFade delay={0.4} inView className="w-full flex flex-col items-center lg:items-start">
                 <div className="flex flex-col sm:flex-row gap-4 mb-10 lg:mb-12">
                   <Button size="lg" asChild>
                     <a href="/#solucao">Ver como funciona</a>
@@ -140,8 +151,8 @@ export function Hero() {
                     <a href="/contato">Falar com especialista</a>
                   </Button>
                 </div>
-                <div className="flex items-center gap-3 text-xs text-gray-600 mb-10">
-                  <ShieldCheck className="h-5 w-5 text-brand-green" aria-hidden="true" />
+                <div className="flex items-center lg:items-start justify-center lg:justify-start gap-3 text-xs text-gray-600 mb-10 text-center lg:text-left max-w-md lg:max-w-none">
+                  <ShieldCheck className="h-5 w-5 text-brand-green shrink-0" aria-hidden="true" />
                   <span>Operando desde 2022, em conformidade com o Provimento 127 do CNJ e certificação PCI DSS.</span>
                 </div>
               </BlurFade>
@@ -174,10 +185,7 @@ export function Hero() {
             {/* Glow behind the device */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
               <div className="w-96 h-96 bg-brand-green/10 dark:bg-brand-green/10 rounded-full blur-[100px] hidden sm:block" />
-              <div
-                className="w-[280px] h-[360px] opacity-20 dark:opacity-30 sm:hidden"
-                style={{ background: `radial-gradient(circle, var(--brand-green) 1%, rgba(94, 242, 117, 0) 70%)` }}
-              />
+              <div className="w-72 h-72 bg-brand-green/15 dark:bg-brand-green/20 rounded-full blur-[60px] sm:hidden" />
             </div>
 
             {/* 2-column layout: [image | cards column] */}
@@ -190,6 +198,7 @@ export function Hero() {
                   alt="SmartPOS ParceleCart"
                   width={1200}
                   height={1200}
+                  sizes="(min-width: 1024px) 230px, (min-width: 640px) 180px, 150px"
                   className="h-[380px] sm:h-[460px] lg:h-[580px] w-auto object-contain drop-shadow-none sm:drop-shadow-[0_0_80px_rgba(94,242,117,0.2)]"
                   priority
                   placeholder="blur"

@@ -2,6 +2,10 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  experimental: {
+    // Tree-shake barrel imports (corta JS nao-usado, sem mudar nada visual)
+    optimizePackageImports: ["lucide-react", "motion"],
+  },
   images: {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [

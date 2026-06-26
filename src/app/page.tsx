@@ -1,5 +1,10 @@
+import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import { Hero } from "@/components/sections/hero";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 const TrustBar = dynamic(
   () => import("@/components/sections/trust-bar").then((mod) => mod.TrustBar),
   { loading: () => <div className="min-h-24" /> },

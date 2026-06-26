@@ -35,7 +35,7 @@ export function TrustBar() {
         </div>
 
         <div className="flex justify-center items-center">
-          <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-brand-green/40 bg-brand-green/5 text-white text-sm font-medium">
+          <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-brand-green/40 bg-brand-green/5 text-brand-green dark:text-white text-sm font-medium">
             Não encontrou seu sistema? Solicite a integração, é fácil e rápida!
           </span>
         </div>

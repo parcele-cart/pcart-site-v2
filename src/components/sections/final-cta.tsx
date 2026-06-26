@@ -16,7 +16,7 @@ const trustBadges = [
 
 export function FinalCTA() {
   return (
-    <section className="py-16 sm:py-20 lg:py-24 relative overflow-hidden">
+    <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-background dark:from-brand-black via-brand-blue/10 dark:via-brand-blue/30 to-background dark:to-brand-black" />
 

@@ -42,6 +42,7 @@ export function Footer() {
                 alt="ParceleCart"
                 width={180}
                 height={40}
+                sizes="180px"
                 className="h-10 w-auto hidden dark:block opacity-90 hover:opacity-100 transition-opacity"
               />
               <Image
@@ -49,6 +50,7 @@ export function Footer() {
                 alt="ParceleCart"
                 width={180}
                 height={40}
+                sizes="180px"
                 className="h-10 w-auto block dark:hidden opacity-90 hover:opacity-100 transition-opacity"
               />
             </Link>

@@ -117,6 +117,26 @@ const llmProviders = [
   },
 ]
 
+/* Card de link para os LLMs — dedicado (sem o <Button>, cuja base
+   justify-center/h-12/hover:scale conflitava). Ícone + texto à esquerda,
+   seta à direita; borda visível também no dark. */
+function LLMLink({ name, url, Icon }: (typeof llmProviders)[number]) {
+  return (
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group flex w-full items-center justify-between gap-3 rounded-full border border-gray-200 dark:border-white/20 px-6 py-4 text-base font-medium text-foreground dark:text-white transition-all duration-300 hover:-translate-y-1 hover:border-brand-green/60 hover:bg-brand-green/5 hover:shadow-lg hover:shadow-brand-green/20"
+    >
+      <span className="flex items-center gap-2.5">
+        <Icon className="h-10 w-10 shrink-0 transition-transform duration-300 group-hover:scale-110" />
+        Pergunte ao {name}
+      </span>
+      <ArrowUpRight className="h-4 w-4 shrink-0 text-gray-400 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+    </a>
+  )
+}
+
 function FAQTrigger({ question, index }: { question: string; index: number }) {
   const { isOpen } = useAccordionItem()
 
@@ -224,28 +244,9 @@ export function FAQ() {
                 </p>
               </div>
               {/* Direita: grid 2x2 dos LLMs */}
-              <div className="grid grid-cols-2 gap-3 md:gap-4">
-                {llmProviders.map(({ name, url, Icon }) => (
-                  <Button
-                    key={name}
-                    variant="outline"
-                    size="lg"
-                    asChild
-                    className="group w-full h-auto py-4 rounded-full px-6 border-gray-200 dark:border-gray-800 hover:border-brand-green/60 hover:bg-brand-green/5 hover:-translate-y-1 hover:shadow-lg hover:shadow-brand-green/20 transition-all duration-300"
-                  >
-                    <a
-                      href={url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-between gap-3 text-base font-medium"
-                    >
-                      <span className="flex items-center gap-2.5">
-                        <Icon className="h-10 w-10 shrink-0 transition-transform duration-300 group-hover:scale-110" />
-                        Pergunte ao {name}
-                      </span>
-                      <ArrowUpRight className="h-4 w-4 shrink-0 text-gray-400 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
-                    </a>
-                  </Button>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+                {llmProviders.map((provider) => (
+                  <LLMLink key={provider.name} {...provider} />
                 ))}
               </div>
             </div>

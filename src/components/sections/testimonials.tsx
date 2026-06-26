@@ -34,6 +34,32 @@ const testimonials = [
   },
 ]
 
+/* Conteúdo interno do card (ícone + citação + autor), compartilhado entre o
+   layout desktop (pinned) e o mobile (lista simples), pra não duplicar markup. */
+function TestimonialBody({ item }: { item: (typeof testimonials)[number] }) {
+  return (
+    <>
+      <div className="flex items-center gap-4 mb-4">
+        <div className="inline-flex items-center justify-center w-12 h-12 text-brand-green">
+          <Quote className="w-6 h-6" />
+        </div>
+      </div>
+
+      <p className="text-sm sm:text-[15px] text-foreground dark:text-white leading-relaxed mb-4 text-left">
+        {item.quote}
+      </p>
+      <div className="border-t border-white/10 pt-3">
+        <p className="font-semibold text-foreground dark:text-white text-sm text-left">
+          {item.name}
+        </p>
+        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 text-left">
+          {item.role}
+        </p>
+      </div>
+    </>
+  )
+}
+
 export function Testimonials() {
   const sectionRef = useRef<HTMLElement>(null)
   const [activeIndex, setActiveIndex] = useState(0)
@@ -65,7 +91,7 @@ export function Testimonials() {
 
   if (!mounted) {
     return (
-      <section ref={sectionRef} className="min-h-[400vh] relative">
+      <section ref={sectionRef} className="lg:min-h-[400vh] relative overflow-x-clip">
         <div className="sticky top-0 min-h-screen flex items-center justify-center">
           <div className="animate-pulse bg-foreground/5 w-24 h-8 rounded-full" />
         </div>
@@ -74,7 +100,7 @@ export function Testimonials() {
   }
 
   return (
-    <section ref={sectionRef} className="min-h-[400vh] relative">
+    <section ref={sectionRef} className="lg:min-h-[400vh] relative overflow-x-clip">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-background dark:from-brand-black via-background dark:via-[#0F1419] to-background dark:to-brand-black" />
       
@@ -90,7 +116,7 @@ export function Testimonials() {
       {/* Subtle glow */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-brand-green/5 dark:bg-brand-green/10 rounded-full blur-[140px] pointer-events-none" />
 
-      <div className="sticky top-0 min-h-screen flex flex-col justify-center">
+      <div className="hidden lg:flex flex-col sticky top-0 min-h-screen justify-center">
         <div className="relative z-10 py-8 max-w-8xl mx-auto px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] w-full">
           <div className="mx-auto max-w-7xl space-y-6 text-center">
             <div className="max-w-3xl mx-auto">
@@ -115,23 +141,7 @@ em nosso trabalho:
                       : "opacity-70 hover:opacity-100"
                   }`}
                 >
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="inline-flex items-center justify-center w-12 h-12 text-brand-green">
-                      <Quote className="w-6 h-6" />
-                    </div>
-                  </div>
-
-                  <p className="text-sm sm:text-[15px] text-foreground dark:text-white leading-relaxed mb-4 text-left">
-                    {item.quote}
-                  </p>
-                  <div className="border-t border-white/10 pt-3">
-                    <p className="font-semibold text-foreground dark:text-white text-sm text-left">
-                      {item.name}
-                    </p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 text-left">
-                      {item.role}
-                    </p>
-                  </div>
+                  <TestimonialBody item={item} />
                 </motion.div>
               ))}
             </div>
@@ -141,12 +151,48 @@ em nosso trabalho:
         <div className="relative z-10 max-w-8xl mx-auto px-5 sm:px-8 lg:px-16 xl:px-32 2xl:px-[150px] pt-4">
           <div className="max-w-4xl mx-auto text-center">
             <p className="text-lg text-gray-500 dark:text-gray-400 mb-6 leading-relaxed">
-              Fale com a gente e conheça como podemos ajudar seu cartório.
+              Converse com nossa equipe e entenda como vamos ajudar seu cartório
             </p>
             <Button size="lg" asChild>
               <a href="/contato">Fale com a gente</a>
             </Button>
           </div>
+        </div>
+      </div>
+
+      {/* Mobile/tablet: lista simples (sem pin); cards animam ao entrar */}
+      <div className="lg:hidden relative z-10 px-5 sm:px-8 pt-20 pb-24">
+        <div className="mx-auto max-w-3xl text-center mb-10">
+          <BlurFade inView>
+            <h2 className="font-bold text-3xl sm:text-4xl text-foreground dark:text-white leading-tight">
+              A palavra de quem acredita<br />
+              em nosso trabalho:
+            </h2>
+          </BlurFade>
+        </div>
+
+        <div className="grid gap-6 sm:grid-cols-2">
+          {testimonials.map((item) => (
+            <motion.div
+              key={item.name}
+              initial={{ opacity: 0, y: 40, scale: 0.98 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-10% 0px" }}
+              transition={{ duration: 0.5, ease }}
+              className="glass rounded-[2rem] border border-white/10 p-6 shadow-[0_30px_80px_rgba(0,0,0,0.18)]"
+            >
+              <TestimonialBody item={item} />
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="mx-auto max-w-md text-center mt-12">
+          <p className="text-base text-gray-500 dark:text-gray-400 mb-6 leading-relaxed">
+            Converse com nossa equipe e entenda como vamos ajudar seu cartório
+          </p>
+          <Button size="lg" asChild>
+            <a href="/contato">Fale com a gente</a>
+          </Button>
         </div>
       </div>
     </section>

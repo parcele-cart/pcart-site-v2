@@ -225,6 +225,10 @@ body {
 /* Smooth scroll */
 html {
   background: var(--background);
+  /* Guard against page-wide horizontal scroll on mobile from decorative
+     bleed (blobs, glows). `clip` clips the x-axis WITHOUT creating a scroll
+     container, so it never breaks the sticky scroll-driven sections. */
+  overflow-x: clip;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -237,6 +241,14 @@ html {
 body.pointer-active,
 body.pointer-active * {
   cursor: none;
+}
+
+/* Never hide the cursor on touch / coarse-pointer devices (phones, tablets) */
+@media (pointer: coarse), (hover: none) {
+  body.pointer-active,
+  body.pointer-active * {
+    cursor: auto;
+  }
 }
 
 /* Performance */
