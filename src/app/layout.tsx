@@ -6,6 +6,7 @@ import { Footer } from "@/components/layout/footer";
 import { Pointer } from "@/components/ui/pointer";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ScrollToTop } from "@/components/ui/scroll-to-top";
+import { GoogleTagManager } from "@/components/analytics/google-tag-manager";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -82,6 +83,7 @@ export default function RootLayout({
         className={`${inter.variable} ${dmSans.variable} antialiased selection:bg-brand-blue-light/30 selection:text-foreground dark:text-white`}
         suppressHydrationWarning
       >
+        <GoogleTagManager />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
